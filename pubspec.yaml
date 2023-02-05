@@ -37,6 +37,7 @@ dependencies:
   responsive_framework:
   mapbox_maps_flutter:
   google_maps_flutter_web:
+  google_maps_flutter:
   
 
 dev_dependencies:
