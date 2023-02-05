@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sumilao/screens/auth/login_page.dart';
+import 'package:sumilao/screens/home_screen.dart';
+import 'package:sumilao/utils/routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,9 +14,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-     
-      home:  LoginPage(),
+      debugShowCheckedModeBanner: false,
+      home: LoginPage(),
+      routes: {
+        Routes.loginpage: (context) => LoginPage(),
+        Routes.homescreen: (context) => const HomeScreen(),
+      },
     );
   }
 }
-
