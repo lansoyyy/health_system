@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sumilao/screens/tabs/about_us_tab.dart';
+import 'package:sumilao/screens/tabs/news_tab.dart';
 import 'package:sumilao/screens/tabs/patient_list_tab.dart';
 import 'package:sumilao/utils/colors.dart';
 import 'package:sumilao/widgets/button_widget.dart';
-import 'package:sumilao/widgets/text_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -26,12 +26,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Image.asset(
                     'assets/images/logo.jpg',
-                    height: 75,
+                    height: 100,
                   ),
-                  const Expanded(
-                    child: SizedBox(),
+                  const SizedBox(
+                    width: 20,
                   ),
-                  Expanded(
+                  SizedBox(
+                    width: 600,
                     child: TabBar(
                         indicatorColor: primary,
                         unselectedLabelColor: Colors.grey,
@@ -53,8 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ]),
                   ),
-                  const SizedBox(
-                    width: 50,
+                  const Expanded(
+                    child: SizedBox(),
                   ),
                   ButtonWidget(
                       fontSize: 12,
@@ -87,10 +88,11 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: TabBarView(children: [
                 PatientListTab(),
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < 1; i++)
                   Center(
                     child: Text(i.toString()),
                   ),
+                const NewsTab(),
                 const AboutUsTab(),
               ]),
             )
