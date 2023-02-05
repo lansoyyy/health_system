@@ -11,7 +11,7 @@ class AboutUsTab extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 500,
+            height: 400,
             decoration: const BoxDecoration(
                 color: Colors.black,
                 image: DecorationImage(
