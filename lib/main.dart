@@ -14,11 +14,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Municipaliy of Sumilao',
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
       routes: {
         Routes.loginpage: (context) => LoginPage(),
-        Routes.homescreen: (context) => const HomeScreen(),
+        Routes.homescreen: (context) => HomeScreen(),
       },
     );
   }
