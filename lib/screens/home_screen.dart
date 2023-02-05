@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sumilao/screens/tabs/about_us_tab.dart';
+import 'package:sumilao/screens/tabs/map_tab.dart';
 import 'package:sumilao/screens/tabs/news_tab.dart';
 import 'package:sumilao/screens/tabs/patient_list_tab.dart';
 import 'package:sumilao/utils/colors.dart';
@@ -88,10 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: TabBarView(children: [
                 PatientListTab(),
-                for (int i = 0; i < 1; i++)
-                  Center(
-                    child: Text(i.toString()),
-                  ),
+                const MapTab(),
                 const NewsTab(),
                 const AboutUsTab(),
               ]),
