@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sumilao/services/local_storage.dart';
 import 'package:sumilao/widgets/button_widget.dart';
 import 'package:sumilao/widgets/text_widget.dart';
 import 'package:sumilao/widgets/textfield_widget.dart';
+import 'package:sumilao/widgets/toast_widget.dart';
 
 class LoginPage extends StatelessWidget {
   final passwordController = TextEditingController();
@@ -41,7 +43,9 @@ class LoginPage extends StatelessWidget {
                 height: 20,
               ),
               TextFieldWidget(
-                  label: 'Password: ', controller: passwordController),
+                  isObscure: true,
+                  label: 'Password: ',
+                  controller: passwordController),
               TextButton(
                   onPressed: (() {}),
                   child: TextBold(
@@ -55,7 +59,13 @@ class LoginPage extends StatelessWidget {
                 child: ButtonWidget(
                     label: 'Login',
                     onPressed: (() {
-                      Navigator.pushReplacementNamed(context, '/homescreen');
+                      if (emailController.text == 'admin-username' &&
+                          passwordController.text == 'admin-password') {
+                        box.write('user', 'admin');
+                        Navigator.pushReplacementNamed(context, '/homescreen');
+                      } else {
+                        showToast('Invalid Login Credentials');
+                      }
                     })),
               )
             ],

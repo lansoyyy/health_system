@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sumilao/screens/tabs/about_us_tab.dart';
 import 'package:sumilao/screens/tabs/map_tab.dart';
 import 'package:sumilao/screens/tabs/news_tab.dart';
 import 'package:sumilao/screens/tabs/patient_list_tab.dart';
+import 'package:sumilao/services/local_storage.dart';
 import 'package:sumilao/utils/colors.dart';
 import 'package:sumilao/widgets/button_widget.dart';
 
@@ -14,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    print(box.read('user'));
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -75,7 +78,47 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 15,
                   ),
                   IconButton(
-                      onPressed: (() {}),
+                      onPressed: (() {
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: const Text(
+                                    'Logout Confirmation',
+                                    style: TextStyle(
+                                        fontFamily: 'QBold',
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  content: const Text(
+                                    'Are you sure you want to Logout?',
+                                    style: TextStyle(fontFamily: 'QRegular'),
+                                  ),
+                                  actions: <Widget>[
+                                    MaterialButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(true),
+                                      child: const Text(
+                                        'Close',
+                                        style: TextStyle(
+                                            fontFamily: 'QRegular',
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    MaterialButton(
+                                      onPressed: () async {
+                                        await FirebaseAuth.instance.signOut();
+                                        Navigator.pushReplacementNamed(
+                                            context, '/loginpage');
+                                      },
+                                      child: const Text(
+                                        'Continue',
+                                        style: TextStyle(
+                                            fontFamily: 'QRegular',
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ));
+                      }),
                       icon: const Icon(
                         Icons.logout,
                         color: Colors.grey,

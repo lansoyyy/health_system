@@ -22,21 +22,24 @@ class MapTabState extends State<MapTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        circles: {
-          Circle(
-            circleId: const CircleId("circle1"),
-            center: const LatLng(8.348975, 124.972012),
-            radius: 100,
-            strokeColor: Colors.blue,
-            fillColor: Colors.blue.withOpacity(0.5),
-          ),
-        },
-        mapType: MapType.normal,
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
+      body: Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: GoogleMap(
+          circles: {
+            Circle(
+              circleId: const CircleId("circle1"),
+              center: const LatLng(8.348975, 124.972012),
+              radius: 100,
+              strokeColor: Colors.blue,
+              fillColor: Colors.blue.withOpacity(0.5),
+            ),
+          },
+          mapType: MapType.normal,
+          initialCameraPosition: _kGooglePlex,
+          onMapCreated: (GoogleMapController controller) {
+            _controller.complete(controller);
+          },
+        ),
       ),
     );
   }
