@@ -38,6 +38,10 @@ dependencies:
   mapbox_maps_flutter:
   google_maps_flutter_web:
   google_maps_flutter:
+  firebase_core:
+  cloud_firestore:
+  firebase_storage:
+  firebase_auth:
   
 
 dev_dependencies:

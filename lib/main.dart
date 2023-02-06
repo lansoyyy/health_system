@@ -1,10 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:sumilao/screens/auth/login_page.dart';
 import 'package:sumilao/screens/home_screen.dart';
 import 'package:sumilao/utils/routes.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
+          apiKey: "AIzaSyC-I141Uc0F_xzjysZvIGMgMyTG58Q4FZs",
+          appId: "1:794218852632:web:6fb1035f78b9f65c1e6e6d",
+          messagingSenderId: "794218852632",
+          projectId: "healthcare-system-59e3f",
+          storageBucket: "healthcare-system-59e3f.appspot.com"));
   runApp(const MyApp());
 }
 

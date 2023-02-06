@@ -55,5 +55,28 @@
       });
     });
   </script>
+  <script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-core.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js";
+
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+  apiKey: "AIzaSyC-I141Uc0F_xzjysZvIGMgMyTG58Q4FZs",
+  authDomain: "healthcare-system-59e3f.firebaseapp.com",
+  projectId: "healthcare-system-59e3f",
+  storageBucket: "healthcare-system-59e3f.appspot.com",
+  messagingSenderId: "794218852632",
+  appId: "1:794218852632:web:6fb1035f78b9f65c1e6e6d"
+};
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+  </script>
 </body>
 </html>
