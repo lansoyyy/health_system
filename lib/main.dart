@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
       routes: {
         Routes.loginpage: (context) => LoginPage(),
         Routes.homescreen: (context) => HomeScreen(),
-        Routes.userscreen: (context) => const UserManagementScreen(),
+        Routes.userscreen: (context) => UserManagementScreen(),
       },
     );
   }

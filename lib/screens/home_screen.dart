@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const Expanded(
                     child: SizedBox(),
                   ),
-                  box.read('user') == 'admin'
+                  box.read('user') != 'admin'
                       ? ButtonWidget(
                           fontSize: 12,
                           width: 100,
