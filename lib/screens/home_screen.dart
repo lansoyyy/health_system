@@ -61,19 +61,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   const Expanded(
                     child: SizedBox(),
                   ),
-                  ButtonWidget(
-                      fontSize: 12,
-                      width: 100,
-                      label: 'Add New Patient',
-                      onPressed: (() {})),
+                  box.read('user') == 'admin'
+                      ? ButtonWidget(
+                          fontSize: 12,
+                          width: 100,
+                          label: 'Add New Patient',
+                          onPressed: (() {}))
+                      : const SizedBox(),
                   const SizedBox(
                     width: 15,
                   ),
-                  ButtonWidget(
-                      fontSize: 12,
-                      width: 100,
-                      label: 'Add User',
-                      onPressed: (() {})),
+                  box.read('user') != 'admin'
+                      ? ButtonWidget(
+                          fontSize: 12,
+                          width: 100,
+                          label: 'Add User',
+                          onPressed: (() {
+                            Navigator.pushNamed(context, '/userscreen');
+                          }))
+                      : const SizedBox(),
                   const SizedBox(
                     width: 15,
                   ),

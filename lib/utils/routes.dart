@@ -1,3 +1,5 @@
 class Routes {
-  static const loginpage = '/loginpage', homescreen = '/homescreen';
+  static const loginpage = '/loginpage',
+      homescreen = '/homescreen',
+      userscreen = '/userscreen';
 }
