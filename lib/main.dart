@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
+import 'package:sumilao/screens/add_patient.dart';
 import 'package:sumilao/screens/add_user.dart';
 import 'package:sumilao/screens/auth/login_page.dart';
 import 'package:sumilao/screens/home_screen.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         Routes.loginpage: (context) => LoginPage(),
         Routes.homescreen: (context) => HomeScreen(),
         Routes.userscreen: (context) => UserManagementScreen(),
+        Routes.patientscreen: (context) => AddPatient(),
       },
     );
   }

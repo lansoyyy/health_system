@@ -66,7 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontSize: 12,
                           width: 100,
                           label: 'Add New Patient',
-                          onPressed: (() {}))
+                          onPressed: (() {
+                            Navigator.pushNamed(context, '/patientscreen');
+                          }))
                       : const SizedBox(),
                   const SizedBox(
                     width: 15,

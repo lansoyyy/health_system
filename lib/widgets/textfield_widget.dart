@@ -7,14 +7,17 @@ class TextFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final double? width;
   final double? height;
+  final int? maxLine;
+  final TextInputType? inputType;
 
-  const TextFieldWidget({
-    required this.label,
-    required this.controller,
-    this.isObscure = false,
-    this.width = 300,
-    this.height = 40,
-  });
+  const TextFieldWidget(
+      {required this.label,
+      required this.controller,
+      this.isObscure = false,
+      this.width = 300,
+      this.height = 40,
+      this.maxLine = 1,
+      this.inputType = TextInputType.text});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +37,11 @@ class TextFieldWidget extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(5)),
           child: TextFormField(
+            keyboardType: inputType,
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+            ),
+            maxLines: maxLine,
             obscureText: isObscure!,
             controller: controller,
           ),
