@@ -206,21 +206,24 @@ class _NewsTabState extends State<NewsTab> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Container(
-                                        height: 300,
-                                        width: 500,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: Colors.grey),
-                                        child: Center(
-                                            child: Container(
+                                      Card(
+                                        child: Container(
+                                          height: 300,
+                                          width: 500,
                                           decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: NetworkImage(data
-                                                      .docs[index]['image']),
-                                                  fit: BoxFit.cover)),
-                                        )),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: Colors.grey),
+                                          child: Center(
+                                              child: Container(
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                image: DecorationImage(
+                                                    image: NetworkImage(data
+                                                        .docs[index]['image']),
+                                                    fit: BoxFit.cover)),
+                                          )),
+                                        ),
                                       ),
                                       const SizedBox(
                                         height: 10,

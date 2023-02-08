@@ -3,6 +3,7 @@ import 'package:sumilao/widgets/text_widget.dart';
 
 class TextFieldWidget extends StatelessWidget {
   final String label;
+  final String? hint;
   final bool? isObscure;
   final TextEditingController controller;
   final double? width;
@@ -12,6 +13,7 @@ class TextFieldWidget extends StatelessWidget {
 
   const TextFieldWidget(
       {required this.label,
+      this.hint = '',
       required this.controller,
       this.isObscure = false,
       this.width = 300,
@@ -38,7 +40,8 @@ class TextFieldWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(5)),
           child: TextFormField(
             keyboardType: inputType,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
+              hintText: hint,
               border: InputBorder.none,
             ),
             maxLines: maxLine,

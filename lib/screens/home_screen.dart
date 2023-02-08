@@ -142,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 PatientListTab(),
                 const MapTab(),
                 NewsTab(),
-                const AboutUsTab(),
+                AboutUsTab(),
               ]),
             )
           ],
