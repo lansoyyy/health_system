@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart' show DateFormat, toBeginningOfSentenceCase;
 import '../../widgets/button_widget.dart';
 import '../../widgets/text_widget.dart';
 
@@ -9,11 +10,15 @@ class PatientListTab extends StatefulWidget {
 }
 
 class _PatientListTabState extends State<PatientListTab> {
-  var filters = ['Name', 'Address', 'Gender'];
+  var filters = ['name', 'address', 'gender'];
 
   final searchController = TextEditingController();
 
   var _dropValue = 0;
+
+  String filter = 'name';
+
+  String nameSearched = '';
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +57,11 @@ class _PatientListTabState extends State<PatientListTab> {
                                   ),
                                   borderRadius: BorderRadius.circular(5)),
                               child: TextFormField(
+                                onChanged: (value) {
+                                  setState(() {
+                                    nameSearched = value;
+                                  });
+                                },
                                 decoration: const InputDecoration(
                                     hintText: 'Search',
                                     hintStyle:
@@ -79,6 +89,9 @@ class _PatientListTabState extends State<PatientListTab> {
                                     items: [
                                       for (int i = 0; i < filters.length; i++)
                                         DropdownMenuItem(
+                                          onTap: (() {
+                                            filter = filters[i];
+                                          }),
                                           value: i,
                                           child: Row(
                                             children: [
@@ -91,7 +104,7 @@ class _PatientListTabState extends State<PatientListTab> {
                                               ),
                                               TextRegular(
                                                   text:
-                                                      'Filter by: ${filters[i]}',
+                                                      'Sort by: ${filters[i]}',
                                                   fontSize: 14,
                                                   color: Colors.grey),
                                             ],
@@ -113,82 +126,125 @@ class _PatientListTabState extends State<PatientListTab> {
                   ),
                 ),
               ),
-              DataTable(columns: [
-                DataColumn(
-                    label: TextBold(
-                        text: 'Patient Name',
-                        fontSize: 18,
-                        color: Colors.black)),
-                DataColumn(
-                    label: TextBold(
-                        text: 'Address', fontSize: 18, color: Colors.black)),
-                DataColumn(
-                    label: TextBold(
-                        text: 'Gender', fontSize: 18, color: Colors.black)),
-                DataColumn(
-                    label: TextBold(
-                        text: 'Disease', fontSize: 18, color: Colors.black)),
-                DataColumn(
-                    label:
-                        TextBold(text: '', fontSize: 20, color: Colors.black)),
-                DataColumn(
-                    label:
-                        TextBold(text: '', fontSize: 20, color: Colors.black)),
-              ], rows: [
-                for (int i = 0; i < 100; i++)
-                  DataRow(cells: [
-                    DataCell(TextRegular(
-                        text: 'John Doe', fontSize: 14, color: Colors.grey)),
-                    DataCell(TextRegular(
-                        text: 'Kisolon Sumilao Bukidnon',
-                        fontSize: 14,
-                        color: Colors.grey)),
-                    DataCell(TextRegular(
-                        text: 'Male', fontSize: 14, color: Colors.grey)),
-                    DataCell(TextRegular(
-                        text: 'Dengue', fontSize: 14, color: Colors.grey)),
-                    DataCell(ButtonWidget(
-                        width: 75,
-                        height: 40,
-                        fontSize: 14,
-                        label: 'Check',
-                        onPressed: (() {}))),
-                    DataCell(
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5, bottom: 5),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            height: 50,
-                            width: 150,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: Colors.white,
-                                border: Border.all(color: Colors.grey)),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                              child: Row(
-                                children: [
-                                  const Icon(
-                                    Icons.print,
-                                    color: Colors.black,
+              StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('Patient')
+                      .where('name',
+                          isGreaterThanOrEqualTo:
+                              toBeginningOfSentenceCase(nameSearched))
+                      .where('name',
+                          isLessThan:
+                              '${toBeginningOfSentenceCase(nameSearched)}z')
+                      // .orderBy('name')
+                      .orderBy(filter)
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      print('error');
+                      return const Center(child: Text('Error'));
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Padding(
+                        padding: EdgeInsets.only(top: 50),
+                        child: Center(
+                            child: CircularProgressIndicator(
+                          color: Colors.black,
+                        )),
+                      );
+                    }
+
+                    final data = snapshot.requireData;
+                    return DataTable(columns: [
+                      DataColumn(
+                          label: TextBold(
+                              text: 'Patient Name',
+                              fontSize: 18,
+                              color: Colors.black)),
+                      DataColumn(
+                          label: TextBold(
+                              text: 'Address',
+                              fontSize: 18,
+                              color: Colors.black)),
+                      DataColumn(
+                          label: TextBold(
+                              text: 'Gender',
+                              fontSize: 18,
+                              color: Colors.black)),
+                      DataColumn(
+                          label: TextBold(
+                              text: 'Disease',
+                              fontSize: 18,
+                              color: Colors.black)),
+                      DataColumn(
+                          label: TextBold(
+                              text: '', fontSize: 20, color: Colors.black)),
+                      DataColumn(
+                          label: TextBold(
+                              text: '', fontSize: 20, color: Colors.black)),
+                    ], rows: [
+                      for (int i = 0; i < data.size; i++)
+                        DataRow(cells: [
+                          DataCell(TextRegular(
+                              text: data.docs[i]['name'],
+                              fontSize: 14,
+                              color: Colors.grey)),
+                          DataCell(TextRegular(
+                              text: data.docs[i]['address'],
+                              fontSize: 14,
+                              color: Colors.grey)),
+                          DataCell(TextRegular(
+                              text: data.docs[i]['gender'],
+                              fontSize: 14,
+                              color: Colors.grey)),
+                          DataCell(TextRegular(
+                              text: data.docs[i]['disease'],
+                              fontSize: 14,
+                              color: Colors.grey)),
+                          DataCell(ButtonWidget(
+                              width: 75,
+                              height: 40,
+                              fontSize: 14,
+                              label: 'Check',
+                              onPressed: (() {}))),
+                          DataCell(
+                            Padding(
+                              padding: const EdgeInsets.only(top: 5, bottom: 5),
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  height: 50,
+                                  width: 150,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.grey)),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                    child: Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.print,
+                                          color: Colors.black,
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        TextRegular(
+                                            text: 'Print Report',
+                                            fontSize: 12,
+                                            color: Colors.grey),
+                                      ],
+                                    ),
                                   ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  TextRegular(
-                                      text: 'Print Report',
-                                      fontSize: 12,
-                                      color: Colors.grey),
-                                ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                  ])
-              ])
+                        ])
+                    ]);
+                  })
             ],
           ),
         ),

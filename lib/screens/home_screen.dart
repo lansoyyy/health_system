@@ -141,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: TabBarView(children: [
                 PatientListTab(),
                 const MapTab(),
-                const NewsTab(),
+                NewsTab(),
                 const AboutUsTab(),
               ]),
             )

@@ -1,20 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 Future addPatient(
-  image,
-  name,
-  phoneNumber,
-  dateOfBirth,
-  age,
-  brgy,
-  zone,
-  gender,
-  disease,
-  address,
-  medicalFindings,
-  dateOfFindings,
-  assistedBy,
-) async {
+    image,
+    name,
+    phoneNumber,
+    dateOfBirth,
+    age,
+    brgy,
+    zone,
+    gender,
+    disease,
+    address,
+    medicalFindings,
+    dateOfFindings,
+    assistedBy,
+    lat,
+    long) async {
   final docUser = FirebaseFirestore.instance.collection('Patient').doc();
 
   final json = {
@@ -31,6 +32,8 @@ Future addPatient(
     'medicalFindings': medicalFindings,
     'dateOfFindings': dateOfFindings,
     'assistedBy': assistedBy,
+    'lat': lat,
+    'long': long
   };
 
   await docUser.set(json);

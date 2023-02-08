@@ -1,4 +1,8 @@
+import 'dart:html';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:sumilao/services/add_patient.dart';
 import 'package:sumilao/widgets/button_widget.dart';
 import 'package:sumilao/widgets/text_widget.dart';
 import 'package:sumilao/widgets/textfield_widget.dart';
@@ -25,6 +29,35 @@ class _AddPatientState extends State<AddPatient> {
     'Puntian',
   ];
 
+  var lats = [
+    8.331635,
+    8.276836,
+    8.214124,
+    8.201508,
+    8.245051,
+    8.287519,
+    8.332622,
+    8.356091,
+    8.338830,
+    8.291026,
+  ];
+
+  double lat = 8.331635;
+  double long = 124.976005;
+
+  var longs = [
+    124.976005,
+    124.924843,
+    124.905968,
+    124.929829,
+    124.901814,
+    124.948132,
+    124.935717,
+    124.975748,
+    124.975427,
+    124.905548
+  ];
+
   var diseases = ['No Sickness', 'Covid', 'Dengue', 'Diarrhea'];
 
   final nameController = TextEditingController();
@@ -49,6 +82,39 @@ class _AddPatientState extends State<AddPatient> {
   var _dropValue2 = 0;
   var _dropValue3 = 0;
 
+  String brgy = 'Kisolon';
+  String zone = 'Zone 1';
+  String gender = 'Male';
+  String disease = 'No Sickness';
+
+  late String imgUrl = '';
+
+  var hasLoaded = false;
+
+  uploadToStorage() {
+    InputElement input = FileUploadInputElement() as InputElement
+      ..accept = 'image/*';
+    FirebaseStorage fs = FirebaseStorage.instance;
+    input.click();
+    input.onChange.listen((event) {
+      final file = input.files!.first;
+      final reader = FileReader();
+      reader.readAsDataUrl(file);
+      reader.onLoadEnd.listen((event) async {
+        var snapshot = await fs.ref().child('newfile').putBlob(file);
+        String downloadUrl = await snapshot.ref.getDownloadURL();
+
+        showToast('Image Uploaded!');
+
+        print(downloadUrl);
+        setState(() {
+          imgUrl = downloadUrl;
+          hasLoaded = true;
+        });
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,15 +131,32 @@ class _AddPatientState extends State<AddPatient> {
               const SizedBox(
                 height: 20,
               ),
-              Container(
-                color: Colors.grey,
-                height: 150,
-                width: 200,
-                child: Center(
-                  child: TextRegular(
-                      text: 'No Photo', fontSize: 12, color: Colors.white),
-                ),
-              ),
+              hasLoaded
+                  ? Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          image: DecorationImage(
+                              image: NetworkImage(imgUrl), fit: BoxFit.cover)),
+                      height: 150,
+                      width: 200,
+                      child: Center(
+                        child: TextRegular(
+                            text: 'Image Uploaded',
+                            fontSize: 12,
+                            color: Colors.white),
+                      ),
+                    )
+                  : Container(
+                      color: Colors.grey,
+                      height: 150,
+                      width: 200,
+                      child: Center(
+                        child: TextRegular(
+                            text: 'No Photo',
+                            fontSize: 12,
+                            color: Colors.white),
+                      ),
+                    ),
               const SizedBox(
                 height: 10,
               ),
@@ -82,7 +165,9 @@ class _AddPatientState extends State<AddPatient> {
                   height: 35,
                   fontSize: 12,
                   label: 'Upload Photo',
-                  onPressed: (() {})),
+                  onPressed: (() {
+                    uploadToStorage();
+                  })),
               const SizedBox(
                 height: 20,
               ),
@@ -97,7 +182,7 @@ class _AddPatientState extends State<AddPatient> {
                   TextFieldWidget(
                       inputType: TextInputType.number,
                       label: 'Phone Number',
-                      controller: nameController),
+                      controller: phoneNumberController),
                 ],
               ),
               const SizedBox(
@@ -110,7 +195,7 @@ class _AddPatientState extends State<AddPatient> {
                       inputType: TextInputType.datetime,
                       width: 180,
                       label: 'Date of Birth',
-                      controller: nameController),
+                      controller: dateOfBirthController),
                   const SizedBox(
                     width: 30,
                   ),
@@ -118,7 +203,7 @@ class _AddPatientState extends State<AddPatient> {
                       inputType: TextInputType.number,
                       width: 100,
                       label: 'Age',
-                      controller: nameController),
+                      controller: ageController),
                   const SizedBox(
                     width: 30,
                   ),
@@ -146,6 +231,11 @@ class _AddPatientState extends State<AddPatient> {
                                 items: [
                                   for (int i = 0; i < brgys.length; i++)
                                     DropdownMenuItem(
+                                      onTap: () {
+                                        brgy = brgys[i];
+                                        lat = lats[i];
+                                        long = longs[i];
+                                      },
                                       value: i,
                                       child: TextRegular(
                                           text: brgys[i],
@@ -190,6 +280,9 @@ class _AddPatientState extends State<AddPatient> {
                                 items: [
                                   for (int i = 0; i < 4; i++)
                                     DropdownMenuItem(
+                                      onTap: () {
+                                        zone = 'Zone ${i + 1}';
+                                      },
                                       value: i,
                                       child: TextRegular(
                                           text: 'Zone ${i + 1}',
@@ -238,6 +331,9 @@ class _AddPatientState extends State<AddPatient> {
                                 value: _dropValue2,
                                 items: [
                                   DropdownMenuItem(
+                                    onTap: () {
+                                      gender = 'Male';
+                                    },
                                     value: 0,
                                     child: TextRegular(
                                         text: 'Male',
@@ -245,6 +341,9 @@ class _AddPatientState extends State<AddPatient> {
                                         color: Colors.black),
                                   ),
                                   DropdownMenuItem(
+                                    onTap: () {
+                                      gender = 'Female';
+                                    },
                                     value: 1,
                                     child: TextRegular(
                                         text: 'Female',
@@ -289,6 +388,9 @@ class _AddPatientState extends State<AddPatient> {
                                 items: [
                                   for (int i = 0; i < diseases.length; i++)
                                     DropdownMenuItem(
+                                      onTap: (() {
+                                        disease = diseases[i];
+                                      }),
                                       value: i,
                                       child: TextRegular(
                                           text: diseases[i],
@@ -348,6 +450,22 @@ class _AddPatientState extends State<AddPatient> {
                 label: 'Add Patient',
                 onPressed: (() {
                   showToast('Patient added succesfully!');
+                  addPatient(
+                      imgUrl,
+                      nameController.text,
+                      phoneNumberController.text,
+                      dateOfBirthController.text,
+                      ageController.text,
+                      brgy,
+                      zone,
+                      gender,
+                      disease,
+                      addressController.text,
+                      findingsController.text,
+                      dateFindingsController.text,
+                      assistedController.text,
+                      lat,
+                      long);
                   Navigator.pushReplacementNamed(context, '/homescreen');
                 }),
               ),
