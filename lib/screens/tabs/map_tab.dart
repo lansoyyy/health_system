@@ -1,7 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_map/flutter_map.dart';
+
+import 'package:latlong2/latlong.dart';
 
 class MapTab extends StatefulWidget {
   const MapTab({Key? key}) : super(key: key);
@@ -11,36 +11,38 @@ class MapTab extends StatefulWidget {
 }
 
 class MapTabState extends State<MapTab> {
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
-
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(8.308721, 124.944031),
-    zoom: 14.4746,
-  );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: GoogleMap(
-          circles: {
-            Circle(
-              circleId: const CircleId("circle1"),
-              center: const LatLng(8.348975, 124.972012),
-              radius: 100,
-              strokeColor: Colors.blue,
-              fillColor: Colors.blue.withOpacity(0.5),
+          padding: const EdgeInsets.only(bottom: 20),
+          child: FlutterMap(
+            options: MapOptions(
+              center: LatLng(8.348975, 124.972012),
+              zoom: 13.0,
             ),
-          },
-          mapType: MapType.normal,
-          initialCameraPosition: _kGooglePlex,
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
-        ),
-      ),
+            layers: [
+              TileLayerOptions(
+                  urlTemplate:
+                      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                  subdomains: ['a', 'b', 'c']),
+              MarkerLayerOptions(
+                markers: [
+                  Marker(
+                    point: LatLng(8.348975, 124.972012),
+                    builder: (ctx) => Container(
+                      child: Image.asset(
+                        'assets/images/heat.png',
+                        height: 25,
+                        width: 25,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+            children: const [],
+          )),
     );
   }
 }
