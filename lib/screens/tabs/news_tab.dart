@@ -53,7 +53,7 @@ class _NewsTabState extends State<NewsTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: box.read('user') == 'admin'
+      floatingActionButton: box.read('user') == 'Admin'
           ? FloatingActionButton(
               backgroundColor: primary,
               onPressed: (() {

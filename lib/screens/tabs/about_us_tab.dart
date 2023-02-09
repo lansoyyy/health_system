@@ -31,7 +31,7 @@ class AboutUsTab extends StatelessWidget {
 
           dynamic data = snapshot.data;
           return Scaffold(
-            floatingActionButton: box.read('user') == 'admin'
+            floatingActionButton: box.read('user') == 'Admin'
                 ? FloatingActionButton(
                     backgroundColor: primary,
                     onPressed: (() {
