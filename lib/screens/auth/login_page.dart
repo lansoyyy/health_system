@@ -69,10 +69,11 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: (() async {
                       if (emailController.text == 'admin-username' &&
                           passwordController.text == 'admin-password') {
-                        box.write('user', 'admin');
+                        box.write('user', 'Admin');
                         Navigator.pushReplacementNamed(context, '/homescreen');
                       } else {
                         late var isDeleted;
+                        late var role;
                         try {
                           var collection = FirebaseFirestore.instance
                               .collection('User')
@@ -90,6 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                               Map<String, dynamic> data =
                                   queryDocumentSnapshot.data();
                               isDeleted = data['isDeleted'];
+                              role = data['role'];
                             }
                           });
 
@@ -97,6 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                             showToast('Your account has been deleted!');
                             await FirebaseAuth.instance.signOut();
                           } else {
+                            box.write('user', role);
                             Navigator.pushReplacementNamed(
                                 context, '/homescreen');
                           }

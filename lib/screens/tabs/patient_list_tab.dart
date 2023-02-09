@@ -127,16 +127,28 @@ class _PatientListTabState extends State<PatientListTab> {
                 ),
               ),
               StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection('Patient')
-                      .where('name',
-                          isGreaterThanOrEqualTo:
-                              toBeginningOfSentenceCase(nameSearched))
-                      .where('name',
-                          isLessThan:
-                              '${toBeginningOfSentenceCase(nameSearched)}z')
-                      .orderBy(filter)
-                      .snapshots(),
+                  stream: filter == 'name'
+                      ? FirebaseFirestore.instance
+                          .collection('Patient')
+                          .where('name',
+                              isGreaterThanOrEqualTo:
+                                  toBeginningOfSentenceCase(nameSearched))
+                          .where('name',
+                              isLessThan:
+                                  '${toBeginningOfSentenceCase(nameSearched)}z')
+                          .orderBy(filter)
+                          .snapshots()
+                      : FirebaseFirestore.instance
+                          .collection('Patient')
+                          .where('name',
+                              isGreaterThanOrEqualTo:
+                                  toBeginningOfSentenceCase(nameSearched))
+                          .where('name',
+                              isLessThan:
+                                  '${toBeginningOfSentenceCase(nameSearched)}z')
+                          .orderBy('name')
+                          .orderBy(filter)
+                          .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasError) {
