@@ -135,13 +135,15 @@ class _PatientListTabState extends State<PatientListTab> {
                       .where('name',
                           isLessThan:
                               '${toBeginningOfSentenceCase(nameSearched)}z')
-                      .orderBy('name')
                       .orderBy(filter)
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasError) {
                       print('error');
+
+                      print(snapshot.error);
+
                       return const Center(child: Text('Error'));
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {

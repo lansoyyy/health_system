@@ -242,7 +242,7 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
                 StreamBuilder<QuerySnapshot>(
                     stream: FirebaseFirestore.instance
                         .collection('User')
-                        .where('isDeleted', isEqualTo: true)
+                        .where('isDeleted', isEqualTo: false)
                         .where('name',
                             isGreaterThanOrEqualTo:
                                 toBeginningOfSentenceCase(nameSearched))
@@ -256,6 +256,8 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasError) {
                         print('error');
+
+                        print(snapshot.error);
                         return const Center(child: Text('Error'));
                       }
                       if (snapshot.connectionState == ConnectionState.waiting) {

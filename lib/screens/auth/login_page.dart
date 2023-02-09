@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sumilao/services/local_storage.dart';
 import 'package:sumilao/widgets/button_widget.dart';
@@ -5,8 +7,14 @@ import 'package:sumilao/widgets/text_widget.dart';
 import 'package:sumilao/widgets/textfield_widget.dart';
 import 'package:sumilao/widgets/toast_widget.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
+
   final emailController = TextEditingController();
 
   @override
@@ -58,13 +66,43 @@ class LoginPage extends StatelessWidget {
               Center(
                 child: ButtonWidget(
                     label: 'Login',
-                    onPressed: (() {
+                    onPressed: (() async {
                       if (emailController.text == 'admin-username' &&
                           passwordController.text == 'admin-password') {
                         box.write('user', 'admin');
                         Navigator.pushReplacementNamed(context, '/homescreen');
                       } else {
-                        showToast('Invalid Login Credentials');
+                        late var isDeleted;
+                        try {
+                          var collection = FirebaseFirestore.instance
+                              .collection('User')
+                              .where('email', isEqualTo: emailController.text);
+
+                          var querySnapshot = await collection.get();
+                          var user = await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                                  email: emailController.text,
+                                  password: passwordController.text);
+
+                          setState(() {
+                            for (var queryDocumentSnapshot
+                                in querySnapshot.docs) {
+                              Map<String, dynamic> data =
+                                  queryDocumentSnapshot.data();
+                              isDeleted = data['isDeleted'];
+                            }
+                          });
+
+                          if (isDeleted == true) {
+                            showToast('Your account has been deleted!');
+                            await FirebaseAuth.instance.signOut();
+                          } else {
+                            Navigator.pushReplacementNamed(
+                                context, '/homescreen');
+                          }
+                        } catch (e) {
+                          showToast(e.toString());
+                        }
                       }
                     })),
               )
