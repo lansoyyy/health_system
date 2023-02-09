@@ -44,6 +44,8 @@ dependencies:
   flutter_map: ^0.13.0
   flutter_map_marker_cluster:
   latlong: ^0.6.1
+  pie_chart:
+  syncfusion_flutter_charts:
   
 
 dev_dependencies:

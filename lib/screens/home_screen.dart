@@ -4,6 +4,7 @@ import 'package:sumilao/screens/tabs/about_us_tab.dart';
 import 'package:sumilao/screens/tabs/map_tab.dart';
 import 'package:sumilao/screens/tabs/news_tab.dart';
 import 'package:sumilao/screens/tabs/patient_list_tab.dart';
+import 'package:sumilao/screens/tabs/report_tab.dart';
 import 'package:sumilao/services/local_storage.dart';
 import 'package:sumilao/utils/colors.dart';
 import 'package:sumilao/widgets/button_widget.dart';
@@ -16,9 +17,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    print(box.read('user'));
     return DefaultTabController(
-      length: 4,
+      length: 5,
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Column(
@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 20,
                   ),
                   SizedBox(
-                    width: 600,
+                    width: 750,
                     child: TabBar(
                         indicatorColor: primary,
                         unselectedLabelColor: Colors.grey,
@@ -56,12 +56,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           Tab(
                             text: 'ABOUT US',
                           ),
+                          Tab(
+                            text: 'STATISTICS',
+                          ),
                         ]),
                   ),
-                  const Expanded(
-                    child: SizedBox(),
-                  ),
-                  box.read('user') != 'Admin'
+                  box.read('user') == 'Admin'
                       ? ButtonWidget(
                           fontSize: 12,
                           width: 100,
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     width: 15,
                   ),
-                  box.read('user') != 'Admin'
+                  box.read('user') == 'Admin'
                       ? ButtonWidget(
                           fontSize: 12,
                           width: 100,
@@ -143,6 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const MapTab(),
                 NewsTab(),
                 AboutUsTab(),
+                ReportTab(),
               ]),
             )
           ],

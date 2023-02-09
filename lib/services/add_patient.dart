@@ -18,6 +18,8 @@ Future addPatient(
     long) async {
   final docUser = FirebaseFirestore.instance.collection('Patient').doc();
 
+  var dt = DateTime.now();
+
   final json = {
     'image': image,
     'name': name,
@@ -33,7 +35,8 @@ Future addPatient(
     'dateOfFindings': dateOfFindings,
     'assistedBy': assistedBy,
     'lat': lat,
-    'long': long
+    'long': long,
+    'month': dt.month
   };
 
   await docUser.set(json);

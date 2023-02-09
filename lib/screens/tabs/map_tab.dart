@@ -61,7 +61,7 @@ class MapTabState extends State<MapTab> {
                                   image: AssetImage(
                                     'assets/images/heat.png',
                                   ),
-                                  opacity: 120,
+                                  opacity: 50,
                                 ),
                               ),
                             ),
