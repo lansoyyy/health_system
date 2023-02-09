@@ -5,6 +5,7 @@ import 'package:sumilao/screens/add_patient.dart';
 import 'package:sumilao/screens/add_user.dart';
 import 'package:sumilao/screens/auth/login_page.dart';
 import 'package:sumilao/screens/home_screen.dart';
+import 'package:sumilao/screens/patient_screen.dart';
 import 'package:sumilao/utils/routes.dart';
 
 void main() async {
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         Routes.homescreen: (context) => HomeScreen(),
         Routes.userscreen: (context) => UserManagementScreen(),
         Routes.patientscreen: (context) => AddPatient(),
+        Routes.patient: (context) => PatientScreen(),
       },
     );
   }

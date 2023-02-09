@@ -4,7 +4,6 @@ import 'package:sumilao/screens/tabs/about_us_tab.dart';
 import 'package:sumilao/screens/tabs/map_tab.dart';
 import 'package:sumilao/screens/tabs/news_tab.dart';
 import 'package:sumilao/screens/tabs/patient_list_tab.dart';
-import 'package:sumilao/screens/tabs/report_tab.dart';
 import 'package:sumilao/services/local_storage.dart';
 import 'package:sumilao/utils/colors.dart';
 import 'package:sumilao/widgets/button_widget.dart';
@@ -18,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 5,
+      length: 4,
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Column(
@@ -56,20 +55,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           Tab(
                             text: 'ABOUT US',
                           ),
-                          Tab(
-                            text: 'STATISTICS',
-                          ),
+                          // Tab(
+                          //   text: 'STATISTICS',
+                          // ),
                         ]),
                   ),
-                  box.read('user') == 'Admin'
-                      ? ButtonWidget(
-                          fontSize: 12,
-                          width: 100,
-                          label: 'Add New Patient',
-                          onPressed: (() {
-                            Navigator.pushNamed(context, '/patientscreen');
-                          }))
-                      : const SizedBox(),
+                  ButtonWidget(
+                      fontSize: 12,
+                      width: 100,
+                      label: 'Add New Patient',
+                      onPressed: (() {
+                        Navigator.pushNamed(context, '/patientscreen');
+                      })),
                   const SizedBox(
                     width: 15,
                   ),
@@ -143,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const MapTab(),
                 NewsTab(),
                 AboutUsTab(),
-                ReportTab(),
+                // ReportTab(),
               ]),
             )
           ],

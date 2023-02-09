@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat, toBeginningOfSentenceCase;
+import 'package:sumilao/services/local_storage.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/text_widget.dart';
+import '../../widgets/toast_widget.dart';
 
 class PatientListTab extends StatefulWidget {
   @override
@@ -74,6 +76,40 @@ class _PatientListTabState extends State<PatientListTab> {
                               ),
                             ),
                             const Expanded(child: SizedBox()),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 5, bottom: 5, right: 10),
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  height: 50,
+                                  width: 180,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.grey)),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                    child: Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.print,
+                                          color: Colors.black,
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        TextRegular(
+                                            text: 'Print All Report',
+                                            fontSize: 12,
+                                            color: Colors.grey),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                             Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
@@ -220,42 +256,65 @@ class _PatientListTabState extends State<PatientListTab> {
                               height: 40,
                               fontSize: 14,
                               label: 'Check',
-                              onPressed: (() {}))),
-                          DataCell(
-                            Padding(
-                              padding: const EdgeInsets.only(top: 5, bottom: 5),
-                              child: GestureDetector(
-                                onTap: () {},
-                                child: Container(
-                                  height: 50,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Colors.white,
-                                      border: Border.all(color: Colors.grey)),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                    child: Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.print,
-                                          color: Colors.black,
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        TextRegular(
-                                            text: 'Print Report',
-                                            fontSize: 12,
-                                            color: Colors.grey),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                              onPressed: (() {
+                                box.write('id', data.docs[i].id);
+                                Navigator.pushNamed(context, '/patient');
+                              }))),
+                          DataCell(ButtonWidget(
+                              color: Colors.red,
+                              width: 75,
+                              height: 40,
+                              fontSize: 14,
+                              label: 'Delete',
+                              onPressed: (() async {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                          title: const Text(
+                                            'Delete Confirmation',
+                                            style: TextStyle(
+                                                fontFamily: 'QBold',
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          content: const Text(
+                                            'Are you sure you want to delete this patient?',
+                                            style: TextStyle(
+                                                fontFamily: 'QRegular'),
+                                          ),
+                                          actions: <Widget>[
+                                            MaterialButton(
+                                              onPressed: () =>
+                                                  Navigator.of(context)
+                                                      .pop(true),
+                                              child: const Text(
+                                                'Close',
+                                                style: TextStyle(
+                                                    fontFamily: 'QRegular',
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                            MaterialButton(
+                                              onPressed: () async {
+                                                showToast(
+                                                    'Patient deleted succesfully!');
+                                                await FirebaseFirestore.instance
+                                                    .collection('Patient')
+                                                    .doc(data.docs[i].id)
+                                                    .delete();
+                                                Navigator.pop(context);
+                                              },
+                                              child: const Text(
+                                                'Continue',
+                                                style: TextStyle(
+                                                    fontFamily: 'QRegular',
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                          ],
+                                        ));
+                              }))),
                         ])
                     ]);
                   })

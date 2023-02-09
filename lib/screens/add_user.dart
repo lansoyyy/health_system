@@ -180,27 +180,154 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
                         children: [
                           TextRegular(
                               text: 'All ', fontSize: 18, color: Colors.grey),
-                          TextBold(
-                              text: '(0)', fontSize: 18, color: Colors.black),
+                          StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('User')
+                                  .where('isDeleted', isEqualTo: false)
+
+                                  // .orderBy('name')
+
+                                  .snapshots(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                if (snapshot.hasError) {
+                                  print('error');
+
+                                  print(snapshot.error);
+                                  return const Center(child: Text('Error'));
+                                }
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Padding(
+                                    padding: EdgeInsets.only(top: 50),
+                                    child: Center(
+                                        child: CircularProgressIndicator(
+                                      color: Colors.black,
+                                    )),
+                                  );
+                                }
+
+                                final data = snapshot.requireData;
+                                return TextBold(
+                                    text: '(${data.size})',
+                                    fontSize: 18,
+                                    color: Colors.black);
+                              }),
                           const VerticalDivider(),
                           TextRegular(
                               text: 'Administrator ',
                               fontSize: 18,
                               color: Colors.grey),
-                          TextBold(
-                              text: '(0)', fontSize: 18, color: Colors.black),
+                          StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('User')
+                                  .where('isDeleted', isEqualTo: false)
+                                  .where('role', isEqualTo: 'Admin')
+
+                                  // .orderBy('name')
+
+                                  .snapshots(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                if (snapshot.hasError) {
+                                  print('error');
+
+                                  print(snapshot.error);
+                                  return const Center(child: Text('Error'));
+                                }
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Padding(
+                                    padding: EdgeInsets.only(top: 50),
+                                    child: Center(
+                                        child: CircularProgressIndicator(
+                                      color: Colors.black,
+                                    )),
+                                  );
+                                }
+
+                                final data = snapshot.requireData;
+                                return TextBold(
+                                    text: '(${data.size})',
+                                    fontSize: 18,
+                                    color: Colors.black);
+                              }),
                           const VerticalDivider(),
                           TextRegular(
                               text: 'Doctors ',
                               fontSize: 18,
                               color: Colors.grey),
-                          TextBold(
-                              text: '(0)', fontSize: 18, color: Colors.black),
+                          StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('User')
+                                  .where('isDeleted', isEqualTo: false)
+                                  .where('role', isEqualTo: 'Doctor')
+
+                                  // .orderBy('name')
+
+                                  .snapshots(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                if (snapshot.hasError) {
+                                  print('error');
+
+                                  print(snapshot.error);
+                                  return const Center(child: Text('Error'));
+                                }
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Padding(
+                                    padding: EdgeInsets.only(top: 50),
+                                    child: Center(
+                                        child: CircularProgressIndicator(
+                                      color: Colors.black,
+                                    )),
+                                  );
+                                }
+
+                                final data = snapshot.requireData;
+                                return TextBold(
+                                    text: '(${data.size})',
+                                    fontSize: 18,
+                                    color: Colors.black);
+                              }),
                           const VerticalDivider(),
                           TextRegular(
                               text: 'Nurse ', fontSize: 18, color: Colors.grey),
-                          TextBold(
-                              text: '(0)', fontSize: 18, color: Colors.black),
+                          StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('User')
+                                  .where('isDeleted', isEqualTo: false)
+                                  .where('role', isEqualTo: 'Nurse')
+
+                                  // .orderBy('name')
+
+                                  .snapshots(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                if (snapshot.hasError) {
+                                  print('error');
+
+                                  print(snapshot.error);
+                                  return const Center(child: Text('Error'));
+                                }
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Padding(
+                                    padding: EdgeInsets.only(top: 50),
+                                    child: Center(
+                                        child: CircularProgressIndicator(
+                                      color: Colors.black,
+                                    )),
+                                  );
+                                }
+
+                                final data = snapshot.requireData;
+                                return TextBold(
+                                    text: '(${data.size})',
+                                    fontSize: 18,
+                                    color: Colors.black);
+                              }),
                         ],
                       ),
                     ),
@@ -330,7 +457,81 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
                                 height: 40,
                                 fontSize: 14,
                                 label: 'Edit Role',
-                                onPressed: (() {}))),
+                                onPressed: (() {
+                                  showDialog(
+                                      context: context,
+                                      builder: ((context) {
+                                        return Dialog(
+                                          child: SizedBox(
+                                            height: 220,
+                                            width: 150,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                ButtonWidget(
+                                                    width: 150,
+                                                    fontSize: 14,
+                                                    label: 'Change to Admin',
+                                                    onPressed: (() async {
+                                                      await FirebaseFirestore
+                                                          .instance
+                                                          .collection('User')
+                                                          .doc(data.docs[i].id)
+                                                          .update({
+                                                        'role': 'Admin'
+                                                      });
+                                                      showToast(
+                                                          'Role updated succesfully!');
+                                                      Navigator.pop(context);
+                                                    })),
+                                                const SizedBox(
+                                                  height: 20,
+                                                ),
+                                                ButtonWidget(
+                                                    width: 150,
+                                                    fontSize: 14,
+                                                    label: 'Change to Doctor',
+                                                    onPressed: (() async {
+                                                      await FirebaseFirestore
+                                                          .instance
+                                                          .collection('User')
+                                                          .doc(data.docs[i].id)
+                                                          .update({
+                                                        'role': 'Doctor'
+                                                      });
+                                                      showToast(
+                                                          'Role updated succesfully!');
+                                                      Navigator.pop(context);
+                                                    })),
+                                                const SizedBox(
+                                                  height: 20,
+                                                ),
+                                                ButtonWidget(
+                                                    width: 150,
+                                                    fontSize: 12,
+                                                    label:
+                                                        'Change to Nurse/BHW',
+                                                    onPressed: (() async {
+                                                      await FirebaseFirestore
+                                                          .instance
+                                                          .collection('User')
+                                                          .doc(data.docs[i].id)
+                                                          .update({
+                                                        'role': 'Nurse'
+                                                      });
+                                                      showToast(
+                                                          'Role updated succesfully!');
+                                                      Navigator.pop(context);
+                                                    })),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      }));
+                                }))),
                             DataCell(ButtonWidget(
                                 color: Colors.red,
                                 width: 75,

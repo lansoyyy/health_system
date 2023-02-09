@@ -36,7 +36,8 @@ Future addPatient(
     'assistedBy': assistedBy,
     'lat': lat,
     'long': long,
-    'month': dt.month
+    'month': dt.month,
+    'id': docUser.id
   };
 
   await docUser.set(json);

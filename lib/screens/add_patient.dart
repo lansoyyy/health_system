@@ -3,6 +3,7 @@ import 'dart:html';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:sumilao/services/add_patient.dart';
+import 'package:sumilao/services/local_storage.dart';
 import 'package:sumilao/widgets/button_widget.dart';
 import 'package:sumilao/widgets/text_widget.dart';
 import 'package:sumilao/widgets/textfield_widget.dart';
@@ -420,12 +421,14 @@ class _AddPatientState extends State<AddPatient> {
               const SizedBox(
                 height: 20,
               ),
-              TextFieldWidget(
-                  width: 500,
-                  height: 100,
-                  maxLine: 5,
-                  label: 'Medical Findings',
-                  controller: findingsController),
+              box.read('user') != 'Nurse'
+                  ? TextFieldWidget(
+                      width: 500,
+                      height: 100,
+                      maxLine: 5,
+                      label: 'Medical Findings',
+                      controller: findingsController)
+                  : const SizedBox(),
               const SizedBox(
                 height: 20,
               ),
@@ -450,22 +453,41 @@ class _AddPatientState extends State<AddPatient> {
                 label: 'Add Patient',
                 onPressed: (() {
                   showToast('Patient added succesfully!');
-                  addPatient(
-                      imgUrl,
-                      nameController.text,
-                      phoneNumberController.text,
-                      dateOfBirthController.text,
-                      ageController.text,
-                      brgy,
-                      zone,
-                      gender,
-                      disease,
-                      addressController.text,
-                      findingsController.text,
-                      dateFindingsController.text,
-                      assistedController.text,
-                      lat,
-                      long);
+                  if (box.read('user') == 'Nurse') {
+                    addPatient(
+                        imgUrl,
+                        nameController.text,
+                        phoneNumberController.text,
+                        dateOfBirthController.text,
+                        ageController.text,
+                        brgy,
+                        zone,
+                        gender,
+                        disease,
+                        addressController.text,
+                        '',
+                        dateFindingsController.text,
+                        assistedController.text,
+                        lat,
+                        long);
+                  } else {
+                    addPatient(
+                        imgUrl,
+                        nameController.text,
+                        phoneNumberController.text,
+                        dateOfBirthController.text,
+                        ageController.text,
+                        brgy,
+                        zone,
+                        gender,
+                        disease,
+                        addressController.text,
+                        findingsController.text,
+                        dateFindingsController.text,
+                        assistedController.text,
+                        lat,
+                        long);
+                  }
                   Navigator.pushReplacementNamed(context, '/homescreen');
                 }),
               ),
