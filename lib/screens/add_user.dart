@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sumilao/services/add_user.dart';
 import 'package:sumilao/widgets/appbar_widget.dart';
 import 'package:sumilao/widgets/text_widget.dart';
 import 'package:sumilao/widgets/textfield_widget.dart';
 import 'package:sumilao/widgets/toast_widget.dart';
-
+import 'package:intl/intl.dart' show DateFormat, toBeginningOfSentenceCase;
 import '../utils/colors.dart';
 import '../widgets/button_widget.dart';
 
@@ -26,6 +29,9 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
   var roles = ['Admin', 'Doctor', 'Nurse'];
 
   var dropValue = 0;
+
+  String role = 'Admin';
+  String nameSearched = '';
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +103,9 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
                                       items: [
                                         for (int i = 0; i < roles.length; i++)
                                           DropdownMenuItem(
+                                              onTap: (() {
+                                                role = roles[i];
+                                              }),
                                               value: i,
                                               child: Padding(
                                                 padding: const EdgeInsets.only(
@@ -120,9 +129,24 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
                               ),
                               ButtonWidget(
                                   label: 'Continue',
-                                  onPressed: (() {
-                                    showToast('User added succesfully!');
-                                    Navigator.pop(context);
+                                  onPressed: (() async {
+                                    try {
+                                      showToast('User added succesfully!');
+                                      await FirebaseAuth.instance
+                                          .createUserWithEmailAndPassword(
+                                              email: emailController.text,
+                                              password:
+                                                  passwordController.text);
+                                      addUser(
+                                          usernameController.text,
+                                          nameController.text,
+                                          emailController.text,
+                                          passwordController.text,
+                                          role);
+                                      Navigator.pop(context);
+                                    } catch (e) {
+                                      showToast(e.toString());
+                                    }
                                   }))
                             ],
                           ),
@@ -180,108 +204,191 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
                         ],
                       ),
                     ),
-                    TextFieldWidget(
-                        width: 250,
-                        label: 'Search user',
-                        controller: userController)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextRegular(
+                            text: 'Search user',
+                            fontSize: 16,
+                            color: Colors.black),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          height: 40,
+                          width: 300,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.black,
+                              ),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: TextFormField(
+                            onChanged: ((value) {
+                              setState(() {
+                                nameSearched = value;
+                              });
+                            }),
+                            keyboardType: TextInputType.text,
+                            decoration: const InputDecoration(
+                              hintText: 'Search by name',
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
                   ],
                 ),
-                DataTable(columns: [
-                  DataColumn(
-                      label: TextBold(
-                          text: 'Username', fontSize: 18, color: Colors.black)),
-                  DataColumn(
-                      label: TextBold(
-                          text: 'Name', fontSize: 18, color: Colors.black)),
-                  DataColumn(
-                      label: TextBold(
-                          text: 'Email', fontSize: 18, color: Colors.black)),
-                  DataColumn(
-                      label: TextBold(
-                          text: 'Role', fontSize: 18, color: Colors.black)),
-                  DataColumn(
-                      label: TextBold(
-                          text: '', fontSize: 18, color: Colors.black)),
-                  DataColumn(
-                      label:
-                          TextBold(text: '', fontSize: 18, color: Colors.black))
-                ], rows: [
-                  for (int i = 0; i < 100; i++)
-                    DataRow(cells: [
-                      DataCell(
-                        TextRegular(
-                            text: 'John123', fontSize: 14, color: Colors.grey),
-                      ),
-                      DataCell(
-                        TextRegular(
-                            text: 'John Doe', fontSize: 14, color: Colors.grey),
-                      ),
-                      DataCell(
-                        TextRegular(
-                            text: 'doe@gmail.com',
-                            fontSize: 14,
-                            color: Colors.grey),
-                      ),
-                      DataCell(
-                        TextRegular(
-                            text: 'Admin', fontSize: 14, color: Colors.grey),
-                      ),
-                      DataCell(ButtonWidget(
-                          width: 75,
-                          height: 40,
-                          fontSize: 14,
-                          label: 'Edit Role',
-                          onPressed: (() {}))),
-                      DataCell(ButtonWidget(
-                          color: Colors.red,
-                          width: 75,
-                          height: 40,
-                          fontSize: 14,
-                          label: 'Delete',
-                          onPressed: (() {
-                            showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                      title: const Text(
-                                        'Delete Confirmation',
-                                        style: TextStyle(
-                                            fontFamily: 'QBold',
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      content: const Text(
-                                        'Are you sure you want to delete this user?',
-                                        style:
-                                            TextStyle(fontFamily: 'QRegular'),
-                                      ),
-                                      actions: <Widget>[
-                                        MaterialButton(
-                                          onPressed: () =>
-                                              Navigator.of(context).pop(true),
-                                          child: const Text(
-                                            'Close',
-                                            style: TextStyle(
-                                                fontFamily: 'QRegular',
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        MaterialButton(
-                                          onPressed: () async {
-                                            showToast(
-                                                'User deleted succesfully!');
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text(
-                                            'Continue',
-                                            style: TextStyle(
-                                                fontFamily: 'QRegular',
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ],
-                                    ));
-                          }))),
-                    ])
-                ])
+                StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('User')
+                        .where('isDeleted', isEqualTo: true)
+                        .where('name',
+                            isGreaterThanOrEqualTo:
+                                toBeginningOfSentenceCase(nameSearched))
+                        .where('name',
+                            isLessThan:
+                                '${toBeginningOfSentenceCase(nameSearched)}z')
+                        // .orderBy('name')
+
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        print('error');
+                        return const Center(child: Text('Error'));
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Padding(
+                          padding: EdgeInsets.only(top: 50),
+                          child: Center(
+                              child: CircularProgressIndicator(
+                            color: Colors.black,
+                          )),
+                        );
+                      }
+
+                      final data = snapshot.requireData;
+                      return DataTable(columns: [
+                        DataColumn(
+                            label: TextBold(
+                                text: 'Username',
+                                fontSize: 18,
+                                color: Colors.black)),
+                        DataColumn(
+                            label: TextBold(
+                                text: 'Name',
+                                fontSize: 18,
+                                color: Colors.black)),
+                        DataColumn(
+                            label: TextBold(
+                                text: 'Email',
+                                fontSize: 18,
+                                color: Colors.black)),
+                        DataColumn(
+                            label: TextBold(
+                                text: 'Role',
+                                fontSize: 18,
+                                color: Colors.black)),
+                        DataColumn(
+                            label: TextBold(
+                                text: '', fontSize: 18, color: Colors.black)),
+                        DataColumn(
+                            label: TextBold(
+                                text: '', fontSize: 18, color: Colors.black))
+                      ], rows: [
+                        for (int i = 0; i < data.size; i++)
+                          DataRow(cells: [
+                            DataCell(
+                              TextRegular(
+                                  text: data.docs[i]['username'],
+                                  fontSize: 14,
+                                  color: Colors.grey),
+                            ),
+                            DataCell(
+                              TextRegular(
+                                  text: data.docs[i]['name'],
+                                  fontSize: 14,
+                                  color: Colors.grey),
+                            ),
+                            DataCell(
+                              TextRegular(
+                                  text: data.docs[i]['email'],
+                                  fontSize: 14,
+                                  color: Colors.grey),
+                            ),
+                            DataCell(
+                              TextRegular(
+                                  text: data.docs[i]['role'],
+                                  fontSize: 14,
+                                  color: Colors.grey),
+                            ),
+                            DataCell(ButtonWidget(
+                                width: 75,
+                                height: 40,
+                                fontSize: 14,
+                                label: 'Edit Role',
+                                onPressed: (() {}))),
+                            DataCell(ButtonWidget(
+                                color: Colors.red,
+                                width: 75,
+                                height: 40,
+                                fontSize: 14,
+                                label: 'Delete',
+                                onPressed: (() {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                            title: const Text(
+                                              'Delete Confirmation',
+                                              style: TextStyle(
+                                                  fontFamily: 'QBold',
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            content: const Text(
+                                              'Are you sure you want to delete this user?',
+                                              style: TextStyle(
+                                                  fontFamily: 'QRegular'),
+                                            ),
+                                            actions: <Widget>[
+                                              MaterialButton(
+                                                onPressed: () =>
+                                                    Navigator.of(context)
+                                                        .pop(true),
+                                                child: const Text(
+                                                  'Close',
+                                                  style: TextStyle(
+                                                      fontFamily: 'QRegular',
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                              MaterialButton(
+                                                onPressed: () async {
+                                                  showToast(
+                                                      'User deleted succesfully!');
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection('User')
+                                                      .doc(data.docs[i].id)
+                                                      .update(
+                                                          {'isDeleted': true});
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text(
+                                                  'Continue',
+                                                  style: TextStyle(
+                                                      fontFamily: 'QRegular',
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            ],
+                                          ));
+                                }))),
+                          ])
+                      ]);
+                    })
               ],
             ),
           ),

@@ -135,7 +135,7 @@ class _PatientListTabState extends State<PatientListTab> {
                       .where('name',
                           isLessThan:
                               '${toBeginningOfSentenceCase(nameSearched)}z')
-                      // .orderBy('name')
+                      .orderBy('name')
                       .orderBy(filter)
                       .snapshots(),
                   builder: (BuildContext context,
