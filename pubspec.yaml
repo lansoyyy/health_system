@@ -43,9 +43,10 @@ dependencies:
   get_storage:
   flutter_map: ^0.13.0
   flutter_map_marker_cluster:
-  latlong: ^0.6.1
   pie_chart:
   syncfusion_flutter_charts:
+  syncfusion_flutter_maps:
+  round_spot:
   
 
 dev_dependencies:
@@ -73,6 +74,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
