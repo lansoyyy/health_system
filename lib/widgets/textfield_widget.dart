@@ -10,6 +10,7 @@ class TextFieldWidget extends StatelessWidget {
   final double? height;
   final int? maxLine;
   final TextInputType? inputType;
+  final bool? readOnly;
 
   const TextFieldWidget(
       {required this.label,
@@ -19,6 +20,7 @@ class TextFieldWidget extends StatelessWidget {
       this.width = 300,
       this.height = 40,
       this.maxLine = 1,
+      this.readOnly = false,
       this.inputType = TextInputType.text});
 
   @override
@@ -39,6 +41,7 @@ class TextFieldWidget extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(5)),
           child: TextFormField(
+            readOnly: readOnly!,
             keyboardType: inputType,
             decoration: InputDecoration(
               hintText: hint,

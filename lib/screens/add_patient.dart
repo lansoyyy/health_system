@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:sumilao/services/add_patient.dart';
 import 'package:sumilao/services/local_storage.dart';
+import 'package:sumilao/utils/colors.dart';
 import 'package:sumilao/widgets/button_widget.dart';
 import 'package:sumilao/widgets/text_widget.dart';
 import 'package:sumilao/widgets/textfield_widget.dart';
@@ -77,6 +78,10 @@ class _AddPatientState extends State<AddPatient> {
   final dateFindingsController = TextEditingController();
 
   final assistedController = TextEditingController();
+
+  late String dateOfBirth = '';
+
+  late String dateFindings = '';
 
   var _dropValue = 0;
   var _dropValue1 = 0;
@@ -193,11 +198,35 @@ class _AddPatientState extends State<AddPatient> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextFieldWidget(
-                      inputType: TextInputType.datetime,
-                      width: 180,
-                      label: 'Date of Birth',
-                      controller: dateOfBirthController),
+                  dateOfBirth == ''
+                      ? MaterialButton(
+                          color: primary,
+                          onPressed: (() async {
+                            final DateTime? selectedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime(2100),
+                            );
+
+                            if (selectedDate != null) {
+                              setState(() {
+                                dateOfBirth =
+                                    "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+                              });
+                            }
+                          }),
+                          child: TextRegular(
+                              text: 'Date of Birth',
+                              fontSize: 12,
+                              color: Colors.white))
+                      : TextFieldWidget(
+                          readOnly: true,
+                          inputType: TextInputType.datetime,
+                          width: 180,
+                          label: '',
+                          hint: dateOfBirth,
+                          controller: dateOfBirthController),
                   const SizedBox(
                     width: 30,
                   ),
@@ -436,10 +465,35 @@ class _AddPatientState extends State<AddPatient> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextFieldWidget(
-                      inputType: TextInputType.datetime,
-                      label: 'Date of Findings',
-                      controller: dateFindingsController),
+                  dateFindings == ''
+                      ? MaterialButton(
+                          color: primary,
+                          onPressed: (() async {
+                            final DateTime? selectedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime(2100),
+                            );
+
+                            if (selectedDate != null) {
+                              setState(() {
+                                dateFindings =
+                                    "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+                              });
+                            }
+                          }),
+                          child: TextRegular(
+                              text: 'Date of Findings',
+                              fontSize: 12,
+                              color: Colors.white))
+                      : TextFieldWidget(
+                          readOnly: true,
+                          inputType: TextInputType.datetime,
+                          width: 180,
+                          label: '',
+                          hint: dateFindings,
+                          controller: dateFindingsController),
                   const SizedBox(
                     width: 30,
                   ),
@@ -489,7 +543,7 @@ class _AddPatientState extends State<AddPatient> {
                         imgUrl,
                         nameController.text,
                         phoneNumberController.text,
-                        dateOfBirthController.text,
+                        dateOfBirth,
                         ageController.text,
                         brgy,
                         zone,
@@ -497,7 +551,7 @@ class _AddPatientState extends State<AddPatient> {
                         disease,
                         addressController.text,
                         '',
-                        dateFindingsController.text,
+                        dateFindings,
                         assistedController.text,
                         lat,
                         long);
@@ -506,7 +560,7 @@ class _AddPatientState extends State<AddPatient> {
                         imgUrl,
                         nameController.text,
                         phoneNumberController.text,
-                        dateOfBirthController.text,
+                        dateOfBirth,
                         ageController.text,
                         brgy,
                         zone,
@@ -514,7 +568,7 @@ class _AddPatientState extends State<AddPatient> {
                         disease,
                         addressController.text,
                         findingsController.text,
-                        dateFindingsController.text,
+                        dateFindings,
                         assistedController.text,
                         lat,
                         long);
