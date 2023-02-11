@@ -1,10 +1,15 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat, toBeginningOfSentenceCase;
+import 'package:printing/printing.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:sumilao/services/local_storage.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/text_widget.dart';
 import '../../widgets/toast_widget.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 class PatientListTab extends StatefulWidget {
   @override
@@ -12,6 +17,7 @@ class PatientListTab extends StatefulWidget {
 }
 
 class _PatientListTabState extends State<PatientListTab> {
+  final ssController = ScreenshotController();
   var filters = ['name', 'address', 'gender'];
 
   final searchController = TextEditingController();
@@ -22,6 +28,23 @@ class _PatientListTabState extends State<PatientListTab> {
 
   String nameSearched = '';
 
+  final doc = pw.Document();
+
+  printing(Uint8List capturedImage) async {
+    doc.addPage(pw.Page(
+      build: (pw.Context context) {
+        return pw.Container(
+            height: double.infinity,
+            width: double.infinity,
+            child: pw.Image(
+              pw.MemoryImage(capturedImage),
+            ));
+      },
+    ));
+
+    await Printing.layoutPdf(onLayout: (format) async => doc.save());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,8 +54,11 @@ class _PatientListTabState extends State<PatientListTab> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              TextBold(
-                  text: 'Search Patient', fontSize: 18, color: Colors.black),
+              Screenshot(
+                controller: ssController,
+                child: TextBold(
+                    text: 'Search Patient', fontSize: 18, color: Colors.black),
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -80,7 +106,17 @@ class _PatientListTabState extends State<PatientListTab> {
                               padding: const EdgeInsets.only(
                                   top: 5, bottom: 5, right: 10),
                               child: GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  ssController
+                                      .capture(
+                                          delay:
+                                              const Duration(milliseconds: 10))
+                                      .then((capturedImage) async {
+                                    printing(capturedImage!);
+                                  }).catchError((onError) {
+                                    print(onError);
+                                  });
+                                },
                                 child: Container(
                                   height: 50,
                                   width: 180,
