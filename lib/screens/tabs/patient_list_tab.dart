@@ -28,6 +28,19 @@ class _PatientListTabState extends State<PatientListTab> {
 
   String nameSearched = '';
 
+  var brgys = [
+    'Kisolon',
+    'Kulasi',
+    'Lican',
+    'Lupiagan',
+    'Ocasion',
+    'Poblacion',
+    'San Roque',
+    'San Vicente',
+    'Vista Villa',
+    'Puntian',
+  ];
+
   final doc = pw.Document();
 
   printing(Uint8List capturedImage) async {
@@ -107,15 +120,10 @@ class _PatientListTabState extends State<PatientListTab> {
                                   top: 5, bottom: 5, right: 10),
                               child: GestureDetector(
                                 onTap: () {
-                                  ssController
-                                      .capture(
-                                          delay:
-                                              const Duration(milliseconds: 10))
-                                      .then((capturedImage) async {
-                                    printing(capturedImage!);
-                                  }).catchError((onError) {
-                                    print(onError);
-                                  });
+                                  // To Implement
+                                  // for (int i = 0; i < brgys.length; i++) {
+                                  //   addPlaces(brgys[i]);
+                                  // }
                                 },
                                 child: Container(
                                   height: 50,

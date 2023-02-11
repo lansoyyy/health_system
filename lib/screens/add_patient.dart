@@ -1,5 +1,6 @@
 import 'dart:html';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:sumilao/services/add_patient.dart';
@@ -451,7 +452,37 @@ class _AddPatientState extends State<AddPatient> {
               ),
               ButtonWidget(
                 label: 'Add Patient',
-                onPressed: (() {
+                onPressed: (() async {
+                  // for (int i = 0; i < brgys.length; i++) {
+                  //   await FirebaseFirestore.instance
+                  //       .collection('Places')
+                  //       .doc(brgys[i])
+                  //       .update({
+                  //     'lat': lats[i],
+                  //     'long': longs[i],
+                  //   });
+                  // }
+                  int nums = 0;
+
+                  var collection = FirebaseFirestore.instance
+                      .collection('Places')
+                      .where('place', isEqualTo: brgy);
+
+                  var querySnapshot = await collection.get();
+                  if (mounted) {
+                    setState(() {
+                      for (var queryDocumentSnapshot in querySnapshot.docs) {
+                        Map<String, dynamic> data =
+                            queryDocumentSnapshot.data();
+                        nums = data['nums'];
+                      }
+                    });
+                  }
+
+                  await FirebaseFirestore.instance
+                      .collection('Places')
+                      .doc(brgy)
+                      .update({"nums": nums + 1});
                   showToast('Patient added succesfully!');
                   if (box.read('user') == 'Nurse') {
                     addPatient(
