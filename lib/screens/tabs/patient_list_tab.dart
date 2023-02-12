@@ -1,5 +1,6 @@
 import 'dart:typed_data';
-
+import 'package:pie_chart/pie_chart.dart' as p;
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat, toBeginningOfSentenceCase;
@@ -17,16 +18,13 @@ class PatientListTab extends StatefulWidget {
 }
 
 class _PatientListTabState extends State<PatientListTab> {
-  final ssController = ScreenshotController();
-  var filters = ['name', 'address', 'gender'];
-
-  final searchController = TextEditingController();
-
-  var _dropValue = 0;
-
-  String filter = 'name';
-
-  String nameSearched = '';
+  @override
+  void initState() {
+    super.initState();
+    getData();
+    getDataMonth();
+    getDataDiseases();
+  }
 
   var brgys = [
     'Kisolon',
@@ -40,6 +38,81 @@ class _PatientListTabState extends State<PatientListTab> {
     'Vista Villa',
     'Puntian',
   ];
+
+  var datas = [];
+  var datasMonth = [];
+
+  var datasDisease = [];
+  var hasLoaded = false;
+
+  getData() async {
+    for (int i = 0; i < brgys.length; i++) {
+      var collection = FirebaseFirestore.instance
+          .collection('Patient')
+          .where('brgy', isEqualTo: brgys[i]);
+
+      var querySnapshot = await collection.get();
+
+      datas.add(querySnapshot.size);
+
+      setState(() {});
+    }
+  }
+
+  getDataDiseases() async {
+    for (int i = 0; i < brgys.length; i++) {
+      var collection = FirebaseFirestore.instance
+          .collection('Patient')
+          .where('brgy', isEqualTo: brgys[i]);
+
+      var querySnapshot = await collection.get();
+
+      datasDisease.add(querySnapshot.size);
+
+      setState(() {});
+    }
+  }
+
+  getDataMonth() async {
+    for (int i = 0; i < 12; i++) {
+      var collection = FirebaseFirestore.instance
+          .collection('Patient')
+          .where('month', isEqualTo: i + 1);
+
+      var querySnapshot = await collection.get();
+
+      datasMonth.add(querySnapshot.size);
+    }
+
+    setState(() {
+      hasLoaded = true;
+    });
+  }
+
+  List<String> months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "June",
+    "July",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ];
+  final ssController = ScreenshotController();
+  var filters = ['name', 'address', 'gender'];
+
+  final searchController = TextEditingController();
+
+  var _dropValue = 0;
+
+  String filter = 'name';
+
+  String nameSearched = '';
 
   final doc = pw.Document();
 
@@ -60,6 +133,14 @@ class _PatientListTabState extends State<PatientListTab> {
 
   @override
   Widget build(BuildContext context) {
+    final List<ChartData> chartData = [
+      for (int i = 0; i < brgys.length; i++) ChartData(brgys[i], datas[i])
+    ];
+
+    Map<String, double> dataMap = {
+      for (int i = 0; i < brgys.length; i++) brgys[i]: datas[i]
+    };
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: SingleChildScrollView(
@@ -124,6 +205,184 @@ class _PatientListTabState extends State<PatientListTab> {
                                   // for (int i = 0; i < brgys.length; i++) {
                                   //   addPlaces(brgys[i]);
                                   // }
+
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Dialog(
+                                          child: SizedBox(
+                                            width: 1000,
+                                            height: 700,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    p.PieChart(
+                                                      dataMap: dataMap,
+                                                      animationDuration:
+                                                          const Duration(
+                                                              milliseconds:
+                                                                  800),
+                                                      chartLegendSpacing: 32,
+                                                      chartRadius: 150,
+                                                      colorList: const [
+                                                        Colors.blue,
+                                                        Colors.amber,
+                                                        Colors.red,
+                                                        Colors.green,
+                                                        Colors.brown,
+                                                      ],
+                                                      initialAngleInDegree: 0,
+                                                      chartType:
+                                                          p.ChartType.disc,
+                                                      ringStrokeWidth: 32,
+
+                                                      legendOptions:
+                                                          const p.LegendOptions(
+                                                        showLegendsInRow: false,
+                                                        legendPosition: p
+                                                            .LegendPosition
+                                                            .right,
+                                                        showLegends: true,
+                                                        legendTextStyle:
+                                                            TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      chartValuesOptions: const p
+                                                          .ChartValuesOptions(
+                                                        showChartValueBackground:
+                                                            true,
+                                                        showChartValues: false,
+                                                        showChartValuesInPercentage:
+                                                            false,
+                                                        showChartValuesOutside:
+                                                            false,
+                                                        decimalPlaces: 1,
+                                                      ),
+                                                      // gradientList: ---To add gradient colors---
+                                                      // emptyColorGradient: ---Empty Color gradient---
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        SizedBox(
+                                                            width: 450,
+                                                            height: 220,
+                                                            child:
+                                                                SfCartesianChart(
+
+                                                                    // Initialize category axis
+                                                                    primaryXAxis:
+                                                                        CategoryAxis(),
+                                                                    series: <
+                                                                        ChartSeries>[
+                                                                  // Initialize line series
+                                                                  LineSeries<
+                                                                          ChartData1,
+                                                                          String>(
+                                                                      dataSource: [
+                                                                        // Bind data source
+                                                                        for (int i =
+                                                                                0;
+                                                                            i <
+                                                                                months
+                                                                                    .length;
+                                                                            i++)
+                                                                          ChartData1(
+                                                                              months[i],
+                                                                              datasMonth[i]),
+                                                                      ],
+                                                                      xValueMapper: (ChartData1 data,
+                                                                              _) =>
+                                                                          data
+                                                                              .x,
+                                                                      yValueMapper:
+                                                                          (ChartData1 data, _) =>
+                                                                              data.y)
+                                                                ])),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 600,
+                                                  width: 400,
+                                                  child: GridView.builder(
+                                                      itemCount: brgys.length,
+                                                      gridDelegate:
+                                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                                              crossAxisCount:
+                                                                  3),
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        return Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            TextBold(
+                                                                text: brgys[
+                                                                    index],
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black),
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            TextRegular(
+                                                                text:
+                                                                    'No Disease: ',
+                                                                fontSize: 12,
+                                                                color: Colors
+                                                                    .grey),
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            TextRegular(
+                                                                text: 'Covid: ',
+                                                                fontSize: 12,
+                                                                color: Colors
+                                                                    .grey),
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            TextRegular(
+                                                                text:
+                                                                    'Dengue: ',
+                                                                fontSize: 12,
+                                                                color: Colors
+                                                                    .grey),
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            TextRegular(
+                                                                text:
+                                                                    'Diarrhea: ',
+                                                                fontSize: 12,
+                                                                color: Colors
+                                                                    .grey),
+                                                          ],
+                                                        );
+                                                      }),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      });
                                 },
                                 child: Container(
                                   height: 50,
@@ -368,4 +627,16 @@ class _PatientListTabState extends State<PatientListTab> {
       ),
     );
   }
+}
+
+class ChartData {
+  ChartData(this.x, this.y);
+  final String x;
+  final double y;
+}
+
+class ChartData1 {
+  ChartData1(this.x, this.y);
+  final String x;
+  final double? y;
 }
