@@ -130,7 +130,8 @@ class _PatientListTabState extends State<PatientListTab> {
     "Dec"
   ];
   final ssController = ScreenshotController();
-  var filters = ['name', 'address', 'gender'];
+  var filters = ['name', 'address', 'brgy', 'dateOfFindings', 'gender'];
+  var filterLabel = ['Name', 'Address', 'Baranggay', 'Date', 'Gender'];
 
   final searchController = TextEditingController();
 
@@ -480,7 +481,7 @@ class _PatientListTabState extends State<PatientListTab> {
                                                     ),
                                                     TextRegular(
                                                         text:
-                                                            'Sort by: ${filters[i]}',
+                                                            'Sort by: ${filterLabel[i]}',
                                                         fontSize: 14,
                                                         color: Colors.grey),
                                                   ],
