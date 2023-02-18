@@ -41,7 +41,7 @@ dependencies:
   firebase_auth:
   fluttertoast:
   get_storage:
-  flutter_map: ^0.13.0
+  flutter_map:
   flutter_map_marker_cluster:
   pie_chart:
   syncfusion_flutter_charts: ^19.1.54

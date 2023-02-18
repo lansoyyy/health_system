@@ -64,53 +64,57 @@ class MapTabState extends State<MapTab> {
     return Scaffold(
       body: Padding(
           padding: const EdgeInsets.only(bottom: 20),
-          child: FlutterMap(
-            options: MapOptions(
-              center: LatLng(8.348975, 124.972012),
-              zoom: 12.0,
-            ),
-            layers: [
-              TileLayerOptions(
-                  urlTemplate:
-                      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                  subdomains: ['a', 'b', 'c']),
-              MarkerLayerOptions(
-                markers: [
-                  for (int i = 0; i < datas.length; i++)
-                    Marker(
-                      height: 120,
-                      width: 120,
-                      point: LatLng(lats[i], longs[i]),
-                      builder: (ctx) => Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                              datas[i] >= 1 && datas[i] < 3
-                                  ? 'assets/images/green.png'
-                                  : datas[i] >= 4 && datas[i] < 7
-                                      ? 'assets/images/yellowgreen.png'
-                                      : datas[i] >= 8 && datas[i] < 12
-                                          ? 'assets/images/yellow.png'
-                                          : datas[i] >= 12 && datas[i] < 15
-                                              ? 'assets/images/lightorange.png'
-                                              : datas[i] >= 15 && datas[i] < 18
-                                                  ? 'assets/images/orange.png'
-                                                  : datas[i] >= 19 &&
-                                                          datas[i] < 22
-                                                      ? 'assets/images/lightred.png'
-                                                      : datas[i] >= 23
-                                                          ? 'assets/images/red.png'
-                                                          : '',
+          child: InteractiveViewer(
+            maxScale: 50,
+            child: FlutterMap(
+              options: MapOptions(
+                center: LatLng(8.348975, 124.972012),
+                zoom: 12.0,
+              ),
+              layers: [
+                TileLayerOptions(
+                    urlTemplate:
+                        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    subdomains: ['a', 'b', 'c']),
+                MarkerLayerOptions(
+                  markers: [
+                    for (int i = 0; i < datas.length; i++)
+                      Marker(
+                        height: 120,
+                        width: 120,
+                        point: LatLng(lats[i], longs[i]),
+                        builder: (ctx) => Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(
+                                datas[i] >= 1 && datas[i] < 3
+                                    ? 'assets/images/green.png'
+                                    : datas[i] >= 4 && datas[i] < 7
+                                        ? 'assets/images/yellowgreen.png'
+                                        : datas[i] >= 8 && datas[i] < 12
+                                            ? 'assets/images/yellow.png'
+                                            : datas[i] >= 12 && datas[i] < 15
+                                                ? 'assets/images/lightorange.png'
+                                                : datas[i] >= 15 &&
+                                                        datas[i] < 18
+                                                    ? 'assets/images/orange.png'
+                                                    : datas[i] >= 19 &&
+                                                            datas[i] < 22
+                                                        ? 'assets/images/lightred.png'
+                                                        : datas[i] >= 23
+                                                            ? 'assets/images/red.png'
+                                                            : '',
+                              ),
+                              opacity: 75,
                             ),
-                            opacity: 75,
                           ),
                         ),
                       ),
-                    ),
-                ],
-              ),
-            ],
-            children: const [],
+                  ],
+                ),
+              ],
+              children: const [],
+            ),
           )),
     );
   }
