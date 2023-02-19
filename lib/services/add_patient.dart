@@ -37,6 +37,7 @@ Future addPatient(
     'lat': lat,
     'long': long,
     'month': dt.month,
+    'day': dt.day,
     'id': docUser.id
   };
 
