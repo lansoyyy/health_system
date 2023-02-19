@@ -98,6 +98,9 @@ class _AddPatientState extends State<AddPatient> {
 
   var hasLoaded = false;
 
+  String filterData = '';
+  String filterMonth = '';
+
   uploadToStorage() {
     InputElement input = FileUploadInputElement() as InputElement
       ..accept = 'image/*';

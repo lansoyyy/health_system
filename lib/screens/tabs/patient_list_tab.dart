@@ -130,14 +130,18 @@ class _PatientListTabState extends State<PatientListTab> {
     "Dec"
   ];
   final ssController = ScreenshotController();
-  var filters = ['name', 'address', 'brgy', 'dateOfFindings', 'gender'];
-  var filterLabel = ['Name', 'Address', 'Baranggay', 'Date', 'Gender'];
+  var filters = ['name', 'address', 'brgy'];
+  var filterLabel = ['Name', 'Address', 'Baranggay'];
 
   final searchController = TextEditingController();
 
   var _dropValue = 0;
 
   String filter = 'name';
+
+  var _dropValue1 = 0;
+
+  String gender = 'All';
 
   String nameSearched = '';
 
@@ -158,8 +162,15 @@ class _PatientListTabState extends State<PatientListTab> {
     await Printing.layoutPdf(onLayout: (format) async => doc.save());
   }
 
+  List genderLabels = ['All', 'Male', 'Female'];
+
+  int filterData = 0;
+  int filterMonth = 0;
+
   @override
   Widget build(BuildContext context) {
+    print(gender);
+    print(filter);
     final List<ChartData> chartData = [
       for (int i = 0; i < brgys.length; i++) ChartData(brgys[i], datas[i])
     ];
@@ -186,7 +197,7 @@ class _PatientListTabState extends State<PatientListTab> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(80, 0, 80, 20),
                       child: Container(
-                        width: 1000,
+                        width: 1100,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             border: Border.all(color: Colors.grey)),
@@ -496,6 +507,86 @@ class _PatientListTabState extends State<PatientListTab> {
                                           })),
                                     ),
                                   ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: Colors.white,
+                                        border: Border.all(color: Colors.grey)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20, 0, 20, 0),
+                                      child: DropdownButton(
+                                          dropdownColor: Colors.white,
+                                          focusColor: Colors.white,
+                                          value: _dropValue1,
+                                          items: [
+                                            for (int i = 0;
+                                                i < genderLabels.length;
+                                                i++)
+                                              DropdownMenuItem(
+                                                onTap: (() {
+                                                  gender = genderLabels[i];
+                                                }),
+                                                value: i,
+                                                child: Row(
+                                                  children: [
+                                                    TextRegular(
+                                                        text:
+                                                            'Filter by: ${genderLabels[i]}',
+                                                        fontSize: 14,
+                                                        color: Colors.grey),
+                                                  ],
+                                                ),
+                                              ),
+                                          ],
+                                          onChanged: ((value) {
+                                            setState(() {
+                                              _dropValue1 =
+                                                  int.parse(value.toString());
+                                            });
+                                          })),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  GestureDetector(
+                                    onTap: (() async {
+                                      final DateTime? selectedDate =
+                                          await showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(1900),
+                                        lastDate: DateTime(2100),
+                                      );
+
+                                      if (selectedDate != null) {
+                                        setState(() {
+                                          filterData = selectedDate.day;
+                                          filterMonth = selectedDate.month;
+                                        });
+                                      }
+                                    }),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: Colors.white,
+                                          border:
+                                              Border.all(color: Colors.grey)),
+                                      child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              20, 15, 20, 15),
+                                          child: TextRegular(
+                                              text:
+                                                  'Date: $filterData/$filterMonth/2023',
+                                              fontSize: 14,
+                                              color: Colors.grey)),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ],
@@ -505,16 +596,75 @@ class _PatientListTabState extends State<PatientListTab> {
                     ),
                     StreamBuilder<QuerySnapshot>(
                         stream: filter == 'name'
-                            ? FirebaseFirestore.instance
-                                .collection('Patient')
-                                .where('name',
-                                    isGreaterThanOrEqualTo:
-                                        toBeginningOfSentenceCase(nameSearched))
-                                .where('name',
-                                    isLessThan:
-                                        '${toBeginningOfSentenceCase(nameSearched)}z')
-                                .orderBy(filter)
-                                .snapshots()
+                            ? gender != 'All'
+                                ? filterMonth != 0
+                                    ? FirebaseFirestore.instance
+                                        .collection('Patient')
+                                        .where('name',
+                                            isGreaterThanOrEqualTo:
+                                                toBeginningOfSentenceCase(
+                                                    nameSearched))
+                                        .where('name',
+                                            isLessThan:
+                                                '${toBeginningOfSentenceCase(nameSearched)}z')
+                                        .where('gender', isEqualTo: gender)
+                                        .where('day', isEqualTo: filterData)
+                                        .where('month', isEqualTo: filterMonth)
+                                        .orderBy(filter)
+                                        .snapshots()
+                                    : FirebaseFirestore.instance
+                                        .collection('Patient')
+                                        .where('name',
+                                            isGreaterThanOrEqualTo:
+                                                toBeginningOfSentenceCase(
+                                                    nameSearched))
+                                        .where('name',
+                                            isLessThan:
+                                                '${toBeginningOfSentenceCase(nameSearched)}z')
+                                        .orderBy(filter)
+                                        .snapshots()
+                                : gender != 'All'
+                                    ? filterMonth != 0
+                                        ? FirebaseFirestore.instance
+                                            .collection('Patient')
+                                            .where('name',
+                                                isGreaterThanOrEqualTo:
+                                                    toBeginningOfSentenceCase(
+                                                        nameSearched))
+                                            .where('name',
+                                                isLessThan:
+                                                    '${toBeginningOfSentenceCase(nameSearched)}z')
+                                            .where('gender', isEqualTo: gender)
+                                            .where('day', isEqualTo: filterData)
+                                            .where('month',
+                                                isEqualTo: filterMonth)
+                                            .orderBy(filter)
+                                            .snapshots()
+                                        : FirebaseFirestore.instance
+                                            .collection('Patient')
+                                            .where('name',
+                                                isGreaterThanOrEqualTo:
+                                                    toBeginningOfSentenceCase(
+                                                        nameSearched))
+                                            .where('name',
+                                                isLessThan:
+                                                    '${toBeginningOfSentenceCase(nameSearched)}z')
+                                            .where('gender', isEqualTo: gender)
+                                            .orderBy(filter)
+                                            .snapshots()
+                                    : FirebaseFirestore.instance
+                                        .collection('Patient')
+                                        .where('name',
+                                            isGreaterThanOrEqualTo:
+                                                toBeginningOfSentenceCase(
+                                                    nameSearched))
+                                        .where('name',
+                                            isLessThan:
+                                                '${toBeginningOfSentenceCase(nameSearched)}z')
+                                        .where('gender', isEqualTo: gender)
+                                        .where('day', isEqualTo: filterData)
+                                        .where('month', isEqualTo: filterMonth)
+                                        .snapshots()
                             : FirebaseFirestore.instance
                                 .collection('Patient')
                                 .where('name',
@@ -523,8 +673,8 @@ class _PatientListTabState extends State<PatientListTab> {
                                 .where('name',
                                     isLessThan:
                                         '${toBeginningOfSentenceCase(nameSearched)}z')
-                                .orderBy('name')
-                                .orderBy(filter)
+                                // .orderBy('name')
+
                                 .snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
