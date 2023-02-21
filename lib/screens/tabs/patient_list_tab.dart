@@ -167,7 +167,41 @@ class _PatientListTabState extends State<PatientListTab> {
   int filterData = 0;
   int filterMonth = 0;
 
-  filterStream() {}
+  filterStream() {
+    if (filter != 'name') {
+      return FirebaseFirestore.instance
+          .collection('Patient')
+          .orderBy(filter)
+          .snapshots();
+    } else if (gender != 'All') {
+      return FirebaseFirestore.instance
+          .collection('Patient')
+          .where('name',
+              isGreaterThanOrEqualTo: toBeginningOfSentenceCase(nameSearched))
+          .where('name',
+              isLessThan: '${toBeginningOfSentenceCase(nameSearched)}z')
+          .where('gender', isEqualTo: gender)
+          .snapshots();
+    } else if (filterMonth != 0) {
+      return FirebaseFirestore.instance
+          .collection('Patient')
+          .where('name',
+              isGreaterThanOrEqualTo: toBeginningOfSentenceCase(nameSearched))
+          .where('name',
+              isLessThan: '${toBeginningOfSentenceCase(nameSearched)}z')
+          .where('day', isEqualTo: filterData)
+          .where('month', isEqualTo: filterMonth)
+          .snapshots();
+    } else {
+      return FirebaseFirestore.instance
+          .collection('Patient')
+          .where('name',
+              isGreaterThanOrEqualTo: toBeginningOfSentenceCase(nameSearched))
+          .where('name',
+              isLessThan: '${toBeginningOfSentenceCase(nameSearched)}z')
+          .snapshots();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -597,87 +631,7 @@ class _PatientListTabState extends State<PatientListTab> {
                       ),
                     ),
                     StreamBuilder<QuerySnapshot>(
-                        stream: filter == 'name'
-                            ? gender != 'All'
-                                ? filterMonth != 0
-                                    ? FirebaseFirestore.instance
-                                        .collection('Patient')
-                                        .where('name',
-                                            isGreaterThanOrEqualTo:
-                                                toBeginningOfSentenceCase(
-                                                    nameSearched))
-                                        .where('name',
-                                            isLessThan:
-                                                '${toBeginningOfSentenceCase(nameSearched)}z')
-                                        .where('gender', isEqualTo: gender)
-                                        .where('day', isEqualTo: filterData)
-                                        .where('month', isEqualTo: filterMonth)
-                                        .orderBy(filter)
-                                        .snapshots()
-                                    : FirebaseFirestore.instance
-                                        .collection('Patient')
-                                        .where('name',
-                                            isGreaterThanOrEqualTo:
-                                                toBeginningOfSentenceCase(
-                                                    nameSearched))
-                                        .where('name',
-                                            isLessThan:
-                                                '${toBeginningOfSentenceCase(nameSearched)}z')
-                                        .orderBy(filter)
-                                        .snapshots()
-                                : gender != 'All'
-                                    ? filterMonth != 0
-                                        ? FirebaseFirestore.instance
-                                            .collection('Patient')
-                                            .where('name',
-                                                isGreaterThanOrEqualTo:
-                                                    toBeginningOfSentenceCase(
-                                                        nameSearched))
-                                            .where('name',
-                                                isLessThan:
-                                                    '${toBeginningOfSentenceCase(nameSearched)}z')
-                                            .where('gender', isEqualTo: gender)
-                                            .where('day', isEqualTo: filterData)
-                                            .where('month',
-                                                isEqualTo: filterMonth)
-                                            .orderBy(filter)
-                                            .snapshots()
-                                        : FirebaseFirestore.instance
-                                            .collection('Patient')
-                                            .where('name',
-                                                isGreaterThanOrEqualTo:
-                                                    toBeginningOfSentenceCase(
-                                                        nameSearched))
-                                            .where('name',
-                                                isLessThan:
-                                                    '${toBeginningOfSentenceCase(nameSearched)}z')
-                                            .where('gender', isEqualTo: gender)
-                                            .orderBy(filter)
-                                            .snapshots()
-                                    : FirebaseFirestore.instance
-                                        .collection('Patient')
-                                        .where('name',
-                                            isGreaterThanOrEqualTo:
-                                                toBeginningOfSentenceCase(
-                                                    nameSearched))
-                                        .where('name',
-                                            isLessThan:
-                                                '${toBeginningOfSentenceCase(nameSearched)}z')
-                                        .where('gender', isEqualTo: gender)
-                                        .where('day', isEqualTo: filterData)
-                                        .where('month', isEqualTo: filterMonth)
-                                        .snapshots()
-                            : FirebaseFirestore.instance
-                                .collection('Patient')
-                                .where('name',
-                                    isGreaterThanOrEqualTo:
-                                        toBeginningOfSentenceCase(nameSearched))
-                                .where('name',
-                                    isLessThan:
-                                        '${toBeginningOfSentenceCase(nameSearched)}z')
-                                // .orderBy('name')
-
-                                .snapshots(),
+                        stream: filterStream(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (snapshot.hasError) {
