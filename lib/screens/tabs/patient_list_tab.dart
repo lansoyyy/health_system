@@ -167,6 +167,8 @@ class _PatientListTabState extends State<PatientListTab> {
   int filterData = 0;
   int filterMonth = 0;
 
+  filterStream() {}
+
   @override
   Widget build(BuildContext context) {
     print(gender);
