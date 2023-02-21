@@ -77,6 +77,7 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
                                 height: 10,
                               ),
                               TextFieldWidget(
+                                  inPassword: true,
                                   isObscure: true,
                                   label: 'Password',
                                   controller: passwordController),
