@@ -719,6 +719,7 @@ class _PatientListTabState extends State<PatientListTab> {
                                     fontSize: 14,
                                     label: 'Delete',
                                     onPressed: (() async {
+                                      print(data.docs[i]['brgy']);
                                       showDialog(
                                           context: context,
                                           builder: (context) => AlertDialog(
@@ -750,6 +751,35 @@ class _PatientListTabState extends State<PatientListTab> {
                                                   ),
                                                   MaterialButton(
                                                     onPressed: () async {
+                                                      int num = 0;
+
+                                                      var collection =
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'Places')
+                                                              .where('place',
+                                                                  isEqualTo: data
+                                                                          .docs[i]
+                                                                      ['brgy']);
+
+                                                      var querySnapshot =
+                                                          await collection
+                                                              .get();
+                                                      if (mounted) {
+                                                        setState(() {
+                                                          for (var queryDocumentSnapshot
+                                                              in querySnapshot
+                                                                  .docs) {
+                                                            Map<String, dynamic>
+                                                                data =
+                                                                queryDocumentSnapshot
+                                                                    .data();
+                                                            num = data['nums'];
+                                                          }
+                                                        });
+                                                      }
+
                                                       showToast(
                                                           'Patient deleted succesfully!');
                                                       await FirebaseFirestore
@@ -757,6 +787,16 @@ class _PatientListTabState extends State<PatientListTab> {
                                                           .collection('Patient')
                                                           .doc(data.docs[i].id)
                                                           .delete();
+
+                                                      await FirebaseFirestore
+                                                          .instance
+                                                          .collection('Places')
+                                                          .doc(data.docs[i]
+                                                              ['brgy'])
+                                                          .update({
+                                                        'nums': num - 1
+                                                      });
+
                                                       Navigator.pop(context);
                                                     },
                                                     child: const Text(
