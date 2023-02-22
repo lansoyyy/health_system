@@ -34,6 +34,12 @@ class PatientScreen extends StatelessWidget {
     await Printing.layoutPdf(onLayout: (format) async => doc.save());
   }
 
+  final ageController = TextEditingController();
+  final addressController = TextEditingController();
+  final zoneController = TextEditingController();
+  final brgyController = TextEditingController();
+  final contactNumController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final Stream<DocumentSnapshot> userData = FirebaseFirestore.instance
@@ -102,7 +108,7 @@ class PatientScreen extends StatelessWidget {
                                           width: 10,
                                         ),
                                         TextBold(
-                                            text: 'Edit',
+                                            text: 'Edit Notes',
                                             fontSize: 18,
                                             color: Colors.black),
                                       ],
@@ -170,10 +176,80 @@ class PatientScreen extends StatelessWidget {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              TextRegular(
-                                                  text: 'Age: ${data['age']}',
-                                                  fontSize: 14,
-                                                  color: Colors.black),
+                                              SizedBox(
+                                                width: 100,
+                                                child: Row(
+                                                  children: [
+                                                    TextRegular(
+                                                        text:
+                                                            'Age: ${data['age']}',
+                                                        fontSize: 14,
+                                                        color: Colors.black),
+                                                    IconButton(
+                                                      onPressed: (() {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                ((context) {
+                                                              return AlertDialog(
+                                                                content:
+                                                                    SizedBox(
+                                                                  height: 100,
+                                                                  width: 200,
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            10,
+                                                                        right:
+                                                                            10),
+                                                                    child:
+                                                                        TextFormField(
+                                                                      controller:
+                                                                          ageController,
+                                                                      decoration:
+                                                                          const InputDecoration(
+                                                                              labelText: 'New Age:'),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                actions: [
+                                                                  TextButton(
+                                                                    onPressed:
+                                                                        (() async {
+                                                                      await FirebaseFirestore
+                                                                          .instance
+                                                                          .collection(
+                                                                              'Patient')
+                                                                          .doc(box.read(
+                                                                              'id'))
+                                                                          .update({
+                                                                        'age': ageController
+                                                                            .text
+                                                                      });
+
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    }),
+                                                                    child: TextBold(
+                                                                        text:
+                                                                            'Update',
+                                                                        fontSize:
+                                                                            14,
+                                                                        color: Colors
+                                                                            .black),
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            }));
+                                                      }),
+                                                      icon: const Icon(
+                                                          Icons.edit),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                               TextRegular(
                                                   text:
                                                       'Date of Birth: ${data['dateOfBirth']}',
@@ -195,11 +271,80 @@ class PatientScreen extends StatelessWidget {
                                                       'Gender: ${data['gender']}',
                                                   fontSize: 14,
                                                   color: Colors.black),
-                                              TextRegular(
-                                                  text:
-                                                      'Phone Number: ${data['phoneNumber']}',
-                                                  fontSize: 14,
-                                                  color: Colors.black),
+                                              SizedBox(
+                                                width: 230,
+                                                child: Row(
+                                                  children: [
+                                                    TextRegular(
+                                                        text:
+                                                            'Phone Number: ${data['phoneNumber']}',
+                                                        fontSize: 14,
+                                                        color: Colors.black),
+                                                    IconButton(
+                                                      onPressed: (() {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                ((context) {
+                                                              return AlertDialog(
+                                                                content:
+                                                                    SizedBox(
+                                                                  height: 100,
+                                                                  width: 200,
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            10,
+                                                                        right:
+                                                                            10),
+                                                                    child:
+                                                                        TextFormField(
+                                                                      controller:
+                                                                          contactNumController,
+                                                                      decoration:
+                                                                          const InputDecoration(
+                                                                              labelText: 'New Contact Number:'),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                actions: [
+                                                                  TextButton(
+                                                                    onPressed:
+                                                                        (() async {
+                                                                      await FirebaseFirestore
+                                                                          .instance
+                                                                          .collection(
+                                                                              'Patient')
+                                                                          .doc(box.read(
+                                                                              'id'))
+                                                                          .update({
+                                                                        'phoneNumber':
+                                                                            contactNumController.text
+                                                                      });
+
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    }),
+                                                                    child: TextBold(
+                                                                        text:
+                                                                            'Update',
+                                                                        fontSize:
+                                                                            14,
+                                                                        color: Colors
+                                                                            .black),
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            }));
+                                                      }),
+                                                      icon: const Icon(
+                                                          Icons.edit),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                             ],
                                           )),
                                     ],
@@ -241,25 +386,211 @@ class PatientScreen extends StatelessWidget {
                                   const SizedBox(
                                     height: 40,
                                   ),
-                                  TextRegular(
-                                      text: 'Baranggay: ${data['brgy']}',
-                                      fontSize: 15,
-                                      color: Colors.black),
+                                  SizedBox(
+                                    width: 220,
+                                    child: Row(
+                                      children: [
+                                        TextRegular(
+                                            text: 'Baranggay: ${data['brgy']}',
+                                            fontSize: 15,
+                                            color: Colors.black),
+                                        IconButton(
+                                          onPressed: (() {
+                                            showDialog(
+                                                context: context,
+                                                builder: ((context) {
+                                                  return AlertDialog(
+                                                    content: SizedBox(
+                                                      height: 100,
+                                                      width: 200,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 10,
+                                                                right: 10),
+                                                        child: TextFormField(
+                                                          controller:
+                                                              brgyController,
+                                                          decoration:
+                                                              const InputDecoration(
+                                                                  labelText:
+                                                                      'Baranggay:'),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: (() async {
+                                                          await FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'Patient')
+                                                              .doc(box
+                                                                  .read('id'))
+                                                              .update({
+                                                            'brgy':
+                                                                brgyController
+                                                                    .text
+                                                          });
+
+                                                          Navigator.pop(
+                                                              context);
+                                                        }),
+                                                        child: TextBold(
+                                                            text: 'Update',
+                                                            fontSize: 14,
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                    ],
+                                                  );
+                                                }));
+                                          }),
+                                          icon: const Icon(Icons.edit),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  TextRegular(
-                                      text: 'Zone: ${data['zone']}',
-                                      fontSize: 15,
-                                      color: Colors.black),
+                                  SizedBox(
+                                    width: 140,
+                                    child: Row(
+                                      children: [
+                                        TextRegular(
+                                            text: 'Zone: ${data['zone']}',
+                                            fontSize: 15,
+                                            color: Colors.black),
+                                        IconButton(
+                                          onPressed: (() {
+                                            showDialog(
+                                                context: context,
+                                                builder: ((context) {
+                                                  return AlertDialog(
+                                                    content: SizedBox(
+                                                      height: 100,
+                                                      width: 200,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 10,
+                                                                right: 10),
+                                                        child: TextFormField(
+                                                          controller:
+                                                              zoneController,
+                                                          decoration:
+                                                              const InputDecoration(
+                                                                  labelText:
+                                                                      'Zone:'),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: (() async {
+                                                          await FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'Patient')
+                                                              .doc(box
+                                                                  .read('id'))
+                                                              .update({
+                                                            'zone':
+                                                                zoneController
+                                                                    .text
+                                                          });
+
+                                                          Navigator.pop(
+                                                              context);
+                                                        }),
+                                                        child: TextBold(
+                                                            text: 'Update',
+                                                            fontSize: 14,
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                    ],
+                                                  );
+                                                }));
+                                          }),
+                                          icon: const Icon(Icons.edit),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  TextRegular(
-                                      text:
-                                          'Complete Address: ${data['address']}',
-                                      fontSize: 15,
-                                      color: Colors.black),
+                                  SizedBox(
+                                    width: 320,
+                                    child: Row(
+                                      children: [
+                                        TextRegular(
+                                            text:
+                                                'Complete Address: ${data['address']}',
+                                            fontSize: 15,
+                                            color: Colors.black),
+                                        IconButton(
+                                          onPressed: (() {
+                                            showDialog(
+                                                context: context,
+                                                builder: ((context) {
+                                                  return AlertDialog(
+                                                    content: SizedBox(
+                                                      height: 100,
+                                                      width: 200,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 10,
+                                                                right: 10),
+                                                        child: TextFormField(
+                                                          controller:
+                                                              addressController,
+                                                          decoration:
+                                                              const InputDecoration(
+                                                                  labelText:
+                                                                      'New Address:'),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: (() async {
+                                                          await FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'Patient')
+                                                              .doc(box
+                                                                  .read('id'))
+                                                              .update({
+                                                            'address':
+                                                                addressController
+                                                                    .text
+                                                          });
+
+                                                          Navigator.pop(
+                                                              context);
+                                                        }),
+                                                        child: TextBold(
+                                                            text: 'Update',
+                                                            fontSize: 14,
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                    ],
+                                                  );
+                                                }));
+                                          }),
+                                          icon: const Icon(Icons.edit),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
