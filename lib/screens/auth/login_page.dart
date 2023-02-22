@@ -51,6 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 20,
               ),
               TextFieldWidget(
+                  inPassword: true,
                   isObscure: true,
                   label: 'Password: ',
                   controller: passwordController),
