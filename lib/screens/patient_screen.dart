@@ -26,8 +26,11 @@ class PatientScreen extends StatelessWidget {
             height: double.infinity,
             width: double.infinity,
             child: pw.Image(
-              pw.MemoryImage(capturedImage),
-            ));
+                pw.MemoryImage(
+                  capturedImage,
+                ),
+                height: 1000,
+                width: 1000));
       },
     ));
 
