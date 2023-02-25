@@ -21,6 +21,7 @@ class PatientScreen extends StatelessWidget {
 
   printing(Uint8List capturedImage) async {
     doc.addPage(pw.Page(
+      orientation: pw.PageOrientation.landscape,
       build: (pw.Context context) {
         return pw.Container(
             height: double.infinity,
@@ -29,8 +30,8 @@ class PatientScreen extends StatelessWidget {
                 pw.MemoryImage(
                   capturedImage,
                 ),
-                height: 1000,
-                width: 1000));
+                height: 750,
+                width: 700));
       },
     ));
 

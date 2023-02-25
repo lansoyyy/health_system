@@ -149,13 +149,13 @@ class _PatientListTabState extends State<PatientListTab> {
 
   printing(Uint8List capturedImage) async {
     doc.addPage(pw.Page(
+      orientation: pw.PageOrientation.landscape,
       build: (pw.Context context) {
         return pw.Container(
             height: double.infinity,
             width: double.infinity,
-            child: pw.Image(
-              pw.MemoryImage(capturedImage),
-            ));
+            child: pw.Image(pw.MemoryImage(capturedImage),
+                height: 750, width: 750));
       },
     ));
 
