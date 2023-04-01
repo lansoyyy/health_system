@@ -346,7 +346,7 @@ class _AddPatientState extends State<AddPatient> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextRegular(
-                          text: 'Gender', fontSize: 16, color: Colors.black),
+                          text: 'Sex', fontSize: 16, color: Colors.black),
                       const SizedBox(
                         height: 10,
                       ),

@@ -86,25 +86,11 @@ class MapTabState extends State<MapTab> {
                         builder: (ctx) => Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage(
-                                datas[i] >= 1 && datas[i] < 3
-                                    ? 'assets/images/green.png'
-                                    : datas[i] >= 4 && datas[i] < 7
-                                        ? 'assets/images/yellowgreen.png'
-                                        : datas[i] >= 8 && datas[i] < 12
-                                            ? 'assets/images/yellow.png'
-                                            : datas[i] >= 12 && datas[i] < 15
-                                                ? 'assets/images/lightorange.png'
-                                                : datas[i] >= 15 &&
-                                                        datas[i] < 18
-                                                    ? 'assets/images/orange.png'
-                                                    : datas[i] >= 19 &&
-                                                            datas[i] < 22
-                                                        ? 'assets/images/lightred.png'
-                                                        : datas[i] >= 23
-                                                            ? 'assets/images/red.png'
-                                                            : '',
-                              ),
+                              image: AssetImage(datas[i] >= 0 && datas[i] < 5
+                                  ? 'assets/images/green.png'
+                                  : datas[i] >= 6 && datas[i] < 11
+                                      ? 'assets/images/orange.png'
+                                      : 'assets/images/red.png'),
                               opacity: 75,
                             ),
                           ),

@@ -24,14 +24,24 @@ class _LoginPageState extends State<LoginPage> {
       body: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Container(
-            height: 600,
-            width: 600,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/images/background.png'),
-                  fit: BoxFit.fitWidth),
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextBold(
+                  text: 'Sumilao Health System',
+                  fontSize: 38,
+                  color: Colors.black),
+              Container(
+                height: 300,
+                width: 600,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/background.png'),
+                      fit: BoxFit.fitWidth),
+                ),
+              ),
+            ],
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,12 +65,12 @@ class _LoginPageState extends State<LoginPage> {
                   isObscure: true,
                   label: 'Password: ',
                   controller: passwordController),
-              TextButton(
-                  onPressed: (() {}),
-                  child: TextBold(
-                      text: 'Forgot Password?',
-                      fontSize: 12,
-                      color: Colors.black)),
+              // TextButton(
+              //     onPressed: (() {}),
+              //     child: TextBold(
+              //         text: 'Forgot Password?',
+              //         fontSize: 12,
+              //         color: Colors.black)),
               const SizedBox(
                 height: 30,
               ),

@@ -666,7 +666,7 @@ class _PatientListTabState extends State<PatientListTab> {
                                     color: Colors.black)),
                             DataColumn(
                                 label: TextBold(
-                                    text: 'Gender',
+                                    text: 'Sex',
                                     fontSize: 18,
                                     color: Colors.black)),
                             DataColumn(
