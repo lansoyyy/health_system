@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sumilao/services/local_storage.dart';
+import 'package:sumilao/utils/colors.dart';
 import 'package:sumilao/widgets/button_widget.dart';
 import 'package:sumilao/widgets/text_widget.dart';
 import 'package:sumilao/widgets/textfield_widget.dart';
@@ -28,12 +29,9 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextBold(
-                  text: 'Sumilao Health System',
-                  fontSize: 38,
-                  color: Colors.black),
+              TextBold(text: '  GeoFinds', fontSize: 75, color: primary),
               Container(
-                height: 300,
+                height: 350,
                 width: 600,
                 decoration: const BoxDecoration(
                   image: DecorationImage(

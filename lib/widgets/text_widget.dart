@@ -36,7 +36,11 @@ class TextBold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(fontSize: fontSize, color: color, fontFamily: 'QBold'),
+      style: TextStyle(
+          fontSize: fontSize,
+          color: color,
+          fontFamily: 'QBold',
+          fontWeight: FontWeight.w800),
     );
   }
 }
