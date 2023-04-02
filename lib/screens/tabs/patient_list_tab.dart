@@ -39,6 +39,8 @@ class _PatientListTabState extends State<PatientListTab> {
     'Puntian',
   ];
 
+  var diseases = ['No Sickness', 'Covid', 'Dengue', 'Diarrhea'];
+
   var datas = [];
   var datasMonth = [];
 
@@ -223,10 +225,227 @@ class _PatientListTabState extends State<PatientListTab> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    TextBold(
-                        text: 'Search Patient',
-                        fontSize: 18,
-                        color: Colors.black),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(80, 0, 80, 0),
+                      child: SizedBox(
+                        width: 1100,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox(),
+                            TextBold(
+                                text: 'Search Patient',
+                                fontSize: 18,
+                                color: Colors.black),
+                            IconButton(
+                                onPressed: (() {
+                                  {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return Dialog(
+                                            child: Screenshot(
+                                              controller: ssController,
+                                              child: SizedBox(
+                                                  width: 1000,
+                                                  height: 700,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          p.PieChart(
+                                                            dataMap: dataMap,
+                                                            animationDuration:
+                                                                const Duration(
+                                                                    milliseconds:
+                                                                        800),
+                                                            chartLegendSpacing:
+                                                                32,
+                                                            chartRadius: 150,
+                                                            colorList: const [
+                                                              Colors.blue,
+                                                              Colors.amber,
+                                                              Colors.red,
+                                                              Colors.green,
+                                                              Colors.brown,
+                                                            ],
+                                                            initialAngleInDegree:
+                                                                0,
+                                                            chartType: p
+                                                                .ChartType.disc,
+                                                            ringStrokeWidth: 32,
+
+                                                            legendOptions: const p
+                                                                .LegendOptions(
+                                                              showLegendsInRow:
+                                                                  false,
+                                                              legendPosition: p
+                                                                  .LegendPosition
+                                                                  .right,
+                                                              showLegends: true,
+                                                              legendTextStyle:
+                                                                  TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            ),
+                                                            chartValuesOptions:
+                                                                const p
+                                                                    .ChartValuesOptions(
+                                                              showChartValueBackground:
+                                                                  true,
+                                                              showChartValues:
+                                                                  false,
+                                                              showChartValuesInPercentage:
+                                                                  false,
+                                                              showChartValuesOutside:
+                                                                  false,
+                                                              decimalPlaces: 1,
+                                                            ),
+                                                            // gradientList: ---To add gradient colors---
+                                                            // emptyColorGradient: ---Empty Color gradient---
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              SizedBox(
+                                                                  width: 450,
+                                                                  height: 220,
+                                                                  child: SfCartesianChart(
+
+                                                                      // Initialize category axis
+                                                                      primaryXAxis: CategoryAxis(),
+                                                                      series: <ChartSeries>[
+                                                                        // Initialize line series
+                                                                        LineSeries<ChartData1,
+                                                                                String>(
+                                                                            dataSource: [
+                                                                              // Bind data source
+                                                                              for (int i = 0; i < months.length; i++)
+                                                                                ChartData1(months[i], datasMonth[i]),
+                                                                            ],
+                                                                            xValueMapper: (ChartData1 data, _) =>
+                                                                                data.x,
+                                                                            yValueMapper: (ChartData1 data, _) => data.y)
+                                                                      ])),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 600,
+                                                        width: 400,
+                                                        child: GridView.builder(
+                                                            itemCount:
+                                                                brgys.length,
+                                                            gridDelegate:
+                                                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                                                    crossAxisCount:
+                                                                        3),
+                                                            itemBuilder:
+                                                                (context,
+                                                                    index) {
+                                                              return Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  TextBold(
+                                                                      text: brgys[
+                                                                          index],
+                                                                      fontSize:
+                                                                          14,
+                                                                      color: Colors
+                                                                          .black),
+                                                                  const SizedBox(
+                                                                    height: 10,
+                                                                  ),
+                                                                  TextRegular(
+                                                                      text:
+                                                                          'No Disease: ${datasNoDiseas[index]}',
+                                                                      fontSize:
+                                                                          12,
+                                                                      color: Colors
+                                                                          .grey),
+                                                                  const SizedBox(
+                                                                    height: 10,
+                                                                  ),
+                                                                  TextRegular(
+                                                                      text:
+                                                                          'Covid:  ${datasCovid[index]}',
+                                                                      fontSize:
+                                                                          12,
+                                                                      color: Colors
+                                                                          .grey),
+                                                                  const SizedBox(
+                                                                    height: 10,
+                                                                  ),
+                                                                  TextRegular(
+                                                                      text:
+                                                                          'Dengue:  ${dataDengue[index]}',
+                                                                      fontSize:
+                                                                          12,
+                                                                      color: Colors
+                                                                          .grey),
+                                                                  const SizedBox(
+                                                                    height: 10,
+                                                                  ),
+                                                                  TextRegular(
+                                                                      text:
+                                                                          'Diarrhea:  ${datasDiarrhea[index]}',
+                                                                      fontSize:
+                                                                          12,
+                                                                      color: Colors
+                                                                          .grey),
+                                                                ],
+                                                              );
+                                                            }),
+                                                      ),
+                                                    ],
+                                                  )),
+                                            ),
+                                          );
+                                        });
+
+                                    // To Implement
+                                    // for (int i = 0; i < brgys.length; i++) {
+                                    //   addPlaces(brgys[i]);
+                                    // }
+
+                                    ssController
+                                        .capture(
+                                            delay: const Duration(
+                                                milliseconds: 10))
+                                        .then((capturedImage) async {
+                                      printing(capturedImage!);
+                                    }).catchError((onError) {
+                                      print(onError);
+                                    });
+                                  }
+                                }),
+                                icon: const Icon(
+                                  Icons.print_outlined,
+                                  color: Colors.black,
+                                ))
+                          ],
+                        ),
+                      ),
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -270,232 +489,6 @@ class _PatientListTabState extends State<PatientListTab> {
                                     ),
                                   ),
                                   const Expanded(child: SizedBox()),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 5, bottom: 5, right: 10),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return Dialog(
-                                                child: Screenshot(
-                                                  controller: ssController,
-                                                  child: SizedBox(
-                                                      width: 1000,
-                                                      height: 700,
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceEvenly,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              p.PieChart(
-                                                                dataMap:
-                                                                    dataMap,
-                                                                animationDuration:
-                                                                    const Duration(
-                                                                        milliseconds:
-                                                                            800),
-                                                                chartLegendSpacing:
-                                                                    32,
-                                                                chartRadius:
-                                                                    150,
-                                                                colorList: const [
-                                                                  Colors.blue,
-                                                                  Colors.amber,
-                                                                  Colors.red,
-                                                                  Colors.green,
-                                                                  Colors.brown,
-                                                                ],
-                                                                initialAngleInDegree:
-                                                                    0,
-                                                                chartType: p
-                                                                    .ChartType
-                                                                    .disc,
-                                                                ringStrokeWidth:
-                                                                    32,
-
-                                                                legendOptions:
-                                                                    const p
-                                                                        .LegendOptions(
-                                                                  showLegendsInRow:
-                                                                      false,
-                                                                  legendPosition: p
-                                                                      .LegendPosition
-                                                                      .right,
-                                                                  showLegends:
-                                                                      true,
-                                                                  legendTextStyle:
-                                                                      TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                  ),
-                                                                ),
-                                                                chartValuesOptions:
-                                                                    const p
-                                                                        .ChartValuesOptions(
-                                                                  showChartValueBackground:
-                                                                      true,
-                                                                  showChartValues:
-                                                                      false,
-                                                                  showChartValuesInPercentage:
-                                                                      false,
-                                                                  showChartValuesOutside:
-                                                                      false,
-                                                                  decimalPlaces:
-                                                                      1,
-                                                                ),
-                                                                // gradientList: ---To add gradient colors---
-                                                                // emptyColorGradient: ---Empty Color gradient---
-                                                              ),
-                                                              Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  SizedBox(
-                                                                      width:
-                                                                          450,
-                                                                      height:
-                                                                          220,
-                                                                      child: SfCartesianChart(
-
-                                                                          // Initialize category axis
-                                                                          primaryXAxis: CategoryAxis(),
-                                                                          series: <ChartSeries>[
-                                                                            // Initialize line series
-                                                                            LineSeries<ChartData1,
-                                                                                String>(dataSource: [
-                                                                              // Bind data source
-                                                                              for (int i = 0; i < months.length; i++)
-                                                                                ChartData1(months[i], datasMonth[i]),
-                                                                            ], xValueMapper: (ChartData1 data, _) => data.x, yValueMapper: (ChartData1 data, _) => data.y)
-                                                                          ])),
-                                                                ],
-                                                              )
-                                                            ],
-                                                          ),
-                                                          SizedBox(
-                                                            height: 600,
-                                                            width: 400,
-                                                            child: GridView
-                                                                .builder(
-                                                                    itemCount: brgys
-                                                                        .length,
-                                                                    gridDelegate:
-                                                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                                                            crossAxisCount:
-                                                                                3),
-                                                                    itemBuilder:
-                                                                        (context,
-                                                                            index) {
-                                                                      return Column(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.center,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          TextBold(
-                                                                              text: brgys[index],
-                                                                              fontSize: 14,
-                                                                              color: Colors.black),
-                                                                          const SizedBox(
-                                                                            height:
-                                                                                10,
-                                                                          ),
-                                                                          TextRegular(
-                                                                              text: 'No Disease: ${datasNoDiseas[index]}',
-                                                                              fontSize: 12,
-                                                                              color: Colors.grey),
-                                                                          const SizedBox(
-                                                                            height:
-                                                                                10,
-                                                                          ),
-                                                                          TextRegular(
-                                                                              text: 'Covid:  ${datasCovid[index]}',
-                                                                              fontSize: 12,
-                                                                              color: Colors.grey),
-                                                                          const SizedBox(
-                                                                            height:
-                                                                                10,
-                                                                          ),
-                                                                          TextRegular(
-                                                                              text: 'Dengue:  ${dataDengue[index]}',
-                                                                              fontSize: 12,
-                                                                              color: Colors.grey),
-                                                                          const SizedBox(
-                                                                            height:
-                                                                                10,
-                                                                          ),
-                                                                          TextRegular(
-                                                                              text: 'Diarrhea:  ${datasDiarrhea[index]}',
-                                                                              fontSize: 12,
-                                                                              color: Colors.grey),
-                                                                        ],
-                                                                      );
-                                                                    }),
-                                                          ),
-                                                        ],
-                                                      )),
-                                                ),
-                                              );
-                                            });
-
-                                        // To Implement
-                                        // for (int i = 0; i < brgys.length; i++) {
-                                        //   addPlaces(brgys[i]);
-                                        // }
-
-                                        ssController
-                                            .capture(
-                                                delay: const Duration(
-                                                    milliseconds: 10))
-                                            .then((capturedImage) async {
-                                          printing(capturedImage!);
-                                        }).catchError((onError) {
-                                          print(onError);
-                                        });
-                                      },
-                                      child: Container(
-                                        height: 50,
-                                        width: 180,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: Colors.white,
-                                            border:
-                                                Border.all(color: Colors.grey)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              20, 0, 20, 0),
-                                          child: Row(
-                                            children: [
-                                              const Icon(
-                                                Icons.print,
-                                                color: Colors.black,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              TextRegular(
-                                                  text: 'Print All Report',
-                                                  fontSize: 12,
-                                                  color: Colors.grey),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                   Container(
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(5),
