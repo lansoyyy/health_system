@@ -676,6 +676,11 @@ class _PatientListTabState extends State<PatientListTab> {
                                     color: Colors.black)),
                             DataColumn(
                                 label: TextBold(
+                                    text: 'Active',
+                                    fontSize: 18,
+                                    color: Colors.black)),
+                            DataColumn(
+                                label: TextBold(
                                     text: '',
                                     fontSize: 20,
                                     color: Colors.black)),
@@ -701,6 +706,10 @@ class _PatientListTabState extends State<PatientListTab> {
                                     color: Colors.grey)),
                                 DataCell(TextRegular(
                                     text: data.docs[i]['disease'],
+                                    fontSize: 14,
+                                    color: Colors.grey)),
+                                DataCell(TextRegular(
+                                    text: data.docs[i]['isActive'].toString(),
                                     fontSize: 14,
                                     color: Colors.grey)),
                                 DataCell(ButtonWidget(
