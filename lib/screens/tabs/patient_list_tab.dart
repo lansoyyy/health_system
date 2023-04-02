@@ -560,22 +560,11 @@ class _PatientListTabState extends State<PatientListTab> {
                                                   filter = filters[i];
                                                 }),
                                                 value: i,
-                                                child: Row(
-                                                  children: [
-                                                    const Icon(
-                                                      Icons.layers_rounded,
-                                                      color: Colors.black,
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    TextRegular(
-                                                        text:
-                                                            'Sort by: ${filterLabel[i]}',
-                                                        fontSize: 14,
-                                                        color: Colors.grey),
-                                                  ],
-                                                ),
+                                                child: TextRegular(
+                                                    text:
+                                                        'Sort by: ${filterLabel[i]}',
+                                                    fontSize: 14,
+                                                    color: Colors.grey),
                                               ),
                                           ],
                                           onChanged: ((value) {
