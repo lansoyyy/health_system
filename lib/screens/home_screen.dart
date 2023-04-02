@@ -35,31 +35,39 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     width: 20,
                   ),
-                  SizedBox(
-                    width: 750,
-                    child: TabBar(
-                        indicatorColor: primary,
-                        unselectedLabelColor: Colors.grey,
-                        labelColor: primary,
-                        labelStyle: TextStyle(
-                            color: primary, fontFamily: 'QBold', fontSize: 14),
-                        tabs: const [
-                          Tab(
-                            text: 'PATIENT LIST',
-                          ),
-                          Tab(
-                            text: 'MAP',
-                          ),
-                          Tab(
-                            text: 'NEWS & UPDATE',
-                          ),
-                          Tab(
-                            text: 'ABOUT US',
-                          ),
-                          Tab(
-                            text: 'STATISTICS',
-                          ),
-                        ]),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextBold(text: 'GeoFinds', fontSize: 38, color: primary),
+                      SizedBox(
+                        width: 750,
+                        child: TabBar(
+                            indicatorColor: primary,
+                            unselectedLabelColor: Colors.grey,
+                            labelColor: primary,
+                            labelStyle: TextStyle(
+                                color: primary,
+                                fontFamily: 'QBold',
+                                fontSize: 14),
+                            tabs: const [
+                              Tab(
+                                text: 'PATIENT LIST',
+                              ),
+                              Tab(
+                                text: 'MAP',
+                              ),
+                              Tab(
+                                text: 'NEWS & UPDATE',
+                              ),
+                              Tab(
+                                text: 'ABOUT US',
+                              ),
+                              Tab(
+                                text: 'STATISTICS',
+                              ),
+                            ]),
+                      ),
+                    ],
                   ),
                   const Expanded(child: SizedBox()),
                   PopupMenuButton(
