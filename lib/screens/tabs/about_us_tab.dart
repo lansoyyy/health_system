@@ -179,7 +179,7 @@ class AboutUsTab extends StatelessWidget {
                                   width: 10,
                                 ),
                                 TextRegular(
-                                    text: '8701 Sumilao, Bukidon',
+                                    text: '8701 Sumilao, Bukidnon',
                                     fontSize: 14,
                                     color: Colors.black)
                               ],

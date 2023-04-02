@@ -39,7 +39,9 @@ class _PatientListTabState extends State<PatientListTab> {
     'Puntian',
   ];
 
-  var diseases = ['No Sickness', 'Covid', 'Dengue', 'Diarrhea'];
+  var diseases = ['All', 'No Sickness', 'Covid', 'Dengue', 'Diarrhea'];
+
+  var disease = 'All';
 
   var datas = [];
   var datasMonth = [];
@@ -138,6 +140,7 @@ class _PatientListTabState extends State<PatientListTab> {
   final searchController = TextEditingController();
 
   var _dropValue = 0;
+  var _dropValue5 = 0;
 
   String filter = 'name';
 
@@ -193,6 +196,15 @@ class _PatientListTabState extends State<PatientListTab> {
               isLessThan: '${toBeginningOfSentenceCase(nameSearched)}z')
           .where('day', isEqualTo: filterData)
           .where('month', isEqualTo: filterMonth)
+          .snapshots();
+    } else if (disease != 'All') {
+      return FirebaseFirestore.instance
+          .collection('Patient')
+          .where('name',
+              isGreaterThanOrEqualTo: toBeginningOfSentenceCase(nameSearched))
+          .where('name',
+              isLessThan: '${toBeginningOfSentenceCase(nameSearched)}z')
+          .where('disease', isEqualTo: disease)
           .snapshots();
     } else {
       return FirebaseFirestore.instance
@@ -489,6 +501,44 @@ class _PatientListTabState extends State<PatientListTab> {
                                     ),
                                   ),
                                   const Expanded(child: SizedBox()),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: Colors.white,
+                                        border: Border.all(color: Colors.grey)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20, 0, 20, 0),
+                                      child: DropdownButton(
+                                          dropdownColor: Colors.white,
+                                          focusColor: Colors.white,
+                                          value: _dropValue5,
+                                          items: [
+                                            for (int i = 0;
+                                                i < diseases.length;
+                                                i++)
+                                              DropdownMenuItem(
+                                                onTap: (() {
+                                                  disease = diseases[i];
+                                                }),
+                                                value: i,
+                                                child: TextRegular(
+                                                    text: diseases[i],
+                                                    fontSize: 14,
+                                                    color: Colors.grey),
+                                              ),
+                                          ],
+                                          onChanged: ((value) {
+                                            setState(() {
+                                              _dropValue5 =
+                                                  int.parse(value.toString());
+                                            });
+                                          })),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
                                   Container(
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(5),
