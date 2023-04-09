@@ -14,6 +14,8 @@ import 'package:sumilao/widgets/toast_widget.dart';
 import '../widgets/appbar_widget.dart';
 
 class AddPatient extends StatefulWidget {
+  const AddPatient({super.key});
+
   @override
   State<AddPatient> createState() => _AddPatientState();
 }
@@ -170,19 +172,21 @@ class _AddPatientState extends State<AddPatient> {
               const SizedBox(
                 height: 10,
               ),
-              ButtonWidget(
-                  width: 100,
-                  height: 35,
-                  fontSize: 12,
-                  label: 'Upload Photo',
-                  onPressed: (() {
-                    uploadToStorage();
-                  })),
+              Center(
+                child: ButtonWidget(
+                    width: 100,
+                    height: 35,
+                    fontSize: 12,
+                    label: 'Upload Photo',
+                    onPressed: (() {
+                      uploadToStorage();
+                    })),
+              ),
               const SizedBox(
                 height: 20,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   TextFieldWidget(
                       label: 'Full Name', controller: nameController),
@@ -199,7 +203,7 @@ class _AddPatientState extends State<AddPatient> {
                 height: 20,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   dateOfBirth == ''
                       ? MaterialButton(
@@ -340,7 +344,7 @@ class _AddPatientState extends State<AddPatient> {
                 height: 20,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -466,7 +470,7 @@ class _AddPatientState extends State<AddPatient> {
                 height: 20,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   dateFindings == ''
                       ? MaterialButton(

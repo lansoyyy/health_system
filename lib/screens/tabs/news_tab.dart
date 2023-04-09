@@ -13,6 +13,8 @@ import '../../widgets/textfield_widget.dart';
 import '../../widgets/toast_widget.dart';
 
 class NewsTab extends StatefulWidget {
+  const NewsTab({super.key});
+
   @override
   State<NewsTab> createState() => _NewsTabState();
 }
@@ -228,10 +230,27 @@ class _NewsTabState extends State<NewsTab> {
                                       const SizedBox(
                                         height: 10,
                                       ),
-                                      TextBold(
-                                          text: data.docs[index]['headline'],
-                                          fontSize: 18,
-                                          color: Colors.black),
+                                      Row(
+                                        children: [
+                                          TextBold(
+                                              text: data.docs[index]
+                                                  ['headline'],
+                                              fontSize: 18,
+                                              color: Colors.black),
+                                          IconButton(
+                                            onPressed: () async {
+                                              await FirebaseFirestore.instance
+                                                  .collection('News')
+                                                  .doc(data.docs[index].id)
+                                                  .delete();
+                                            },
+                                            icon: const Icon(
+                                              Icons.delete_outline_outlined,
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                   Column(
