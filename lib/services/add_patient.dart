@@ -38,7 +38,8 @@ Future addPatient(
     'long': long,
     'month': dt.month,
     'day': dt.day,
-    'id': docUser.id
+    'id': docUser.id,
+    'isActive': true
   };
 
   await docUser.set(json);

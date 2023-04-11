@@ -12,9 +12,11 @@ class TextFieldWidget extends StatefulWidget {
   final TextInputType? inputType;
   final bool? readOnly;
   final bool? inPassword;
+  late VoidCallback? onPressed;
 
   TextFieldWidget(
-      {required this.label,
+      {super.key,
+      required this.label,
       this.hint = '',
       required this.controller,
       this.isObscure = false,
@@ -23,6 +25,7 @@ class TextFieldWidget extends StatefulWidget {
       this.maxLine = 1,
       this.readOnly = false,
       this.inPassword = false,
+      this.onPressed,
       this.inputType = TextInputType.text});
 
   @override
@@ -48,6 +51,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               ),
               borderRadius: BorderRadius.circular(5)),
           child: TextFormField(
+            onTap: widget.onPressed,
             readOnly: widget.readOnly!,
             keyboardType: widget.inputType,
             decoration: InputDecoration(

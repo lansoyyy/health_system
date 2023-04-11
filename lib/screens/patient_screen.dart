@@ -11,8 +11,14 @@ import 'package:sumilao/widgets/textfield_widget.dart';
 import 'package:sumilao/widgets/toast_widget.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-class PatientScreen extends StatelessWidget {
+class PatientScreen extends StatefulWidget {
+  @override
+  State<PatientScreen> createState() => _PatientScreenState();
+}
+
+class _PatientScreenState extends State<PatientScreen> {
   final ssController = ScreenshotController();
+
   final notesController = TextEditingController();
 
   final box = GetStorage();
@@ -39,9 +45,13 @@ class PatientScreen extends StatelessWidget {
   }
 
   final ageController = TextEditingController();
+
   final addressController = TextEditingController();
+
   final zoneController = TextEditingController();
+
   final brgyController = TextEditingController();
+
   final contactNumController = TextEditingController();
 
   @override
@@ -272,7 +282,7 @@ class PatientScreen extends StatelessWidget {
                                             children: [
                                               TextRegular(
                                                   text:
-                                                      'Gender: ${data['gender']}',
+                                                      'Sex: ${data['gender']}',
                                                   fontSize: 14,
                                                   color: Colors.black),
                                               SizedBox(
@@ -525,76 +535,6 @@ class PatientScreen extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  SizedBox(
-                                    width: 320,
-                                    child: Row(
-                                      children: [
-                                        TextRegular(
-                                            text:
-                                                'Complete Address: ${data['address']}',
-                                            fontSize: 15,
-                                            color: Colors.black),
-                                        IconButton(
-                                          onPressed: (() {
-                                            showDialog(
-                                                context: context,
-                                                builder: ((context) {
-                                                  return AlertDialog(
-                                                    content: SizedBox(
-                                                      height: 100,
-                                                      width: 200,
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 10,
-                                                                right: 10),
-                                                        child: TextFormField(
-                                                          controller:
-                                                              addressController,
-                                                          decoration:
-                                                              const InputDecoration(
-                                                                  labelText:
-                                                                      'New Address:'),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    actions: [
-                                                      TextButton(
-                                                        onPressed: (() async {
-                                                          await FirebaseFirestore
-                                                              .instance
-                                                              .collection(
-                                                                  'Patient')
-                                                              .doc(box
-                                                                  .read('id'))
-                                                              .update({
-                                                            'address':
-                                                                addressController
-                                                                    .text
-                                                          });
-
-                                                          Navigator.pop(
-                                                              context);
-                                                        }),
-                                                        child: TextBold(
-                                                            text: 'Update',
-                                                            fontSize: 14,
-                                                            color:
-                                                                Colors.black),
-                                                      ),
-                                                    ],
-                                                  );
-                                                }));
-                                          }),
-                                          icon: const Icon(Icons.edit),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -634,11 +574,98 @@ class PatientScreen extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          TextRegular(
-                                              text:
-                                                  'Disease: ${data['disease']}',
-                                              fontSize: 15,
-                                              color: Colors.black),
+                                          Row(
+                                            children: [
+                                              TextRegular(
+                                                  text:
+                                                      'Disease: ${data['disease']}',
+                                                  fontSize: 15,
+                                                  color: Colors.black),
+                                              const SizedBox(
+                                                width: 15,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  TextRegular(
+                                                      text:
+                                                          "(Active: ${data['isActive'].toString()})",
+                                                      fontSize: 13,
+                                                      color: Colors.black),
+                                                  IconButton(
+                                                    onPressed: (() async {
+                                                      int nums = 0;
+
+                                                      var collection =
+                                                          FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'Places')
+                                                              .where('place',
+                                                                  isEqualTo: data[
+                                                                      'brgy']);
+
+                                                      var querySnapshot =
+                                                          await collection
+                                                              .get();
+                                                      if (mounted) {
+                                                        setState(() {
+                                                          for (var queryDocumentSnapshot
+                                                              in querySnapshot
+                                                                  .docs) {
+                                                            Map<String, dynamic>
+                                                                data =
+                                                                queryDocumentSnapshot
+                                                                    .data();
+                                                            nums = data['nums'];
+                                                          }
+                                                        });
+                                                      }
+
+                                                      if (data['isActive'] ==
+                                                          true) {
+                                                        await FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'Places')
+                                                            .doc(data['brgy'])
+                                                            .update({
+                                                          "nums": nums - 1
+                                                        });
+                                                        showToast(
+                                                            'Status updated succesfully!');
+                                                      } else {
+                                                        await FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'Places')
+                                                            .doc(data['brgy'])
+                                                            .update({
+                                                          "nums": nums + 1
+                                                        });
+                                                        showToast(
+                                                            'Status updated succesfully!');
+                                                      }
+
+                                                      await FirebaseFirestore
+                                                          .instance
+                                                          .collection('Patient')
+                                                          .doc(box.read('id'))
+                                                          .update({
+                                                        'isActive':
+                                                            !data['isActive']
+                                                      });
+                                                    }),
+                                                    icon: const Icon(
+                                                      Icons
+                                                          .change_circle_outlined,
+                                                      color: Colors.black,
+                                                      size: 15,
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
                                           TextRegular(
                                               text:
                                                   'Date Findings: ${data['dateOfFindings']}',
