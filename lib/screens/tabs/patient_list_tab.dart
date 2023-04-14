@@ -13,6 +13,8 @@ import '../../widgets/toast_widget.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 class PatientListTab extends StatefulWidget {
+  const PatientListTab({super.key});
+
   @override
   State<PatientListTab> createState() => _PatientListTabState();
 }
@@ -140,13 +142,13 @@ class _PatientListTabState extends State<PatientListTab> {
   final searchController = TextEditingController();
 
   var _dropValue = 0;
-  var _dropValue5 = 0;
+  final _dropValue5 = 0;
 
   String filter = 'name';
 
   var _dropValue1 = 0;
 
-  String gender = 'All';
+  String gender = 'Male';
 
   String nameSearched = '';
 
@@ -167,7 +169,7 @@ class _PatientListTabState extends State<PatientListTab> {
     await Printing.layoutPdf(onLayout: (format) async => doc.save());
   }
 
-  List genderLabels = ['All', 'Male', 'Female'];
+  List genderLabels = ['Male', 'Female', 'Others'];
 
   int filterData = 0;
   int filterMonth = 0;
@@ -219,12 +221,6 @@ class _PatientListTabState extends State<PatientListTab> {
 
   @override
   Widget build(BuildContext context) {
-    print(gender);
-    print(filter);
-    final List<ChartData> chartData = [
-      for (int i = 0; i < brgys.length; i++) ChartData(brgys[i], datas[i])
-    ];
-
     Map<String, double> dataMap = {
       for (int i = 0; i < brgys.length; i++) brgys[i]: datas[i]
     };
@@ -501,44 +497,44 @@ class _PatientListTabState extends State<PatientListTab> {
                                     ),
                                   ),
                                   const Expanded(child: SizedBox()),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: Colors.white,
-                                        border: Border.all(color: Colors.grey)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          20, 0, 20, 0),
-                                      child: DropdownButton(
-                                          dropdownColor: Colors.white,
-                                          focusColor: Colors.white,
-                                          value: _dropValue5,
-                                          items: [
-                                            for (int i = 0;
-                                                i < diseases.length;
-                                                i++)
-                                              DropdownMenuItem(
-                                                onTap: (() {
-                                                  disease = diseases[i];
-                                                }),
-                                                value: i,
-                                                child: TextRegular(
-                                                    text: diseases[i],
-                                                    fontSize: 14,
-                                                    color: Colors.grey),
-                                              ),
-                                          ],
-                                          onChanged: ((value) {
-                                            setState(() {
-                                              _dropValue5 =
-                                                  int.parse(value.toString());
-                                            });
-                                          })),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
+                                  // Container(
+                                  //   decoration: BoxDecoration(
+                                  //       borderRadius: BorderRadius.circular(5),
+                                  //       color: Colors.white,
+                                  //       border: Border.all(color: Colors.grey)),
+                                  //   child: Padding(
+                                  //     padding: const EdgeInsets.fromLTRB(
+                                  //         20, 0, 20, 0),
+                                  //     child: DropdownButton(
+                                  //         dropdownColor: Colors.white,
+                                  //         focusColor: Colors.white,
+                                  //         value: _dropValue5,
+                                  //         items: [
+                                  //           for (int i = 0;
+                                  //               i < diseases.length;
+                                  //               i++)
+                                  //             DropdownMenuItem(
+                                  //               onTap: (() {
+                                  //                 disease = diseases[i];
+                                  //               }),
+                                  //               value: i,
+                                  //               child: TextRegular(
+                                  //                   text: diseases[i],
+                                  //                   fontSize: 14,
+                                  //                   color: Colors.grey),
+                                  //             ),
+                                  //         ],
+                                  //         onChanged: ((value) {
+                                  //           setState(() {
+                                  //             _dropValue5 =
+                                  //                 int.parse(value.toString());
+                                  //           });
+                                  //         })),
+                                  //   ),
+                                  // ),
+                                  // const SizedBox(
+                                  //   width: 10,
+                                  // ),
                                   Container(
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(5),

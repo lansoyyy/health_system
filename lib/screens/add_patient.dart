@@ -275,6 +275,16 @@ class _AddPatientState extends State<AddPatient> {
                                             fontSize: 18,
                                             color: Colors.black),
                                       ),
+                                      DropdownMenuItem(
+                                        onTap: () {
+                                          gender = 'Others';
+                                        },
+                                        value: 2,
+                                        child: TextRegular(
+                                            text: 'Others',
+                                            fontSize: 18,
+                                            color: Colors.black),
+                                      ),
                                     ],
                                     onChanged: ((value) {
                                       setState(() {

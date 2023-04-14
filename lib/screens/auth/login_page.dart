@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: 20,
                     ),
                     Container(
-                      height: 350,
+                      height: 450,
                       width: 600,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
