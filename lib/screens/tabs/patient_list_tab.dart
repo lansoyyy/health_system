@@ -675,6 +675,10 @@ class _PatientListTabState extends State<PatientListTab> {
                             ),
                             GestureDetector(
                               onTap: (() async {
+                                setState(() {
+                                  gender = '';
+                                  filter = 'name';
+                                });
                                 final DateTime? selectedDate =
                                     await showDatePicker(
                                   context: context,

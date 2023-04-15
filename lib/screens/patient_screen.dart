@@ -12,6 +12,8 @@ import 'package:sumilao/widgets/toast_widget.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 class PatientScreen extends StatefulWidget {
+  const PatientScreen({super.key});
+
   @override
   State<PatientScreen> createState() => _PatientScreenState();
 }
@@ -400,140 +402,67 @@ class _PatientScreenState extends State<PatientScreen> {
                                   const SizedBox(
                                     height: 40,
                                   ),
-                                  SizedBox(
-                                    width: 220,
-                                    child: Row(
-                                      children: [
-                                        TextRegular(
-                                            text: 'Baranggay: ${data['brgy']}',
-                                            fontSize: 15,
-                                            color: Colors.black),
-                                        IconButton(
-                                          onPressed: (() {
-                                            showDialog(
-                                                context: context,
-                                                builder: ((context) {
-                                                  return AlertDialog(
-                                                    content: SizedBox(
-                                                      height: 100,
-                                                      width: 200,
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 10,
-                                                                right: 10),
-                                                        child: TextFormField(
-                                                          controller:
-                                                              brgyController,
-                                                          decoration:
-                                                              const InputDecoration(
-                                                                  labelText:
-                                                                      'Baranggay:'),
-                                                        ),
+                                  Row(
+                                    children: [
+                                      TextRegular(
+                                          text: 'Address: ${data['address']}',
+                                          fontSize: 15,
+                                          color: Colors.black),
+                                      IconButton(
+                                        onPressed: (() {
+                                          showDialog(
+                                              context: context,
+                                              builder: ((context) {
+                                                return AlertDialog(
+                                                  content: SizedBox(
+                                                    height: 100,
+                                                    width: 200,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10,
+                                                              right: 10),
+                                                      child: TextFormField(
+                                                        controller:
+                                                            brgyController,
+                                                        decoration:
+                                                            const InputDecoration(
+                                                                labelText:
+                                                                    'New Patient Address:'),
                                                       ),
                                                     ),
-                                                    actions: [
-                                                      TextButton(
-                                                        onPressed: (() async {
-                                                          await FirebaseFirestore
-                                                              .instance
-                                                              .collection(
-                                                                  'Patient')
-                                                              .doc(box
-                                                                  .read('id'))
-                                                              .update({
-                                                            'brgy':
-                                                                brgyController
-                                                                    .text
-                                                          });
+                                                  ),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: (() async {
+                                                        await FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'Patient')
+                                                            .doc(box.read('id'))
+                                                            .update({
+                                                          'address':
+                                                              brgyController
+                                                                  .text
+                                                        });
 
-                                                          Navigator.pop(
-                                                              context);
-                                                        }),
-                                                        child: TextBold(
-                                                            text: 'Update',
-                                                            fontSize: 14,
-                                                            color:
-                                                                Colors.black),
-                                                      ),
-                                                    ],
-                                                  );
-                                                }));
-                                          }),
-                                          icon: const Icon(Icons.edit),
-                                        ),
-                                      ],
-                                    ),
+                                                        Navigator.pop(context);
+                                                      }),
+                                                      child: TextBold(
+                                                          text: 'Update',
+                                                          fontSize: 14,
+                                                          color: Colors.black),
+                                                    ),
+                                                  ],
+                                                );
+                                              }));
+                                        }),
+                                        icon: const Icon(Icons.edit),
+                                      ),
+                                    ],
                                   ),
                                   const SizedBox(
                                     height: 20,
-                                  ),
-                                  SizedBox(
-                                    width: 140,
-                                    child: Row(
-                                      children: [
-                                        TextRegular(
-                                            text: 'Zone: ${data['zone']}',
-                                            fontSize: 15,
-                                            color: Colors.black),
-                                        IconButton(
-                                          onPressed: (() {
-                                            showDialog(
-                                                context: context,
-                                                builder: ((context) {
-                                                  return AlertDialog(
-                                                    content: SizedBox(
-                                                      height: 100,
-                                                      width: 200,
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 10,
-                                                                right: 10),
-                                                        child: TextFormField(
-                                                          controller:
-                                                              zoneController,
-                                                          decoration:
-                                                              const InputDecoration(
-                                                                  labelText:
-                                                                      'Zone:'),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    actions: [
-                                                      TextButton(
-                                                        onPressed: (() async {
-                                                          await FirebaseFirestore
-                                                              .instance
-                                                              .collection(
-                                                                  'Patient')
-                                                              .doc(box
-                                                                  .read('id'))
-                                                              .update({
-                                                            'zone':
-                                                                zoneController
-                                                                    .text
-                                                          });
-
-                                                          Navigator.pop(
-                                                              context);
-                                                        }),
-                                                        child: TextBold(
-                                                            text: 'Update',
-                                                            fontSize: 14,
-                                                            color:
-                                                                Colors.black),
-                                                      ),
-                                                    ],
-                                                  );
-                                                }));
-                                          }),
-                                          icon: const Icon(Icons.edit),
-                                        ),
-                                      ],
-                                    ),
                                   ),
                                 ],
                               ),
