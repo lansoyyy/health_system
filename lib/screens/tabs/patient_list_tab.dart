@@ -173,16 +173,38 @@ class _PatientListTabState extends State<PatientListTab> {
       pw.Page(
         build: ((context) {
           return pw.Column(children: [
-            pw.Center(
-              child: pw.Image(image, height: 120, width: 120),
-            ),
+            pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Center(
+                    child: pw.Image(image, height: 80, width: 80),
+                  ),
+                  pw.Column(children: [
+                    pw.SizedBox(height: 20),
+                    pw.Text('Sumilao, Bukidnon, 8701',
+                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                    pw.SizedBox(height: 5),
+                    pw.Row(children: [
+                      pw.Text('Tel (088) 813 - 5661',
+                          style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.normal, fontSize: 8)),
+                      pw.SizedBox(width: 5),
+                      pw.Text('TO 5663; TELEFAX (088) 813 - 2717',
+                          style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.normal, fontSize: 8)),
+                    ]),
+                    pw.SizedBox(height: 5),
+                    pw.Text('www.sumilao.com.ph',
+                        style: pw.TextStyle(
+                            fontWeight: pw.FontWeight.normal, fontSize: 10)),
+                  ]),
+                  pw.SizedBox(width: 20),
+                ]),
             pw.SizedBox(height: 20),
-            pw.Text('Sumilao, Bukidnon'),
-            pw.SizedBox(height: 5),
             pw.Text(cdate2),
-            pw.SizedBox(height: 20),
+            pw.SizedBox(height: 10),
             pw.Text('Patient List'),
-            pw.SizedBox(height: 30),
+            pw.SizedBox(height: 20),
             pw.Table(
               border: pw.TableBorder.all(),
               children: [
