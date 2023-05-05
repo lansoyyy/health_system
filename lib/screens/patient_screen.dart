@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -27,7 +25,9 @@ class _PatientScreenState extends State<PatientScreen> {
 
   final doc = pw.Document();
 
-  printing(Uint8List capturedImage) async {
+  late var userData1;
+
+  printing() async {
     final image = await imageFromAssetBundle('assets/images/logo.jpg');
     doc.addPage(pw.Page(
       build: (pw.Context context) {
@@ -56,7 +56,7 @@ class _PatientScreenState extends State<PatientScreen> {
             pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: [
-                  pw.Text('Lance O. Olana',
+                  pw.Text(userData1['name'],
                       style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                 ]),
             pw.Divider(),
@@ -70,13 +70,13 @@ class _PatientScreenState extends State<PatientScreen> {
             pw.SizedBox(height: 20),
             pw.Align(
               alignment: pw.Alignment.bottomLeft,
-              child: pw.Text('November 01, 2001',
+              child: pw.Text(userData1['dateOfBirth'],
                   style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
             ),
             pw.Divider(),
             pw.Align(
               alignment: pw.Alignment.bottomLeft,
-              child: pw.Text('Date of Birth (MM/DD/yyyy)',
+              child: pw.Text('Date of Birth (DD/MM/yyyy)',
                   style: pw.TextStyle(
                       fontWeight: pw.FontWeight.normal, fontSize: 10)),
             ),
@@ -90,7 +90,7 @@ class _PatientScreenState extends State<PatientScreen> {
                             fontWeight: pw.FontWeight.normal, fontSize: 10)),
                     pw.SizedBox(width: 5),
                     pw.Text(
-                      'Male',
+                      userData1['gender'],
                       style: pw.TextStyle(
                           fontWeight: pw.FontWeight.bold,
                           decoration: pw.TextDecoration.underline),
@@ -102,7 +102,7 @@ class _PatientScreenState extends State<PatientScreen> {
                             fontWeight: pw.FontWeight.normal, fontSize: 10)),
                     pw.SizedBox(width: 5),
                     pw.Text(
-                      '09090104355',
+                      userData1['phoneNumber'],
                       style: pw.TextStyle(
                           fontWeight: pw.FontWeight.bold,
                           decoration: pw.TextDecoration.underline),
@@ -117,7 +117,7 @@ class _PatientScreenState extends State<PatientScreen> {
                       fontWeight: pw.FontWeight.normal, fontSize: 10)),
               pw.SizedBox(width: 5),
               pw.Text(
-                'Zone 3, Poblacion, Impasugong, Bukidnon',
+                userData1['address'],
                 style: pw.TextStyle(
                     fontWeight: pw.FontWeight.bold,
                     decoration: pw.TextDecoration.underline),
@@ -133,7 +133,7 @@ class _PatientScreenState extends State<PatientScreen> {
                             fontWeight: pw.FontWeight.normal, fontSize: 10)),
                     pw.SizedBox(width: 5),
                     pw.Text(
-                      'Lorem Ipsum',
+                      userData1['disease'],
                       style: pw.TextStyle(
                           fontWeight: pw.FontWeight.bold,
                           decoration: pw.TextDecoration.underline),
@@ -145,7 +145,7 @@ class _PatientScreenState extends State<PatientScreen> {
                             fontWeight: pw.FontWeight.normal, fontSize: 10)),
                     pw.SizedBox(width: 5),
                     pw.Text(
-                      'January 01, 2001',
+                      userData1['dateOfFindings'],
                       style: pw.TextStyle(
                           fontWeight: pw.FontWeight.bold,
                           decoration: pw.TextDecoration.underline),
@@ -160,7 +160,7 @@ class _PatientScreenState extends State<PatientScreen> {
                       fontWeight: pw.FontWeight.normal, fontSize: 10)),
               pw.SizedBox(width: 5),
               pw.Text(
-                'Lorem Ipsum',
+                userData1['medicalFindings'],
                 style: pw.TextStyle(
                     fontWeight: pw.FontWeight.bold,
                     decoration: pw.TextDecoration.underline),
@@ -173,7 +173,7 @@ class _PatientScreenState extends State<PatientScreen> {
                       fontWeight: pw.FontWeight.normal, fontSize: 10)),
               pw.SizedBox(width: 5),
               pw.Text(
-                'John Doe',
+                userData1['assistedBy'],
                 style: pw.TextStyle(
                     fontWeight: pw.FontWeight.bold,
                     decoration: pw.TextDecoration.underline),
@@ -276,15 +276,10 @@ class _PatientScreenState extends State<PatientScreen> {
                                   ),
                                   GestureDetector(
                                     onTap: (() {
-                                      ssController
-                                          .capture(
-                                              delay: const Duration(
-                                                  milliseconds: 10))
-                                          .then((capturedImage) async {
-                                        printing(capturedImage!);
-                                      }).catchError((onError) {
-                                        print(onError);
+                                      setState(() {
+                                        userData1 = data;
                                       });
+                                      printing();
                                     }),
                                     child: Row(
                                       mainAxisAlignment:
