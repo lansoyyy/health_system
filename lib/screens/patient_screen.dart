@@ -28,18 +28,159 @@ class _PatientScreenState extends State<PatientScreen> {
   final doc = pw.Document();
 
   printing(Uint8List capturedImage) async {
+    final image = await imageFromAssetBundle('assets/images/logo.jpg');
     doc.addPage(pw.Page(
-      orientation: pw.PageOrientation.landscape,
       build: (pw.Context context) {
-        return pw.Container(
-            height: double.infinity,
-            width: double.infinity,
-            child: pw.Image(
-                pw.MemoryImage(
-                  capturedImage,
-                ),
-                height: 750,
-                width: 700));
+        return pw.Column(children: [
+          pw.Center(
+            child: pw.Image(image, height: 80, width: 80),
+          ),
+          pw.Column(children: [
+            pw.SizedBox(height: 20),
+            pw.Text('Rural Health Unit',
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+            pw.SizedBox(height: 5),
+            pw.Text('Municipality of Sumilao',
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+            pw.Text('Province of Bukidnon',
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+            pw.SizedBox(height: 5),
+            pw.SizedBox(height: 20),
+            pw.Align(
+              alignment: pw.Alignment.bottomLeft,
+              child: pw.Text('Personal Information Sheet',
+                  style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.normal, fontSize: 11)),
+            ),
+            pw.SizedBox(height: 20),
+            pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Text('Lance O. Olana',
+                      style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                ]),
+            pw.Divider(),
+            pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Text('Full Name',
+                      style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.normal, fontSize: 10)),
+                ]),
+            pw.SizedBox(height: 20),
+            pw.Align(
+              alignment: pw.Alignment.bottomLeft,
+              child: pw.Text('November 01, 2001',
+                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+            ),
+            pw.Divider(),
+            pw.Align(
+              alignment: pw.Alignment.bottomLeft,
+              child: pw.Text('Date of Birth (MM/DD/yyyy)',
+                  style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.normal, fontSize: 10)),
+            ),
+            pw.SizedBox(height: 20),
+            pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Row(children: [
+                    pw.Text('Sex:',
+                        style: pw.TextStyle(
+                            fontWeight: pw.FontWeight.normal, fontSize: 10)),
+                    pw.SizedBox(width: 5),
+                    pw.Text(
+                      'Male',
+                      style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          decoration: pw.TextDecoration.underline),
+                    ),
+                  ]),
+                  pw.Row(children: [
+                    pw.Text('Phone Number:',
+                        style: pw.TextStyle(
+                            fontWeight: pw.FontWeight.normal, fontSize: 10)),
+                    pw.SizedBox(width: 5),
+                    pw.Text(
+                      '09090104355',
+                      style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          decoration: pw.TextDecoration.underline),
+                    ),
+                  ]),
+                  pw.SizedBox()
+                ]),
+            pw.SizedBox(height: 20),
+            pw.Row(children: [
+              pw.Text('Address:',
+                  style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.normal, fontSize: 10)),
+              pw.SizedBox(width: 5),
+              pw.Text(
+                'Zone 3, Poblacion, Impasugong, Bukidnon',
+                style: pw.TextStyle(
+                    fontWeight: pw.FontWeight.bold,
+                    decoration: pw.TextDecoration.underline),
+              ),
+            ]),
+            pw.SizedBox(height: 20),
+            pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Row(children: [
+                    pw.Text('Medical Findings:',
+                        style: pw.TextStyle(
+                            fontWeight: pw.FontWeight.normal, fontSize: 10)),
+                    pw.SizedBox(width: 5),
+                    pw.Text(
+                      'Lorem Ipsum',
+                      style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          decoration: pw.TextDecoration.underline),
+                    ),
+                  ]),
+                  pw.Row(children: [
+                    pw.Text('Date of Findings:',
+                        style: pw.TextStyle(
+                            fontWeight: pw.FontWeight.normal, fontSize: 10)),
+                    pw.SizedBox(width: 5),
+                    pw.Text(
+                      'January 01, 2001',
+                      style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold,
+                          decoration: pw.TextDecoration.underline),
+                    ),
+                  ]),
+                  pw.SizedBox()
+                ]),
+            pw.SizedBox(height: 50),
+            pw.Row(children: [
+              pw.Text('Notes:',
+                  style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.normal, fontSize: 10)),
+              pw.SizedBox(width: 5),
+              pw.Text(
+                'Lorem Ipsum',
+                style: pw.TextStyle(
+                    fontWeight: pw.FontWeight.bold,
+                    decoration: pw.TextDecoration.underline),
+              ),
+            ]),
+            pw.SizedBox(height: 30),
+            pw.Row(children: [
+              pw.Text('Assited by:',
+                  style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.normal, fontSize: 10)),
+              pw.SizedBox(width: 5),
+              pw.Text(
+                'John Doe',
+                style: pw.TextStyle(
+                    fontWeight: pw.FontWeight.bold,
+                    decoration: pw.TextDecoration.underline),
+              ),
+            ]),
+          ]),
+        ]);
       },
     ));
 
