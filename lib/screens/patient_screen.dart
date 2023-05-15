@@ -226,7 +226,7 @@ class _PatientScreenState extends State<PatientScreen> {
                       padding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
                       child: Container(
                         width: double.infinity,
-                        height: 210,
+                        height: 250,
                         decoration: BoxDecoration(
                           color: Colors.green.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(20),
@@ -499,6 +499,70 @@ class _PatientScreenState extends State<PatientScreen> {
                                               ),
                                             ],
                                           )),
+                                      Row(
+                                        children: [
+                                          TextRegular(
+                                              text:
+                                                  'Address: ${data['address']}',
+                                              fontSize: 15,
+                                              color: Colors.black),
+                                          IconButton(
+                                            onPressed: (() {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: ((context) {
+                                                    return AlertDialog(
+                                                      content: SizedBox(
+                                                        height: 100,
+                                                        width: 200,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 10,
+                                                                  right: 10),
+                                                          child: TextFormField(
+                                                            controller:
+                                                                brgyController,
+                                                            decoration:
+                                                                const InputDecoration(
+                                                                    labelText:
+                                                                        'New Patient Address:'),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: (() async {
+                                                            await FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    'Patient')
+                                                                .doc(box
+                                                                    .read('id'))
+                                                                .update({
+                                                              'address':
+                                                                  brgyController
+                                                                      .text
+                                                            });
+
+                                                            Navigator.pop(
+                                                                context);
+                                                          }),
+                                                          child: TextBold(
+                                                              text: 'Update',
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.black),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  }));
+                                            }),
+                                            icon: const Icon(Icons.edit),
+                                          ),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ],
@@ -509,14 +573,13 @@ class _PatientScreenState extends State<PatientScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
+                      padding: const EdgeInsets.fromLTRB(30, 10, 30, 20),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
-                            width: 500,
-                            height: 240,
+                            height: 400,
+                            width: 600,
                             decoration: BoxDecoration(
                               color: Colors.green.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(20),
@@ -525,240 +588,143 @@ class _PatientScreenState extends State<PatientScreen> {
                               padding:
                                   const EdgeInsets.only(left: 20, right: 20),
                               child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const SizedBox(
                                     height: 10,
                                   ),
                                   Center(
-                                      child: TextBold(
-                                          text: 'Address',
-                                          fontSize: 24,
-                                          color: Colors.black)),
-                                  const SizedBox(
-                                    height: 40,
+                                    child: TextBold(
+                                        text: 'Medical Findings',
+                                        fontSize: 24,
+                                        color: Colors.black),
                                   ),
-                                  Row(
-                                    children: [
-                                      TextRegular(
-                                          text: 'Address: ${data['address']}',
-                                          fontSize: 15,
-                                          color: Colors.black),
-                                      IconButton(
-                                        onPressed: (() {
-                                          showDialog(
-                                              context: context,
-                                              builder: ((context) {
-                                                return AlertDialog(
-                                                  content: SizedBox(
-                                                    height: 100,
-                                                    width: 200,
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 10,
-                                                              right: 10),
-                                                      child: TextFormField(
-                                                        controller:
-                                                            brgyController,
-                                                        decoration:
-                                                            const InputDecoration(
-                                                                labelText:
-                                                                    'New Patient Address:'),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: (() async {
-                                                        await FirebaseFirestore
+                                  const SizedBox(
+                                    height: 50,
+                                  ),
+                                  SizedBox(
+                                    width: 500,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            TextRegular(
+                                                text:
+                                                    'Disease: ${data['disease']}',
+                                                fontSize: 15,
+                                                color: Colors.black),
+                                            const SizedBox(
+                                              width: 15,
+                                            ),
+                                            Row(
+                                              children: [
+                                                TextRegular(
+                                                    text:
+                                                        "(Active: ${data['isActive'].toString()})",
+                                                    fontSize: 13,
+                                                    color: Colors.black),
+                                                IconButton(
+                                                  onPressed: (() async {
+                                                    int nums = 0;
+
+                                                    var collection =
+                                                        FirebaseFirestore
                                                             .instance
                                                             .collection(
-                                                                'Patient')
-                                                            .doc(box.read('id'))
-                                                            .update({
-                                                          'address':
-                                                              brgyController
-                                                                  .text
-                                                        });
+                                                                'Places')
+                                                            .where('place',
+                                                                isEqualTo: data[
+                                                                    'brgy']);
 
-                                                        Navigator.pop(context);
-                                                      }),
-                                                      child: TextBold(
-                                                          text: 'Update',
-                                                          fontSize: 14,
-                                                          color: Colors.black),
-                                                    ),
-                                                  ],
-                                                );
-                                              }));
-                                        }),
-                                        icon: const Icon(Icons.edit),
-                                      ),
-                                    ],
+                                                    var querySnapshot =
+                                                        await collection.get();
+                                                    if (mounted) {
+                                                      setState(() {
+                                                        for (var queryDocumentSnapshot
+                                                            in querySnapshot
+                                                                .docs) {
+                                                          Map<String, dynamic>
+                                                              data =
+                                                              queryDocumentSnapshot
+                                                                  .data();
+                                                          nums = data['nums'];
+                                                        }
+                                                      });
+                                                    }
+
+                                                    if (data['isActive'] ==
+                                                        true) {
+                                                      await FirebaseFirestore
+                                                          .instance
+                                                          .collection('Places')
+                                                          .doc(data['brgy'])
+                                                          .update({
+                                                        "nums": nums - 1
+                                                      });
+                                                      showToast(
+                                                          'Status updated succesfully!');
+                                                    } else {
+                                                      await FirebaseFirestore
+                                                          .instance
+                                                          .collection('Places')
+                                                          .doc(data['brgy'])
+                                                          .update({
+                                                        "nums": nums + 1
+                                                      });
+                                                      showToast(
+                                                          'Status updated succesfully!');
+                                                    }
+
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection('Patient')
+                                                        .doc(box.read('id'))
+                                                        .update({
+                                                      'isActive':
+                                                          !data['isActive']
+                                                    });
+                                                  }),
+                                                  icon: const Icon(
+                                                    Icons
+                                                        .change_circle_outlined,
+                                                    color: Colors.black,
+                                                    size: 15,
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        TextRegular(
+                                            text:
+                                                'Date Findings: ${data['dateOfFindings']}',
+                                            fontSize: 15,
+                                            color: Colors.black),
+                                      ],
+                                    ),
                                   ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  TextFieldWidget(
+                                      height: 150,
+                                      width: 500,
+                                      maxLine: 5,
+                                      label: 'Notes:',
+                                      hint: data['medicalFindings'],
+                                      controller: notesController),
                                   const SizedBox(
                                     height: 20,
                                   ),
+                                  TextRegular(
+                                      text:
+                                          'Assisted by: ${data['assistedBy']}',
+                                      fontSize: 15,
+                                      color: Colors.black),
                                 ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Expanded(
-                            child: Container(
-                              height: 400,
-                              decoration: BoxDecoration(
-                                color: Colors.green.withOpacity(0.2),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 20, right: 20),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Center(
-                                      child: TextBold(
-                                          text: 'Medical Findings',
-                                          fontSize: 24,
-                                          color: Colors.black),
-                                    ),
-                                    const SizedBox(
-                                      height: 50,
-                                    ),
-                                    SizedBox(
-                                      width: 500,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              TextRegular(
-                                                  text:
-                                                      'Disease: ${data['disease']}',
-                                                  fontSize: 15,
-                                                  color: Colors.black),
-                                              const SizedBox(
-                                                width: 15,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  TextRegular(
-                                                      text:
-                                                          "(Active: ${data['isActive'].toString()})",
-                                                      fontSize: 13,
-                                                      color: Colors.black),
-                                                  IconButton(
-                                                    onPressed: (() async {
-                                                      int nums = 0;
-
-                                                      var collection =
-                                                          FirebaseFirestore
-                                                              .instance
-                                                              .collection(
-                                                                  'Places')
-                                                              .where('place',
-                                                                  isEqualTo: data[
-                                                                      'brgy']);
-
-                                                      var querySnapshot =
-                                                          await collection
-                                                              .get();
-                                                      if (mounted) {
-                                                        setState(() {
-                                                          for (var queryDocumentSnapshot
-                                                              in querySnapshot
-                                                                  .docs) {
-                                                            Map<String, dynamic>
-                                                                data =
-                                                                queryDocumentSnapshot
-                                                                    .data();
-                                                            nums = data['nums'];
-                                                          }
-                                                        });
-                                                      }
-
-                                                      if (data['isActive'] ==
-                                                          true) {
-                                                        await FirebaseFirestore
-                                                            .instance
-                                                            .collection(
-                                                                'Places')
-                                                            .doc(data['brgy'])
-                                                            .update({
-                                                          "nums": nums - 1
-                                                        });
-                                                        showToast(
-                                                            'Status updated succesfully!');
-                                                      } else {
-                                                        await FirebaseFirestore
-                                                            .instance
-                                                            .collection(
-                                                                'Places')
-                                                            .doc(data['brgy'])
-                                                            .update({
-                                                          "nums": nums + 1
-                                                        });
-                                                        showToast(
-                                                            'Status updated succesfully!');
-                                                      }
-
-                                                      await FirebaseFirestore
-                                                          .instance
-                                                          .collection('Patient')
-                                                          .doc(box.read('id'))
-                                                          .update({
-                                                        'isActive':
-                                                            !data['isActive']
-                                                      });
-                                                    }),
-                                                    icon: const Icon(
-                                                      Icons
-                                                          .change_circle_outlined,
-                                                      color: Colors.black,
-                                                      size: 15,
-                                                    ),
-                                                  ),
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                          TextRegular(
-                                              text:
-                                                  'Date Findings: ${data['dateOfFindings']}',
-                                              fontSize: 15,
-                                              color: Colors.black),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    TextFieldWidget(
-                                        height: 150,
-                                        width: 500,
-                                        maxLine: 5,
-                                        label: 'Notes:',
-                                        hint: data['medicalFindings'],
-                                        controller: notesController),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    TextRegular(
-                                        text:
-                                            'Assisted by: ${data['assistedBy']}',
-                                        fontSize: 15,
-                                        color: Colors.black),
-                                  ],
-                                ),
                               ),
                             ),
                           ),
