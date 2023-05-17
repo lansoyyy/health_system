@@ -88,7 +88,7 @@ class MapTabState extends State<MapTab> {
                             image: DecorationImage(
                               image: AssetImage(datas[i] >= 0 && datas[i] < 5
                                   ? 'assets/images/green.png'
-                                  : datas[i] >= 6 && datas[i] < 11
+                                  : datas[i] >= 5 && datas[i] < 11
                                       ? 'assets/images/orange.png'
                                       : 'assets/images/red.png'),
                               opacity: 75,
