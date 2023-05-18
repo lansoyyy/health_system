@@ -225,7 +225,7 @@ class _PatientScreenState extends State<PatientScreen> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
                       child: Container(
-                        width: double.infinity,
+                        width: 1100,
                         height: 250,
                         decoration: BoxDecoration(
                           color: Colors.green.withOpacity(0.2),
@@ -239,38 +239,40 @@ class _PatientScreenState extends State<PatientScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  GestureDetector(
-                                    onTap: (() async {
-                                      if (notesController.text == '') {
-                                        showToast(
-                                            'Update failed! No new Input');
-                                      } else {
-                                        showToast(
-                                            'Findings updated succesfully!');
-                                        await FirebaseFirestore.instance
-                                            .collection('Patient')
-                                            .doc(data['id'])
-                                            .update({
-                                          'medicalFindings':
-                                              notesController.text
-                                        });
-                                      }
-                                    }),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        const Icon(Icons.edit),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        TextBold(
-                                            text: 'Edit Notes',
-                                            fontSize: 18,
-                                            color: Colors.black),
-                                      ],
-                                    ),
-                                  ),
+                                  box.read('user') != 'Nurse'
+                                      ? GestureDetector(
+                                          onTap: (() async {
+                                            if (notesController.text == '') {
+                                              showToast(
+                                                  'Update failed! No new Input');
+                                            } else {
+                                              showToast(
+                                                  'Findings updated succesfully!');
+                                              await FirebaseFirestore.instance
+                                                  .collection('Patient')
+                                                  .doc(data['id'])
+                                                  .update({
+                                                'medicalFindings':
+                                                    notesController.text
+                                              });
+                                            }
+                                          }),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              const Icon(Icons.edit),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              TextBold(
+                                                  text: 'Edit Notes',
+                                                  fontSize: 18,
+                                                  color: Colors.black),
+                                            ],
+                                          ),
+                                        )
+                                      : const SizedBox(),
                                   const SizedBox(
                                     width: 10,
                                   ),
@@ -575,11 +577,11 @@ class _PatientScreenState extends State<PatientScreen> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(30, 10, 30, 20),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
                             height: 400,
-                            width: 600,
+                            width: 1100,
                             decoration: BoxDecoration(
                               color: Colors.green.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(20),
@@ -589,7 +591,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                   const EdgeInsets.only(left: 20, right: 20),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   const SizedBox(
                                     height: 10,
