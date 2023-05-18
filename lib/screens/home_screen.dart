@@ -10,6 +10,8 @@ import 'package:sumilao/utils/colors.dart';
 import 'package:sumilao/widgets/text_widget.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -70,86 +72,171 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   const Expanded(child: SizedBox()),
-                  PopupMenuButton(
-                    icon: const Icon(Icons.menu),
-                    itemBuilder: (context) {
-                      return [
-                        PopupMenuItem(
-                          child: TextButton(
-                            onPressed: (() {
-                              Navigator.pushNamed(context, '/patientscreen');
-                            }),
-                            child: TextBold(
-                                text: 'Add New Patient',
-                                fontSize: 14,
-                                color: primary),
-                          ),
-                        ),
-                        PopupMenuItem(
-                            child: TextButton(
-                                onPressed: (() {
-                                  Navigator.pushNamed(context, '/userscreen');
-                                }),
-                                child: box.read('user') == 'Admin'
-                                    ? TextBold(
-                                        text: 'Add User',
-                                        fontSize: 14,
-                                        color: primary)
-                                    : const SizedBox())),
-                        PopupMenuItem(
-                          child: TextButton(
-                            onPressed: (() {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                        title: const Text(
-                                          'Logout Confirmation',
-                                          style: TextStyle(
-                                              fontFamily: 'QBold',
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        content: const Text(
-                                          'Are you sure you want to Logout?',
-                                          style:
-                                              TextStyle(fontFamily: 'QRegular'),
-                                        ),
-                                        actions: <Widget>[
-                                          MaterialButton(
-                                            onPressed: () =>
-                                                Navigator.of(context).pop(true),
-                                            child: const Text(
-                                              'Close',
-                                              style: TextStyle(
-                                                  fontFamily: 'QRegular',
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                          MaterialButton(
-                                            onPressed: () async {
-                                              await FirebaseAuth.instance
-                                                  .signOut();
-                                              Navigator.pushReplacementNamed(
-                                                  context, '/loginpage');
-                                            },
-                                            child: const Text(
-                                              'Continue',
-                                              style: TextStyle(
-                                                  fontFamily: 'QRegular',
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        ],
-                                      ));
-                            }),
-                            child: TextRegular(
-                                text: 'Logout',
-                                fontSize: 12,
-                                color: Colors.red),
-                          ),
-                        ),
-                      ];
-                    },
-                  )
+                  box.read('user') == 'Admin'
+                      ? PopupMenuButton(
+                          icon: const Icon(Icons.menu),
+                          itemBuilder: (context) {
+                            return [
+                              PopupMenuItem(
+                                child: TextButton(
+                                  onPressed: (() {
+                                    Navigator.pushNamed(
+                                        context, '/patientscreen');
+                                  }),
+                                  child: TextBold(
+                                      text: 'Add New Patient',
+                                      fontSize: 14,
+                                      color: primary),
+                                ),
+                              ),
+                              PopupMenuItem(
+                                  child: TextButton(
+                                      onPressed: (() {
+                                        Navigator.pushNamed(
+                                            context, '/userscreen');
+                                      }),
+                                      child: box.read('user') == 'Admin'
+                                          ? TextBold(
+                                              text: 'Add User',
+                                              fontSize: 14,
+                                              color: primary)
+                                          : const SizedBox())),
+                              PopupMenuItem(
+                                child: TextButton(
+                                  onPressed: (() {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                              title: const Text(
+                                                'Logout Confirmation',
+                                                style: TextStyle(
+                                                    fontFamily: 'QBold',
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              content: const Text(
+                                                'Are you sure you want to Logout?',
+                                                style: TextStyle(
+                                                    fontFamily: 'QRegular'),
+                                              ),
+                                              actions: <Widget>[
+                                                MaterialButton(
+                                                  onPressed: () =>
+                                                      Navigator.of(context)
+                                                          .pop(true),
+                                                  child: const Text(
+                                                    'Close',
+                                                    style: TextStyle(
+                                                        fontFamily: 'QRegular',
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                                MaterialButton(
+                                                  onPressed: () async {
+                                                    await FirebaseAuth.instance
+                                                        .signOut();
+                                                    Navigator
+                                                        .pushReplacementNamed(
+                                                            context,
+                                                            '/loginpage');
+                                                  },
+                                                  child: const Text(
+                                                    'Continue',
+                                                    style: TextStyle(
+                                                        fontFamily: 'QRegular',
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ],
+                                            ));
+                                  }),
+                                  child: TextRegular(
+                                      text: 'Logout',
+                                      fontSize: 12,
+                                      color: Colors.red),
+                                ),
+                              ),
+                            ];
+                          },
+                        )
+                      : PopupMenuButton(
+                          icon: const Icon(Icons.menu),
+                          itemBuilder: (context) {
+                            return [
+                              PopupMenuItem(
+                                child: TextButton(
+                                  onPressed: (() {
+                                    Navigator.pushNamed(
+                                        context, '/patientscreen');
+                                  }),
+                                  child: TextBold(
+                                      text: 'Add New Patient',
+                                      fontSize: 14,
+                                      color: primary),
+                                ),
+                              ),
+                              PopupMenuItem(
+                                child: TextButton(
+                                  onPressed: (() {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                              title: const Text(
+                                                'Logout Confirmation',
+                                                style: TextStyle(
+                                                    fontFamily: 'QBold',
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              content: const Text(
+                                                'Are you sure you want to Logout?',
+                                                style: TextStyle(
+                                                    fontFamily: 'QRegular'),
+                                              ),
+                                              actions: <Widget>[
+                                                MaterialButton(
+                                                  onPressed: () =>
+                                                      Navigator.of(context)
+                                                          .pop(true),
+                                                  child: const Text(
+                                                    'Close',
+                                                    style: TextStyle(
+                                                        fontFamily: 'QRegular',
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                                MaterialButton(
+                                                  onPressed: () async {
+                                                    await FirebaseAuth.instance
+                                                        .signOut();
+                                                    Navigator
+                                                        .pushReplacementNamed(
+                                                            context,
+                                                            '/loginpage');
+                                                  },
+                                                  child: const Text(
+                                                    'Continue',
+                                                    style: TextStyle(
+                                                        fontFamily: 'QRegular',
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ],
+                                            ));
+                                  }),
+                                  child: TextRegular(
+                                      text: 'Logout',
+                                      fontSize: 12,
+                                      color: Colors.red),
+                                ),
+                              ),
+                            ];
+                          },
+                        )
                 ],
               ),
             ),
@@ -158,9 +245,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Expanded(
               child: TabBarView(children: [
-                PatientListTab(),
+                const PatientListTab(),
                 const MapTab(),
-                NewsTab(),
+                const NewsTab(),
                 AboutUsTab(),
                 ReportTab(),
               ]),
