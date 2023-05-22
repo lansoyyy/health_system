@@ -8,6 +8,7 @@ import 'package:sumilao/widgets/text_widget.dart';
 import 'package:sumilao/widgets/textfield_widget.dart';
 import 'package:sumilao/widgets/toast_widget.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:intl/intl.dart';
 
 class PatientScreen extends StatefulWidget {
   const PatientScreen({super.key});
@@ -160,7 +161,7 @@ class _PatientScreenState extends State<PatientScreen> {
                       fontWeight: pw.FontWeight.normal, fontSize: 10)),
               pw.SizedBox(width: 5),
               pw.Text(
-                userData1['medicalFindings'],
+                userData1['medicalFindings'][0]['notes'],
                 style: pw.TextStyle(
                     fontWeight: pw.FontWeight.bold,
                     decoration: pw.TextDecoration.underline),
@@ -242,31 +243,31 @@ class _PatientScreenState extends State<PatientScreen> {
                                   box.read('user') != 'Nurse'
                                       ? GestureDetector(
                                           onTap: (() async {
-                                            if (notesController.text == '') {
-                                              showToast(
-                                                  'Update failed! No new Input');
-                                            } else {
-                                              showToast(
-                                                  'Findings updated succesfully!');
-                                              await FirebaseFirestore.instance
-                                                  .collection('Patient')
-                                                  .doc(data['id'])
-                                                  .update({
-                                                'medicalFindings':
-                                                    notesController.text
-                                              });
-                                            }
+                                            await FirebaseFirestore.instance
+                                                .collection('Patient')
+                                                .doc(box.read('id'))
+                                                .update({
+                                              'medicalFindings':
+                                                  FieldValue.arrayUnion([
+                                                {
+                                                  'notes': notesController.text,
+                                                  'date': DateTime.now(),
+                                                }
+                                              ]),
+                                            });
+                                            notesController.clear();
+                                            showToast('Notes added!');
                                           }),
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: [
-                                              const Icon(Icons.edit),
+                                              const Icon(Icons.add),
                                               const SizedBox(
                                                 width: 10,
                                               ),
                                               TextBold(
-                                                  text: 'Edit Notes',
+                                                  text: 'Add Notes',
                                                   fontSize: 18,
                                                   color: Colors.black),
                                             ],
@@ -711,12 +712,49 @@ class _PatientScreenState extends State<PatientScreen> {
                                   const SizedBox(
                                     height: 10,
                                   ),
+                                  Center(
+                                    child: SizedBox(
+                                      height: 100,
+                                      width: 600,
+                                      child: ListView(
+                                        children: [
+                                          for (int i = 0;
+                                              i <
+                                                  data['medicalFindings']
+                                                      .length;
+                                              i++)
+                                            SizedBox(
+                                              width: 600,
+                                              child: ListTile(
+                                                leading: const Icon(
+                                                  Icons.note,
+                                                ),
+                                                title: TextRegular(
+                                                    text:
+                                                        '${data['medicalFindings'][i]['notes']}',
+                                                    fontSize: 15,
+                                                    color: Colors.black),
+                                                trailing: TextRegular(
+                                                    text: DateFormat.yMMMd()
+                                                        .add_jm()
+                                                        .format(
+                                                            data['medicalFindings']
+                                                                    [i]['date']
+                                                                .toDate()),
+                                                    fontSize: 14,
+                                                    color: Colors.grey),
+                                              ),
+                                            ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                   TextFieldWidget(
-                                      height: 150,
+                                      height: 35,
                                       width: 500,
                                       maxLine: 5,
-                                      label: 'Notes:',
-                                      hint: data['medicalFindings'],
+                                      label: '',
+                                      hint: 'Add Notes',
                                       controller: notesController),
                                   const SizedBox(
                                     height: 20,

@@ -43,13 +43,13 @@ class MyApp extends StatelessWidget {
       }),
       title: 'Municipaliy of Sumilao',
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: const LoginPage(),
       routes: {
-        Routes.loginpage: (context) => LoginPage(),
-        Routes.homescreen: (context) => HomeScreen(),
+        Routes.loginpage: (context) => const LoginPage(),
+        Routes.homescreen: (context) => const HomeScreen(),
         Routes.userscreen: (context) => UserManagementScreen(),
-        Routes.patientscreen: (context) => AddPatient(),
-        Routes.patient: (context) => PatientScreen(),
+        Routes.patientscreen: (context) => const AddPatient(),
+        Routes.patient: (context) => const PatientScreen(),
       },
     );
   }

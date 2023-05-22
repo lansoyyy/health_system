@@ -31,7 +31,7 @@ Future addPatient(
     'gender': gender,
     'disease': disease,
     'address': '$zone $brgy, Sumilao Bukidnon',
-    'medicalFindings': medicalFindings,
+    'medicalFindings': [],
     'dateOfFindings': dateOfFindings,
     'assistedBy': assistedBy,
     'lat': lat,
