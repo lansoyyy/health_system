@@ -713,6 +713,11 @@ class _PatientListTabState extends State<PatientListTab> {
                                   setState(() {
                                     filterData = selectedDate.day;
                                     filterMonth = selectedDate.month;
+                                    names.clear();
+                                    addresses.clear();
+                                    sexs.clear();
+                                    dise.clear();
+                                    actives.clear();
                                   });
                                 }
                               }),
@@ -795,16 +800,19 @@ class _PatientListTabState extends State<PatientListTab> {
                       for (int i = 0; i < data.size; i++)
                         DataRow(cells: [
                           DataCell(Builder(builder: (context) {
-                            names.clear();
-                            addresses.clear();
-                            sexs.clear();
-                            dise.clear();
-                            actives.clear();
-                            names.add(data.docs[i]['name']);
-                            addresses.add(data.docs[i]['address']);
-                            dise.add(data.docs[i]['disease']);
-                            sexs.add(data.docs[i]['gender']);
-                            actives.add(data.docs[i]['isActive']);
+                            if (names.contains(data.docs[i]['name']) == false) {
+                              // names.clear();
+                              // addresses.clear();
+                              // sexs.clear();
+                              // dise.clear();
+                              // actives.clear();
+                              names.add(data.docs[i]['name']);
+                              addresses.add(data.docs[i]['address']);
+                              dise.add(data.docs[i]['disease']);
+                              sexs.add(data.docs[i]['gender']);
+                              actives.add(data.docs[i]['isActive']);
+                            }
+
                             return TextRegular(
                                 text: data.docs[i]['name'],
                                 fontSize: 14,
