@@ -71,7 +71,7 @@ class BarangayDialog extends StatelessWidget {
                     const SizedBox(height: 15),
                     StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
-                            .collection('Places')
+                            .collection('Patient')
                             .where('brgy', isEqualTo: barangayName)
                             .where('disease', isEqualTo: 'Covid')
                             .snapshots(),
@@ -102,7 +102,7 @@ class BarangayDialog extends StatelessWidget {
                     const SizedBox(height: 8),
                     StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
-                            .collection('Places')
+                            .collection('Patient')
                             .where('brgy', isEqualTo: barangayName)
                             .where('disease', isEqualTo: 'Diarrhea')
                             .snapshots(),
@@ -133,7 +133,7 @@ class BarangayDialog extends StatelessWidget {
                     const SizedBox(height: 8),
                     StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
-                            .collection('Places')
+                            .collection('Patient')
                             .where('brgy', isEqualTo: barangayName)
                             .where('disease', isEqualTo: 'Dengue')
                             .snapshots(),
@@ -164,7 +164,7 @@ class BarangayDialog extends StatelessWidget {
                     const SizedBox(height: 8),
                     StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
-                            .collection('Places')
+                            .collection('Patient')
                             .where('brgy', isEqualTo: barangayName)
                             .where('disease', isEqualTo: 'No Sickness')
                             .snapshots(),
