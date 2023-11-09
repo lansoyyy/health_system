@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_framework/responsive_wrapper.dart';
+
 import 'package:sumilao/screens/add_patient.dart';
 import 'package:sumilao/screens/add_user.dart';
 import 'package:sumilao/screens/auth/login_page.dart';
@@ -28,19 +28,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      navigatorObservers: [round_spot.Observer()],
-      builder: ((context, child) {
-        return ResponsiveWrapper.builder(child,
-            maxWidth: 1500,
-            minWidth: 480,
-            defaultScale: true,
-            breakpoints: [
-              const ResponsiveBreakpoint.resize(480, name: MOBILE),
-              const ResponsiveBreakpoint.autoScale(800, name: TABLET),
-              const ResponsiveBreakpoint.resize(1000, name: DESKTOP),
-            ],
-            background: Container(color: Colors.white));
-      }),
       title: 'Municipaliy of Sumilao',
       debugShowCheckedModeBanner: false,
       home: const LoginPage(),

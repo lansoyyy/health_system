@@ -89,12 +89,12 @@ class MapTabState extends State<MapTab> {
                     center: LatLng(8.348975, 124.972012),
                     zoom: 12.0,
                   ),
-                  layers: [
-                    TileLayerOptions(
+                  children: [
+                    TileLayer(
                         urlTemplate:
                             "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                        subdomains: ['a', 'b', 'c']),
-                    MarkerLayerOptions(
+                        subdomains: const ['a', 'b', 'c']),
+                    MarkerLayer(
                       markers: [
                         for (int i = 0; i < datas.length; i++)
                           Marker(
@@ -134,7 +134,6 @@ class MapTabState extends State<MapTab> {
                       ],
                     ),
                   ],
-                  children: const [],
                 ),
               )),
         ),
