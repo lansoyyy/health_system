@@ -142,8 +142,12 @@ class _PatientListTabState extends State<PatientListTab> {
 
   final searchController = TextEditingController();
 
+  List ageFilters = ['No filter', '0-18', '19-59', '60 and above'];
+
+  String selectedAgeFilter = 'No filter';
+
   var _dropValue = 0;
-  final _dropValue5 = 0;
+  var _dropValue5 = 0;
 
   String filter = 'name';
 
@@ -298,6 +302,19 @@ class _PatientListTabState extends State<PatientListTab> {
               isLessThan: '${toBeginningOfSentenceCase(nameSearched)}z')
           .where('disease', isEqualTo: disease)
           .snapshots();
+    } else if (selectedAgeFilter != 'No filter') {
+      return selectedAgeFilter != '60 and above'
+          ? FirebaseFirestore.instance
+              .collection('Patient')
+              .where('age',
+                  isGreaterThan: int.parse(selectedAgeFilter.split('-')[0]))
+              .where('age',
+                  isLessThan: int.parse(selectedAgeFilter.split('-')[1]))
+              .snapshots()
+          : FirebaseFirestore.instance
+              .collection('Patient')
+              .where('age', isGreaterThan: 60)
+              .snapshots();
     } else {
       return FirebaseFirestore.instance
           .collection('Patient')
@@ -577,44 +594,6 @@ class _PatientListTabState extends State<PatientListTab> {
                               ),
                             ),
                             const Expanded(child: SizedBox()),
-                            // Container(
-                            //   decoration: BoxDecoration(
-                            //       borderRadius: BorderRadius.circular(5),
-                            //       color: Colors.white,
-                            //       border: Border.all(color: Colors.grey)),
-                            //   child: Padding(
-                            //     padding: const EdgeInsets.fromLTRB(
-                            //         20, 0, 20, 0),
-                            //     child: DropdownButton(
-                            //         dropdownColor: Colors.white,
-                            //         focusColor: Colors.white,
-                            //         value: _dropValue5,
-                            //         items: [
-                            //           for (int i = 0;
-                            //               i < diseases.length;
-                            //               i++)
-                            //             DropdownMenuItem(
-                            //               onTap: (() {
-                            //                 disease = diseases[i];
-                            //               }),
-                            //               value: i,
-                            //               child: TextRegular(
-                            //                   text: diseases[i],
-                            //                   fontSize: 14,
-                            //                   color: Colors.grey),
-                            //             ),
-                            //         ],
-                            //         onChanged: ((value) {
-                            //           setState(() {
-                            //             _dropValue5 =
-                            //                 int.parse(value.toString());
-                            //           });
-                            //         })),
-                            //   ),
-                            // ),
-                            // const SizedBox(
-                            //   width: 10,
-                            // ),
                             Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
@@ -644,6 +623,44 @@ class _PatientListTabState extends State<PatientListTab> {
                                     onChanged: ((value) {
                                       setState(() {
                                         _dropValue =
+                                            int.parse(value.toString());
+                                      });
+                                    })),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.white,
+                                  border: Border.all(color: Colors.grey)),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                child: DropdownButton(
+                                    dropdownColor: Colors.white,
+                                    focusColor: Colors.white,
+                                    value: _dropValue5,
+                                    items: [
+                                      for (int i = 0;
+                                          i < ageFilters.length;
+                                          i++)
+                                        DropdownMenuItem(
+                                          onTap: (() {
+                                            selectedAgeFilter = ageFilters[i];
+                                          }),
+                                          value: i,
+                                          child: TextRegular(
+                                              text: 'Age: ${ageFilters[i]}',
+                                              fontSize: 14,
+                                              color: Colors.grey),
+                                        ),
+                                    ],
+                                    onChanged: ((value) {
+                                      setState(() {
+                                        _dropValue5 =
                                             int.parse(value.toString());
                                       });
                                     })),
@@ -787,7 +804,7 @@ class _PatientListTabState extends State<PatientListTab> {
                               color: Colors.black)),
                       DataColumn(
                           label: TextBold(
-                              text: 'Active',
+                              text: 'Status',
                               fontSize: 18,
                               color: Colors.black)),
                       DataColumn(
@@ -831,7 +848,9 @@ class _PatientListTabState extends State<PatientListTab> {
                               fontSize: 14,
                               color: Colors.grey)),
                           DataCell(TextRegular(
-                              text: data.docs[i]['isActive'].toString(),
+                              text: data.docs[i]['isActive']
+                                  ? 'Ongoing'
+                                  : 'Recovered',
                               fontSize: 14,
                               color: Colors.grey)),
                           DataCell(ButtonWidget(

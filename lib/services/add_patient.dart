@@ -25,7 +25,7 @@ Future addPatient(
     'name': name,
     'phoneNumber': phoneNumber,
     'dateOfBirth': dateOfBirth,
-    'age': age,
+    'age': int.parse(age),
     'brgy': brgy,
     'zone': zone,
     'gender': gender,

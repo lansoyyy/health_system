@@ -53,13 +53,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontSize: 14),
                             tabs: const [
                               Tab(
+                                text: 'NEWS & UPDATE',
+                              ),
+                              Tab(
                                 text: 'PATIENT LIST',
                               ),
                               Tab(
                                 text: 'MAP',
-                              ),
-                              Tab(
-                                text: 'NEWS & UPDATE',
                               ),
                               Tab(
                                 text: 'ABOUT US',
@@ -245,9 +245,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Expanded(
               child: TabBarView(children: [
+                const NewsTab(),
                 const PatientListTab(),
                 const MapTab(),
-                const NewsTab(),
                 AboutUsTab(),
                 ReportTab(),
               ]),
