@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:sumilao/services/add_patient.dart';
 import 'package:sumilao/services/local_storage.dart';
+import 'package:sumilao/utils/colors.dart';
 import 'package:sumilao/widgets/button_widget.dart';
 import 'package:sumilao/widgets/text_widget.dart';
 import 'package:sumilao/widgets/textfield_widget.dart';
@@ -129,21 +130,44 @@ class _AddPatientState extends State<AddPatient> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppbar('Patient Management'),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
           child: Center(
             child: SizedBox(
-              width: 450,
+              width: double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  TextBold(
-                      text: 'Adding Patient',
-                      fontSize: 24,
-                      color: Colors.black),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/logo.jpg',
+                            height: 100,
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          TextBold(
+                              text: 'GeoFinds', fontSize: 24, color: primary),
+                        ],
+                      ),
+                      TextBold(
+                          text: 'ADDING PATIENT',
+                          fontSize: 58,
+                          color: Colors.black),
+                      const SizedBox(
+                        width: 50,
+                      ),
+                    ],
+                  ),
+                  customAppbar('Patient Management'),
                   const SizedBox(
                     height: 20,
                   ),
@@ -188,242 +212,68 @@ class _AddPatientState extends State<AddPatient> {
                   const SizedBox(
                     height: 20,
                   ),
-                  TextFieldWidget(
-                      width: 425,
-                      label: 'Full Name',
-                      controller: nameController),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFieldWidget(
-                      width: 425,
-                      inputType: TextInputType.number,
-                      label: 'Phone Number',
-                      controller: phoneNumberController),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextFieldWidget(
-                          onPressed: () async {
-                            final DateTime? selectedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(1900),
-                              lastDate: DateTime(2100),
-                            );
-
-                            if (selectedDate != null) {
-                              setState(() {
-                                dateOfBirth =
-                                    "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
-                              });
-                            }
-                          },
-                          readOnly: true,
-                          inputType: TextInputType.datetime,
-                          width: 150,
-                          label: 'Date of Birth',
-                          hint: dateOfBirth,
-                          controller: dateOfBirthController),
-                      TextFieldWidget(
-                          inputType: TextInputType.number,
-                          width: 75,
-                          label: 'Age',
-                          controller: ageController),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextRegular(
-                              text: 'Sex', fontSize: 16, color: Colors.black),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            width: 150,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: Colors.white,
-                                border: Border.all(color: Colors.black)),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                              child: Center(
-                                child: DropdownButton(
-                                    dropdownColor: Colors.white,
-                                    focusColor: Colors.white,
-                                    value: _dropValue2,
-                                    items: [
-                                      DropdownMenuItem(
-                                        onTap: () {
-                                          gender = 'Male';
-                                        },
-                                        value: 0,
-                                        child: TextRegular(
-                                            text: 'Male',
-                                            fontSize: 18,
-                                            color: Colors.black),
-                                      ),
-                                      DropdownMenuItem(
-                                        onTap: () {
-                                          gender = 'Female';
-                                        },
-                                        value: 1,
-                                        child: TextRegular(
-                                            text: 'Female',
-                                            fontSize: 18,
-                                            color: Colors.black),
-                                      ),
-                                      DropdownMenuItem(
-                                        onTap: () {
-                                          gender = 'Others';
-                                        },
-                                        value: 2,
-                                        child: TextRegular(
-                                            text: 'Others',
-                                            fontSize: 18,
-                                            color: Colors.black),
-                                      ),
-                                    ],
-                                    onChanged: ((value) {
-                                      setState(() {
-                                        _dropValue2 =
-                                            int.parse(value.toString());
-                                      });
-                                    })),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextRegular(
-                              text: 'Barangay',
-                              fontSize: 16,
-                              color: Colors.black),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            width: 200,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: Colors.white,
-                                border: Border.all(color: Colors.black)),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                              child: Center(
-                                child: DropdownButton(
-                                    dropdownColor: Colors.white,
-                                    focusColor: Colors.white,
-                                    value: _dropValue,
-                                    items: [
-                                      for (int i = 0; i < brgys.length; i++)
-                                        DropdownMenuItem(
-                                          onTap: () {
-                                            brgy = brgys[i];
-                                            lat = lats[i];
-                                            long = longs[i];
-                                          },
-                                          value: i,
-                                          child: TextRegular(
-                                              text: brgys[i],
-                                              fontSize: 18,
-                                              color: Colors.black),
-                                        ),
-                                    ],
-                                    onChanged: ((value) {
-                                      setState(() {
-                                        _dropValue =
-                                            int.parse(value.toString());
-                                      });
-                                    })),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextRegular(
-                              text: 'Zone', fontSize: 16, color: Colors.black),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            width: 200,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: Colors.white,
-                                border: Border.all(color: Colors.black)),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                              child: Center(
-                                child: DropdownButton(
-                                    dropdownColor: Colors.white,
-                                    focusColor: Colors.white,
-                                    value: _dropValue1,
-                                    items: [
-                                      for (int i = 0; i < 4; i++)
-                                        DropdownMenuItem(
-                                          onTap: () {
-                                            zone = 'Zone ${i + 1}';
-                                          },
-                                          value: i,
-                                          child: TextRegular(
-                                              text: 'Zone ${i + 1}',
-                                              fontSize: 18,
-                                              color: Colors.black),
-                                        ),
-                                    ],
-                                    onChanged: ((value) {
-                                      setState(() {
-                                        _dropValue1 =
-                                            int.parse(value.toString());
-                                      });
-                                    })),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  box.read('user') != 'Nurse'
-                      ? Row(
+                  SizedBox(
+                    width: 450,
+                    child: Column(
+                      children: [
+                        TextFieldWidget(
+                            width: 425,
+                            label: 'Full Name',
+                            controller: nameController),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        TextFieldWidget(
+                            width: 425,
+                            inputType: TextInputType.number,
+                            label: 'Phone Number',
+                            controller: phoneNumberController),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            TextFieldWidget(
+                                onPressed: () async {
+                                  final DateTime? selectedDate =
+                                      await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(1900),
+                                    lastDate: DateTime(2100),
+                                  );
+
+                                  if (selectedDate != null) {
+                                    setState(() {
+                                      dateOfBirth =
+                                          "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+                                    });
+                                  }
+                                },
+                                readOnly: true,
+                                inputType: TextInputType.datetime,
+                                width: 150,
+                                label: 'Date of Birth',
+                                hint: dateOfBirth,
+                                controller: dateOfBirthController),
+                            TextFieldWidget(
+                                inputType: TextInputType.number,
+                                width: 75,
+                                label: 'Age',
+                                controller: ageController),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 TextRegular(
-                                    text: 'Disease',
+                                    text: 'Sex',
                                     fontSize: 16,
                                     color: Colors.black),
                                 const SizedBox(
                                   height: 10,
                                 ),
                                 Container(
-                                  width: 175,
+                                  width: 150,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Colors.white,
@@ -435,25 +285,42 @@ class _AddPatientState extends State<AddPatient> {
                                       child: DropdownButton(
                                           dropdownColor: Colors.white,
                                           focusColor: Colors.white,
-                                          value: _dropValue3,
+                                          value: _dropValue2,
                                           items: [
-                                            for (int i = 0;
-                                                i < diseases.length;
-                                                i++)
-                                              DropdownMenuItem(
-                                                onTap: (() {
-                                                  disease = diseases[i];
-                                                }),
-                                                value: i,
-                                                child: TextRegular(
-                                                    text: diseases[i],
-                                                    fontSize: 14,
-                                                    color: Colors.black),
-                                              ),
+                                            DropdownMenuItem(
+                                              onTap: () {
+                                                gender = 'Male';
+                                              },
+                                              value: 0,
+                                              child: TextRegular(
+                                                  text: 'Male',
+                                                  fontSize: 18,
+                                                  color: Colors.black),
+                                            ),
+                                            DropdownMenuItem(
+                                              onTap: () {
+                                                gender = 'Female';
+                                              },
+                                              value: 1,
+                                              child: TextRegular(
+                                                  text: 'Female',
+                                                  fontSize: 18,
+                                                  color: Colors.black),
+                                            ),
+                                            DropdownMenuItem(
+                                              onTap: () {
+                                                gender = 'Others';
+                                              },
+                                              value: 2,
+                                              child: TextRegular(
+                                                  text: 'Others',
+                                                  fontSize: 18,
+                                                  color: Colors.black),
+                                            ),
                                           ],
                                           onChanged: ((value) {
                                             setState(() {
-                                              _dropValue3 =
+                                              _dropValue2 =
                                                   int.parse(value.toString());
                                             });
                                           })),
@@ -462,54 +329,233 @@ class _AddPatientState extends State<AddPatient> {
                                 ),
                               ],
                             ),
-                            TextFieldWidget(
-                                width: 250,
-                                height: 100,
-                                maxLine: 5,
-                                label: 'Medical Findings',
-                                controller: findingsController),
                           ],
-                        )
-                      : const SizedBox(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextFieldWidget(
-                          onPressed: () async {
-                            final DateTime? selectedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(1900),
-                              lastDate: DateTime(2100),
-                            );
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextRegular(
+                                    text: 'Barangay',
+                                    fontSize: 16,
+                                    color: Colors.black),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  width: 200,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.black)),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                    child: Center(
+                                      child: DropdownButton(
+                                          dropdownColor: Colors.white,
+                                          focusColor: Colors.white,
+                                          value: _dropValue,
+                                          items: [
+                                            for (int i = 0;
+                                                i < brgys.length;
+                                                i++)
+                                              DropdownMenuItem(
+                                                onTap: () {
+                                                  brgy = brgys[i];
+                                                  lat = lats[i];
+                                                  long = longs[i];
+                                                },
+                                                value: i,
+                                                child: TextRegular(
+                                                    text: brgys[i],
+                                                    fontSize: 18,
+                                                    color: Colors.black),
+                                              ),
+                                          ],
+                                          onChanged: ((value) {
+                                            setState(() {
+                                              _dropValue =
+                                                  int.parse(value.toString());
+                                            });
+                                          })),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextRegular(
+                                    text: 'Zone',
+                                    fontSize: 16,
+                                    color: Colors.black),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  width: 200,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.black)),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                    child: Center(
+                                      child: DropdownButton(
+                                          dropdownColor: Colors.white,
+                                          focusColor: Colors.white,
+                                          value: _dropValue1,
+                                          items: [
+                                            for (int i = 0; i < 4; i++)
+                                              DropdownMenuItem(
+                                                onTap: () {
+                                                  zone = 'Zone ${i + 1}';
+                                                },
+                                                value: i,
+                                                child: TextRegular(
+                                                    text: 'Zone ${i + 1}',
+                                                    fontSize: 18,
+                                                    color: Colors.black),
+                                              ),
+                                          ],
+                                          onChanged: ((value) {
+                                            setState(() {
+                                              _dropValue1 =
+                                                  int.parse(value.toString());
+                                            });
+                                          })),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        box.read('user') != 'Nurse'
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      TextRegular(
+                                          text: 'Disease',
+                                          fontSize: 16,
+                                          color: Colors.black),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Container(
+                                        width: 175,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            color: Colors.white,
+                                            border: Border.all(
+                                                color: Colors.black)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              20, 0, 20, 0),
+                                          child: Center(
+                                            child: DropdownButton(
+                                                dropdownColor: Colors.white,
+                                                focusColor: Colors.white,
+                                                value: _dropValue3,
+                                                items: [
+                                                  for (int i = 0;
+                                                      i < diseases.length;
+                                                      i++)
+                                                    DropdownMenuItem(
+                                                      onTap: (() {
+                                                        disease = diseases[i];
+                                                      }),
+                                                      value: i,
+                                                      child: TextRegular(
+                                                          text: diseases[i],
+                                                          fontSize: 14,
+                                                          color: Colors.black),
+                                                    ),
+                                                ],
+                                                onChanged: ((value) {
+                                                  setState(() {
+                                                    _dropValue3 = int.parse(
+                                                        value.toString());
+                                                  });
+                                                })),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  TextFieldWidget(
+                                      width: 250,
+                                      height: 100,
+                                      maxLine: 5,
+                                      label: 'Medical Findings',
+                                      controller: findingsController),
+                                ],
+                              )
+                            : const SizedBox(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextFieldWidget(
+                                onPressed: () async {
+                                  final DateTime? selectedDate =
+                                      await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(1900),
+                                    lastDate: DateTime(2100),
+                                  );
 
-                            if (selectedDate != null) {
-                              setState(() {
-                                dateFindings =
-                                    "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
-                              });
-                            }
-                          },
-                          readOnly: true,
-                          inputType: TextInputType.datetime,
-                          width: 180,
-                          label: 'Date of Findings',
-                          hint: dateFindings,
-                          controller: dateFindingsController),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      TextFieldWidget(
-                          width: 200,
-                          label: 'Assist by',
-                          controller: assistedController),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 30,
+                                  if (selectedDate != null) {
+                                    setState(() {
+                                      dateFindings =
+                                          "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+                                    });
+                                  }
+                                },
+                                readOnly: true,
+                                inputType: TextInputType.datetime,
+                                width: 180,
+                                label: 'Date of Findings',
+                                hint: dateFindings,
+                                controller: dateFindingsController),
+                            const SizedBox(
+                              width: 30,
+                            ),
+                            TextFieldWidget(
+                                width: 200,
+                                label: 'Assist by',
+                                controller: assistedController),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                      ],
+                    ),
                   ),
                   ButtonWidget(
                     label: 'Add Patient',

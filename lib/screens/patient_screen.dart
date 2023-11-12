@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:printing/printing.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:sumilao/utils/colors.dart';
 import 'package:sumilao/widgets/appbar_widget.dart';
 import 'package:sumilao/widgets/text_widget.dart';
 import 'package:sumilao/widgets/textfield_widget.dart';
@@ -219,15 +220,42 @@ class _PatientScreenState extends State<PatientScreen> {
           return Screenshot(
             controller: ssController,
             child: Scaffold(
-              appBar: customAppbar('Patient Profile'),
               body: SingleChildScrollView(
                 child: Column(
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/logo.jpg',
+                              height: 100,
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            TextBold(
+                                text: 'GeoFinds', fontSize: 24, color: primary),
+                          ],
+                        ),
+                        TextBold(
+                            text: 'PATIENT PROFILE',
+                            fontSize: 58,
+                            color: Colors.black),
+                        const SizedBox(
+                          width: 50,
+                        ),
+                      ],
+                    ),
+                    customAppbar('Patient Profile'),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 20, 30, 20),
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                       child: Container(
-                        width: 1100,
-                        height: 250,
+                        width: 1200,
+                        height: 275,
                         decoration: BoxDecoration(
                           color: Colors.green.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(20),
@@ -320,25 +348,25 @@ class _PatientScreenState extends State<PatientScreen> {
                                     children: [
                                       TextBold(
                                           text: data['name'],
-                                          fontSize: 32,
+                                          fontSize: 42,
                                           color: Colors.black),
                                       const SizedBox(
                                         height: 10,
                                       ),
                                       SizedBox(
-                                          width: 400,
+                                          width: 600,
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               SizedBox(
-                                                width: 100,
+                                                width: 150,
                                                 child: Row(
                                                   children: [
                                                     TextRegular(
                                                         text:
                                                             'Age: ${data['age']}',
-                                                        fontSize: 14,
+                                                        fontSize: 24,
                                                         color: Colors.black),
                                                     IconButton(
                                                       onPressed: (() {
@@ -354,7 +382,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                                                   child:
                                                                       Padding(
                                                                     padding: const EdgeInsets
-                                                                            .only(
+                                                                        .only(
                                                                         left:
                                                                             10,
                                                                         right:
@@ -408,7 +436,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                               TextRegular(
                                                   text:
                                                       'Date of Birth: ${data['dateOfBirth']}',
-                                                  fontSize: 14,
+                                                  fontSize: 24,
                                                   color: Colors.black),
                                             ],
                                           )),
@@ -416,7 +444,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                         height: 10,
                                       ),
                                       SizedBox(
-                                          width: 400,
+                                          width: 500,
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
@@ -424,16 +452,16 @@ class _PatientScreenState extends State<PatientScreen> {
                                               TextRegular(
                                                   text:
                                                       'Sex: ${data['gender']}',
-                                                  fontSize: 14,
+                                                  fontSize: 24,
                                                   color: Colors.black),
                                               SizedBox(
-                                                width: 230,
+                                                width: 350,
                                                 child: Row(
                                                   children: [
                                                     TextRegular(
                                                         text:
                                                             'Phone Number: ${data['phoneNumber']}',
-                                                        fontSize: 14,
+                                                        fontSize: 18,
                                                         color: Colors.black),
                                                     IconButton(
                                                       onPressed: (() {
@@ -449,7 +477,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                                                   child:
                                                                       Padding(
                                                                     padding: const EdgeInsets
-                                                                            .only(
+                                                                        .only(
                                                                         left:
                                                                             10,
                                                                         right:
@@ -507,7 +535,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                           TextRegular(
                                               text:
                                                   'Address: ${data['address']}',
-                                              fontSize: 15,
+                                              fontSize: 24,
                                               color: Colors.black),
                                           IconButton(
                                             onPressed: (() {
@@ -521,7 +549,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .only(
+                                                                  .only(
                                                                   left: 10,
                                                                   right: 10),
                                                           child: TextFormField(
@@ -600,14 +628,14 @@ class _PatientScreenState extends State<PatientScreen> {
                                   Center(
                                     child: TextBold(
                                         text: 'Medical Findings',
-                                        fontSize: 24,
+                                        fontSize: 38,
                                         color: Colors.black),
                                   ),
                                   const SizedBox(
                                     height: 50,
                                   ),
                                   SizedBox(
-                                    width: 500,
+                                    width: 550,
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -617,7 +645,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                             TextRegular(
                                                 text:
                                                     'Disease: ${data['disease']}',
-                                                fontSize: 15,
+                                                fontSize: 18,
                                                 color: Colors.black),
                                             const SizedBox(
                                               width: 15,
@@ -627,7 +655,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                                 TextRegular(
                                                     text:
                                                         "(Active: ${data['isActive'].toString()})",
-                                                    fontSize: 13,
+                                                    fontSize: 24,
                                                     color: Colors.black),
                                                 IconButton(
                                                   onPressed: (() async {
@@ -704,7 +732,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                         TextRegular(
                                             text:
                                                 'Date Findings: ${data['dateOfFindings']}',
-                                            fontSize: 15,
+                                            fontSize: 18,
                                             color: Colors.black),
                                       ],
                                     ),
@@ -732,7 +760,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                                 title: TextRegular(
                                                     text:
                                                         '${data['medicalFindings'][i]['notes']}',
-                                                    fontSize: 15,
+                                                    fontSize: 24,
                                                     color: Colors.black),
                                                 trailing: TextRegular(
                                                     text: DateFormat.yMMMd()

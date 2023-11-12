@@ -11,6 +11,8 @@ import '../utils/colors.dart';
 import '../widgets/button_widget.dart';
 
 class UserManagementScreen extends StatefulWidget {
+  const UserManagementScreen({super.key});
+
   @override
   State<UserManagementScreen> createState() => _UserManagementScreenState();
 }
@@ -161,7 +163,6 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
             Icons.add,
             color: Colors.white,
           )),
-      appBar: customAppbar('User Management'),
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
@@ -170,6 +171,34 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/logo.jpg',
+                          height: 100,
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        TextBold(
+                            text: 'GeoFinds', fontSize: 24, color: primary),
+                      ],
+                    ),
+                    TextBold(
+                        text: 'USER MANAGEMENT',
+                        fontSize: 58,
+                        color: Colors.black),
+                    const SizedBox(
+                      width: 50,
+                    ),
+                  ],
+                ),
+                customAppbar('User Management'),
                 const SizedBox(
                   height: 30,
                 ),
