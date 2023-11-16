@@ -201,39 +201,34 @@ class _AddPatientState extends State<AddPatient> {
                   const SizedBox(
                     height: 10,
                   ),
-                  ButtonWidget(
-                      width: 100,
-                      height: 35,
-                      fontSize: 12,
-                      label: 'Upload Photo',
-                      onPressed: (() {
-                        uploadToStorage();
-                      })),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 0),
+                    child: ButtonWidget(
+                        width: 100,
+                        height: 35,
+                        fontSize: 12,
+                        label: 'Upload Photo',
+                        onPressed: (() {
+                          uploadToStorage();
+                        })),
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
                   SizedBox(
-                    width: 450,
+                    width: 800,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextFieldWidget(
-                            width: 425,
-                            label: 'Full Name',
-                            controller: nameController),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        TextFieldWidget(
-                            width: 425,
-                            inputType: TextInputType.number,
-                            label: 'Phone Number',
-                            controller: phoneNumberController),
-                        const SizedBox(
-                          height: 10,
-                        ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            TextFieldWidget(
+                                width: 425,
+                                label: 'Full Name',
+                                controller: nameController),
+                            const SizedBox(
+                              width: 50,
+                            ),
                             TextFieldWidget(
                                 onPressed: () async {
                                   final DateTime? selectedDate =
@@ -253,15 +248,143 @@ class _AddPatientState extends State<AddPatient> {
                                 },
                                 readOnly: true,
                                 inputType: TextInputType.datetime,
-                                width: 150,
+                                width: 225,
                                 label: 'Date of Birth',
                                 hint: dateOfBirth,
                                 controller: dateOfBirthController),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            TextFieldWidget(
+                                width: 425,
+                                inputType: TextInputType.number,
+                                label: 'Phone Number',
+                                controller: phoneNumberController),
+                            const SizedBox(
+                              width: 50,
+                            ),
                             TextFieldWidget(
                                 inputType: TextInputType.number,
-                                width: 75,
+                                width: 150,
                                 label: 'Age',
                                 controller: ageController),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextRegular(
+                                    text: 'Barangay',
+                                    fontSize: 16,
+                                    color: Colors.black),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  width: 200,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.black)),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                    child: Center(
+                                      child: DropdownButton(
+                                          dropdownColor: Colors.white,
+                                          focusColor: Colors.white,
+                                          value: _dropValue,
+                                          items: [
+                                            for (int i = 0;
+                                                i < brgys.length;
+                                                i++)
+                                              DropdownMenuItem(
+                                                onTap: () {
+                                                  brgy = brgys[i];
+                                                  lat = lats[i];
+                                                  long = longs[i];
+                                                },
+                                                value: i,
+                                                child: TextRegular(
+                                                    text: brgys[i],
+                                                    fontSize: 18,
+                                                    color: Colors.black),
+                                              ),
+                                          ],
+                                          onChanged: ((value) {
+                                            setState(() {
+                                              _dropValue =
+                                                  int.parse(value.toString());
+                                            });
+                                          })),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              width: 30,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextRegular(
+                                    text: 'Zone',
+                                    fontSize: 16,
+                                    color: Colors.black),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  width: 200,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.black)),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                    child: Center(
+                                      child: DropdownButton(
+                                          dropdownColor: Colors.white,
+                                          focusColor: Colors.white,
+                                          value: _dropValue1,
+                                          items: [
+                                            for (int i = 0; i < 4; i++)
+                                              DropdownMenuItem(
+                                                onTap: () {
+                                                  zone = 'Zone ${i + 1}';
+                                                },
+                                                value: i,
+                                                child: TextRegular(
+                                                    text: 'Zone ${i + 1}',
+                                                    fontSize: 18,
+                                                    color: Colors.black),
+                                              ),
+                                          ],
+                                          onChanged: ((value) {
+                                            setState(() {
+                                              _dropValue1 =
+                                                  int.parse(value.toString());
+                                            });
+                                          })),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              width: 45,
+                            ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -334,190 +457,75 @@ class _AddPatientState extends State<AddPatient> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TextRegular(
-                                    text: 'Barangay',
-                                    fontSize: 16,
-                                    color: Colors.black),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  width: 200,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Colors.white,
-                                      border: Border.all(color: Colors.black)),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                    child: Center(
-                                      child: DropdownButton(
-                                          dropdownColor: Colors.white,
-                                          focusColor: Colors.white,
-                                          value: _dropValue,
-                                          items: [
-                                            for (int i = 0;
-                                                i < brgys.length;
-                                                i++)
-                                              DropdownMenuItem(
-                                                onTap: () {
-                                                  brgy = brgys[i];
-                                                  lat = lats[i];
-                                                  long = longs[i];
-                                                },
-                                                value: i,
-                                                child: TextRegular(
-                                                    text: brgys[i],
-                                                    fontSize: 18,
-                                                    color: Colors.black),
-                                              ),
-                                          ],
-                                          onChanged: ((value) {
-                                            setState(() {
-                                              _dropValue =
-                                                  int.parse(value.toString());
-                                            });
-                                          })),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TextRegular(
-                                    text: 'Zone',
-                                    fontSize: 16,
-                                    color: Colors.black),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  width: 200,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Colors.white,
-                                      border: Border.all(color: Colors.black)),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                    child: Center(
-                                      child: DropdownButton(
-                                          dropdownColor: Colors.white,
-                                          focusColor: Colors.white,
-                                          value: _dropValue1,
-                                          items: [
-                                            for (int i = 0; i < 4; i++)
-                                              DropdownMenuItem(
-                                                onTap: () {
-                                                  zone = 'Zone ${i + 1}';
-                                                },
-                                                value: i,
-                                                child: TextRegular(
-                                                    text: 'Zone ${i + 1}',
-                                                    fontSize: 18,
-                                                    color: Colors.black),
-                                              ),
-                                          ],
-                                          onChanged: ((value) {
-                                            setState(() {
-                                              _dropValue1 =
-                                                  int.parse(value.toString());
-                                            });
-                                          })),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
                         box.read('user') != 'Nurse'
-                            ? Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                            ? Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      TextRegular(
-                                          text: 'Disease',
-                                          fontSize: 16,
-                                          color: Colors.black),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Container(
-                                        width: 175,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: Colors.white,
-                                            border: Border.all(
-                                                color: Colors.black)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              20, 0, 20, 0),
-                                          child: Center(
-                                            child: DropdownButton(
-                                                dropdownColor: Colors.white,
-                                                focusColor: Colors.white,
-                                                value: _dropValue3,
-                                                items: [
-                                                  for (int i = 0;
-                                                      i < diseases.length;
-                                                      i++)
-                                                    DropdownMenuItem(
-                                                      onTap: (() {
-                                                        disease = diseases[i];
-                                                      }),
-                                                      value: i,
-                                                      child: TextRegular(
-                                                          text: diseases[i],
-                                                          fontSize: 14,
-                                                          color: Colors.black),
-                                                    ),
-                                                ],
-                                                onChanged: ((value) {
-                                                  setState(() {
-                                                    _dropValue3 = int.parse(
-                                                        value.toString());
-                                                  });
-                                                })),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                  TextRegular(
+                                      text: 'Disease',
+                                      fontSize: 16,
+                                      color: Colors.black),
+                                  const SizedBox(
+                                    height: 10,
                                   ),
-                                  TextFieldWidget(
-                                      width: 250,
-                                      height: 100,
-                                      maxLine: 5,
-                                      label: 'Medical Findings',
-                                      controller: findingsController),
+                                  Container(
+                                    width: 175,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: Colors.white,
+                                        border:
+                                            Border.all(color: Colors.black)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20, 0, 20, 0),
+                                      child: Center(
+                                        child: DropdownButton(
+                                            dropdownColor: Colors.white,
+                                            focusColor: Colors.white,
+                                            value: _dropValue3,
+                                            items: [
+                                              for (int i = 0;
+                                                  i < diseases.length;
+                                                  i++)
+                                                DropdownMenuItem(
+                                                  onTap: (() {
+                                                    disease = diseases[i];
+                                                  }),
+                                                  value: i,
+                                                  child: TextRegular(
+                                                      text: diseases[i],
+                                                      fontSize: 14,
+                                                      color: Colors.black),
+                                                ),
+                                            ],
+                                            onChanged: ((value) {
+                                              setState(() {
+                                                _dropValue3 =
+                                                    int.parse(value.toString());
+                                              });
+                                            })),
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               )
                             : const SizedBox(),
                         const SizedBox(
-                          height: 20,
+                          height: 10,
+                        ),
+                        box.read('user') != 'Nurse'
+                            ? TextFieldWidget(
+                                width: 800,
+                                height: 150,
+                                maxLine: 5,
+                                label: 'Medical Findings',
+                                controller: findingsController)
+                            : const SizedBox(),
+                        const SizedBox(
+                          height: 10,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             TextFieldWidget(
                                 onPressed: () async {
@@ -547,7 +555,7 @@ class _AddPatientState extends State<AddPatient> {
                             ),
                             TextFieldWidget(
                                 width: 200,
-                                label: 'Assist by',
+                                label: 'Assisted by',
                                 controller: assistedController),
                           ],
                         ),
