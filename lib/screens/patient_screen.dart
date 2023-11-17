@@ -254,7 +254,7 @@ class _PatientScreenState extends State<PatientScreen> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                       child: Container(
-                        width: 1200,
+                        width: 900,
                         height: 275,
                         decoration: BoxDecoration(
                           color: Colors.green.withOpacity(0.2),
@@ -339,128 +339,131 @@ class _PatientScreenState extends State<PatientScreen> {
                                             image: NetworkImage(data['image']),
                                             fit: BoxFit.cover)),
                                   ),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       TextBold(
                                           text: data['name'],
-                                          fontSize: 42,
+                                          fontSize: 48,
                                           color: Colors.black),
                                       const SizedBox(
                                         height: 10,
                                       ),
                                       SizedBox(
-                                          width: 600,
                                           child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SizedBox(
-                                                width: 150,
-                                                child: Row(
-                                                  children: [
-                                                    TextRegular(
-                                                        text:
-                                                            'Age: ${data['age']}',
-                                                        fontSize: 24,
-                                                        color: Colors.black),
-                                                    IconButton(
-                                                      onPressed: (() {
-                                                        showDialog(
-                                                            context: context,
-                                                            builder:
-                                                                ((context) {
-                                                              return AlertDialog(
-                                                                content:
-                                                                    SizedBox(
-                                                                  height: 100,
-                                                                  width: 200,
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: const EdgeInsets
-                                                                        .only(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            width: 125,
+                                            child: Row(
+                                              children: [
+                                                TextRegular(
+                                                    text: 'Age: ${data['age']}'
+                                                        .toUpperCase(),
+                                                    fontSize: 24,
+                                                    color: Colors.black),
+                                                IconButton(
+                                                  onPressed: (() {
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: ((context) {
+                                                          return AlertDialog(
+                                                            content: SizedBox(
+                                                              height: 100,
+                                                              width: 200,
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
                                                                         left:
                                                                             10,
                                                                         right:
                                                                             10),
-                                                                    child:
-                                                                        TextFormField(
-                                                                      controller:
-                                                                          ageController,
-                                                                      decoration:
-                                                                          const InputDecoration(
-                                                                              labelText: 'New Age:'),
-                                                                    ),
-                                                                  ),
+                                                                child:
+                                                                    TextFormField(
+                                                                  controller:
+                                                                      ageController,
+                                                                  decoration: const InputDecoration(
+                                                                      labelText:
+                                                                          'New Age:'),
                                                                 ),
-                                                                actions: [
-                                                                  TextButton(
-                                                                    onPressed:
-                                                                        (() async {
-                                                                      await FirebaseFirestore
-                                                                          .instance
-                                                                          .collection(
-                                                                              'Patient')
-                                                                          .doc(box.read(
-                                                                              'id'))
-                                                                          .update({
-                                                                        'age': ageController
+                                                              ),
+                                                            ),
+                                                            actions: [
+                                                              TextButton(
+                                                                onPressed:
+                                                                    (() async {
+                                                                  await FirebaseFirestore
+                                                                      .instance
+                                                                      .collection(
+                                                                          'Patient')
+                                                                      .doc(box.read(
+                                                                          'id'))
+                                                                      .update({
+                                                                    'age':
+                                                                        ageController
                                                                             .text
-                                                                      });
+                                                                  });
 
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    }),
-                                                                    child: TextBold(
-                                                                        text:
-                                                                            'Update',
-                                                                        fontSize:
-                                                                            14,
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ],
-                                                              );
-                                                            }));
-                                                      }),
-                                                      icon: const Icon(
-                                                          Icons.edit),
-                                                    ),
-                                                  ],
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                }),
+                                                                child: TextBold(
+                                                                    text:
+                                                                        'Update',
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        }));
+                                                  }),
+                                                  icon: const Icon(
+                                                      Icons.edit_square),
                                                 ),
-                                              ),
-                                              TextRegular(
-                                                  text:
-                                                      'Date of Birth: ${data['dateOfBirth']}',
-                                                  fontSize: 24,
-                                                  color: Colors.black),
-                                            ],
-                                          )),
+                                              ],
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 200,
+                                          ),
+                                          TextRegular(
+                                              text:
+                                                  'Date of Birth: ${data['dateOfBirth']}'
+                                                      .toUpperCase(),
+                                              fontSize: 24,
+                                              color: Colors.black),
+                                        ],
+                                      )),
                                       const SizedBox(
                                         height: 10,
                                       ),
                                       SizedBox(
-                                          width: 500,
+                                          width: 800,
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                                MainAxisAlignment.start,
                                             children: [
                                               TextRegular(
-                                                  text:
-                                                      'Sex: ${data['gender']}',
+                                                  text: 'Sex: ${data['gender']}'
+                                                      .toUpperCase(),
                                                   fontSize: 24,
                                                   color: Colors.black),
+                                              const SizedBox(
+                                                width: 200,
+                                              ),
                                               SizedBox(
                                                 width: 350,
                                                 child: Row(
                                                   children: [
                                                     TextRegular(
                                                         text:
-                                                            'Phone Number: ${data['phoneNumber']}',
+                                                            'Phone Number: ${data['phoneNumber']}'
+                                                                .toUpperCase(),
                                                         fontSize: 18,
                                                         color: Colors.black),
                                                     IconButton(
@@ -477,7 +480,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                                                   child:
                                                                       Padding(
                                                                     padding: const EdgeInsets
-                                                                        .only(
+                                                                            .only(
                                                                         left:
                                                                             10,
                                                                         right:
@@ -523,7 +526,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                                             }));
                                                       }),
                                                       icon: const Icon(
-                                                          Icons.edit),
+                                                          Icons.edit_square),
                                                     ),
                                                   ],
                                                 ),
@@ -534,7 +537,8 @@ class _PatientScreenState extends State<PatientScreen> {
                                         children: [
                                           TextRegular(
                                               text:
-                                                  'Address: ${data['address']}',
+                                                  'Address: ${data['address']}'
+                                                      .toUpperCase(),
                                               fontSize: 24,
                                               color: Colors.black),
                                           IconButton(
@@ -549,7 +553,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                  .only(
+                                                                      .only(
                                                                   left: 10,
                                                                   right: 10),
                                                           child: TextFormField(
@@ -590,7 +594,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                                     );
                                                   }));
                                             }),
-                                            icon: const Icon(Icons.edit),
+                                            icon: const Icon(Icons.edit_square),
                                           ),
                                         ],
                                       ),
@@ -609,8 +613,8 @@ class _PatientScreenState extends State<PatientScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            height: 400,
-                            width: 1100,
+                            height: 450,
+                            width: 900,
                             decoration: BoxDecoration(
                               color: Colors.green.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(20),
@@ -631,11 +635,8 @@ class _PatientScreenState extends State<PatientScreen> {
                                         fontSize: 38,
                                         color: Colors.black),
                                   ),
-                                  const SizedBox(
-                                    height: 50,
-                                  ),
                                   SizedBox(
-                                    width: 550,
+                                    width: 650,
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -644,19 +645,15 @@ class _PatientScreenState extends State<PatientScreen> {
                                           children: [
                                             TextRegular(
                                                 text:
-                                                    'Disease: ${data['disease']}',
-                                                fontSize: 18,
+                                                    'Disease: ${data['disease']}'
+                                                        .toUpperCase(),
+                                                fontSize: 24,
                                                 color: Colors.black),
                                             const SizedBox(
                                               width: 15,
                                             ),
                                             Row(
                                               children: [
-                                                TextRegular(
-                                                    text:
-                                                        "(Active: ${data['isActive'].toString()})",
-                                                    fontSize: 24,
-                                                    color: Colors.black),
                                                 IconButton(
                                                   onPressed: (() async {
                                                     int nums = 0;
@@ -718,12 +715,18 @@ class _PatientScreenState extends State<PatientScreen> {
                                                           !data['isActive']
                                                     });
                                                   }),
-                                                  icon: const Icon(
-                                                    Icons
-                                                        .change_circle_outlined,
-                                                    color: Colors.black,
-                                                    size: 15,
-                                                  ),
+                                                  icon: data['isActive']
+                                                      ? const Icon(
+                                                          Icons.toggle_on,
+                                                          color: Colors.black,
+                                                          size: 40,
+                                                        )
+                                                      : const Icon(
+                                                          Icons
+                                                              .toggle_off_sharp,
+                                                          color: Colors.black,
+                                                          size: 40,
+                                                        ),
                                                 ),
                                               ],
                                             )
@@ -731,7 +734,8 @@ class _PatientScreenState extends State<PatientScreen> {
                                         ),
                                         TextRegular(
                                             text:
-                                                'Date Findings: ${data['dateOfFindings']}',
+                                                'Date of Findings: ${data['dateOfFindings']}'
+                                                    .toUpperCase(),
                                             fontSize: 18,
                                             color: Colors.black),
                                       ],
@@ -742,7 +746,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                   ),
                                   Center(
                                     child: SizedBox(
-                                      height: 100,
+                                      height: 75,
                                       width: 600,
                                       child: ListView(
                                         children: [
@@ -759,7 +763,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                                 ),
                                                 title: TextRegular(
                                                     text:
-                                                        '${data['medicalFindings'][i]['notes']}',
+                                                        'Notes: ${data['medicalFindings'][i]['notes']}',
                                                     fontSize: 24,
                                                     color: Colors.black),
                                                 trailing: TextRegular(
@@ -769,8 +773,8 @@ class _PatientScreenState extends State<PatientScreen> {
                                                             data['medicalFindings']
                                                                     [i]['date']
                                                                 .toDate()),
-                                                    fontSize: 14,
-                                                    color: Colors.grey),
+                                                    fontSize: 18,
+                                                    color: Colors.black),
                                               ),
                                             ),
                                         ],
@@ -778,8 +782,8 @@ class _PatientScreenState extends State<PatientScreen> {
                                     ),
                                   ),
                                   TextFieldWidget(
-                                      height: 35,
-                                      width: 500,
+                                      width: 800,
+                                      height: 150,
                                       maxLine: 5,
                                       label: '',
                                       hint: 'Add Notes',
@@ -787,11 +791,33 @@ class _PatientScreenState extends State<PatientScreen> {
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  TextRegular(
-                                      text:
-                                          'Assisted by: ${data['assistedBy']}',
-                                      fontSize: 15,
-                                      color: Colors.black),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      TextRegular(
+                                          text: 'Assisted by:'.toUpperCase(),
+                                          fontSize: 18,
+                                          color: Colors.black),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          TextRegular(
+                                              deco: TextDecoration.underline,
+                                              text: '${data['assistedBy']}',
+                                              fontSize: 24,
+                                              color: Colors.black),
+                                          TextRegular(
+                                              text:
+                                                  'SIGNATURE OVER PRINTED NAME',
+                                              fontSize: 14,
+                                              color: Colors.black),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),

@@ -163,7 +163,7 @@ class _AddPatientState extends State<AddPatient> {
                           fontSize: 58,
                           color: Colors.black),
                       const SizedBox(
-                        width: 50,
+                        width: 100,
                       ),
                     ],
                   ),
@@ -187,22 +187,25 @@ class _AddPatientState extends State<AddPatient> {
                                 color: Colors.white),
                           ),
                         )
-                      : Container(
-                          color: Colors.grey,
-                          height: 150,
-                          width: 200,
-                          child: Center(
-                            child: TextRegular(
-                                text: 'No Photo',
-                                fontSize: 12,
-                                color: Colors.white),
+                      : Padding(
+                          padding: const EdgeInsets.only(right: 700),
+                          child: Container(
+                            color: Colors.grey,
+                            height: 150,
+                            width: 200,
+                            child: Center(
+                              child: TextRegular(
+                                  text: 'No Photo',
+                                  fontSize: 12,
+                                  color: Colors.white),
+                            ),
                           ),
                         ),
                   const SizedBox(
                     height: 10,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 0),
+                    padding: const EdgeInsets.only(right: 700),
                     child: ButtonWidget(
                         width: 100,
                         height: 35,
@@ -216,20 +219,24 @@ class _AddPatientState extends State<AddPatient> {
                     height: 20,
                   ),
                   SizedBox(
-                    width: 800,
+                    width: 1000,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
                             TextFieldWidget(
-                                width: 425,
+                                capital: true,
+                                onSide: true,
+                                width: 300,
                                 label: 'Full Name',
                                 controller: nameController),
                             const SizedBox(
-                              width: 50,
+                              width: 20,
                             ),
                             TextFieldWidget(
+                                capital: true,
+                                onSide: true,
                                 onPressed: () async {
                                   final DateTime? selectedDate =
                                       await showDatePicker(
@@ -248,7 +255,7 @@ class _AddPatientState extends State<AddPatient> {
                                 },
                                 readOnly: true,
                                 inputType: TextInputType.datetime,
-                                width: 225,
+                                width: 150,
                                 label: 'Date of Birth',
                                 hint: dateOfBirth,
                                 controller: dateOfBirthController),
@@ -260,14 +267,18 @@ class _AddPatientState extends State<AddPatient> {
                         Row(
                           children: [
                             TextFieldWidget(
-                                width: 425,
+                                capital: true,
+                                onSide: true,
+                                width: 240,
                                 inputType: TextInputType.number,
                                 label: 'Phone Number',
                                 controller: phoneNumberController),
                             const SizedBox(
-                              width: 50,
+                              width: 150,
                             ),
                             TextFieldWidget(
+                                capital: true,
+                                onSide: true,
                                 inputType: TextInputType.number,
                                 width: 150,
                                 label: 'Age',
@@ -279,13 +290,16 @@ class _AddPatientState extends State<AddPatient> {
                         ),
                         Row(
                           children: [
-                            Column(
+                            Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 TextRegular(
-                                    text: 'Barangay',
-                                    fontSize: 16,
+                                    text: 'Barangay:'.toUpperCase(),
+                                    fontSize: 24,
                                     color: Colors.black),
+                                const SizedBox(
+                                  width: 10,
+                                ),
                                 const SizedBox(
                                   height: 10,
                                 ),
@@ -334,15 +348,15 @@ class _AddPatientState extends State<AddPatient> {
                             const SizedBox(
                               width: 30,
                             ),
-                            Column(
+                            Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 TextRegular(
-                                    text: 'Zone',
-                                    fontSize: 16,
+                                    text: 'Zone:'.toUpperCase(),
+                                    fontSize: 24,
                                     color: Colors.black),
                                 const SizedBox(
-                                  height: 10,
+                                  width: 10,
                                 ),
                                 Container(
                                   width: 200,
@@ -385,15 +399,15 @@ class _AddPatientState extends State<AddPatient> {
                             const SizedBox(
                               width: 45,
                             ),
-                            Column(
+                            Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 TextRegular(
-                                    text: 'Sex',
-                                    fontSize: 16,
+                                    text: 'Sex:'.toUpperCase(),
+                                    fontSize: 24,
                                     color: Colors.black),
                                 const SizedBox(
-                                  height: 10,
+                                  width: 10,
                                 ),
                                 Container(
                                   width: 150,
@@ -458,15 +472,15 @@ class _AddPatientState extends State<AddPatient> {
                           height: 10,
                         ),
                         box.read('user') != 'Nurse'
-                            ? Column(
+                            ? Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   TextRegular(
-                                      text: 'Disease',
-                                      fontSize: 16,
+                                      text: 'Disease:'.toUpperCase(),
+                                      fontSize: 24,
                                       color: Colors.black),
                                   const SizedBox(
-                                    height: 10,
+                                    width: 10,
                                   ),
                                   Container(
                                     width: 175,
@@ -515,19 +529,22 @@ class _AddPatientState extends State<AddPatient> {
                         ),
                         box.read('user') != 'Nurse'
                             ? TextFieldWidget(
+                                capital: true,
                                 width: 800,
                                 height: 150,
                                 maxLine: 5,
-                                label: 'Medical Findings',
+                                label: 'Medical Findings:'.toUpperCase(),
                                 controller: findingsController)
                             : const SizedBox(),
                         const SizedBox(
                           height: 10,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             TextFieldWidget(
+                                capital: true,
+                                onSide: true,
                                 onPressed: () async {
                                   final DateTime? selectedDate =
                                       await showDatePicker(
@@ -554,6 +571,8 @@ class _AddPatientState extends State<AddPatient> {
                               width: 30,
                             ),
                             TextFieldWidget(
+                                capital: true,
+                                onSide: true,
                                 width: 200,
                                 label: 'Assisted by',
                                 controller: assistedController),
