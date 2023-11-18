@@ -61,29 +61,32 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                       color: Colors.black,
                     ),
                     borderRadius: BorderRadius.circular(5)),
-                child: TextFormField(
-                  onTap: widget.onPressed,
-                  readOnly: widget.readOnly!,
-                  keyboardType: widget.inputType,
-                  decoration: InputDecoration(
-                    suffixIcon: widget.inPassword!
-                        ? IconButton(
-                            onPressed: (() {
-                              setState(() {
-                                widget.isObscure = !widget.isObscure!;
-                              });
-                            }),
-                            icon: widget.isObscure!
-                                ? const Icon(Icons.visibility)
-                                : const Icon(Icons.visibility_off),
-                          )
-                        : const SizedBox(),
-                    hintText: widget.hint,
-                    border: InputBorder.none,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 5, right: 5),
+                  child: TextFormField(
+                    onTap: widget.onPressed,
+                    readOnly: widget.readOnly!,
+                    keyboardType: widget.inputType,
+                    decoration: InputDecoration(
+                      suffixIcon: widget.inPassword!
+                          ? IconButton(
+                              onPressed: (() {
+                                setState(() {
+                                  widget.isObscure = !widget.isObscure!;
+                                });
+                              }),
+                              icon: widget.isObscure!
+                                  ? const Icon(Icons.visibility)
+                                  : const Icon(Icons.visibility_off),
+                            )
+                          : const SizedBox(),
+                      hintText: widget.hint,
+                      border: InputBorder.none,
+                    ),
+                    maxLines: widget.maxLine,
+                    obscureText: widget.isObscure!,
+                    controller: widget.controller,
                   ),
-                  maxLines: widget.maxLine,
-                  obscureText: widget.isObscure!,
-                  controller: widget.controller,
                 ),
               ),
             ],
@@ -104,29 +107,32 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                       color: Colors.black,
                     ),
                     borderRadius: BorderRadius.circular(5)),
-                child: TextFormField(
-                  onTap: widget.onPressed,
-                  readOnly: widget.readOnly!,
-                  keyboardType: widget.inputType,
-                  decoration: InputDecoration(
-                    suffixIcon: widget.inPassword!
-                        ? IconButton(
-                            onPressed: (() {
-                              setState(() {
-                                widget.isObscure = !widget.isObscure!;
-                              });
-                            }),
-                            icon: widget.isObscure!
-                                ? const Icon(Icons.visibility)
-                                : const Icon(Icons.visibility_off),
-                          )
-                        : const SizedBox(),
-                    hintText: widget.hint,
-                    border: InputBorder.none,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 5, right: 5),
+                  child: TextFormField(
+                    onTap: widget.onPressed,
+                    readOnly: widget.readOnly!,
+                    keyboardType: widget.inputType,
+                    decoration: InputDecoration(
+                      suffixIcon: widget.inPassword!
+                          ? IconButton(
+                              onPressed: (() {
+                                setState(() {
+                                  widget.isObscure = !widget.isObscure!;
+                                });
+                              }),
+                              icon: widget.isObscure!
+                                  ? const Icon(Icons.visibility)
+                                  : const Icon(Icons.visibility_off),
+                            )
+                          : const SizedBox(),
+                      hintText: widget.hint,
+                      border: InputBorder.none,
+                    ),
+                    maxLines: widget.maxLine,
+                    obscureText: widget.isObscure!,
+                    controller: widget.controller,
                   ),
-                  maxLines: widget.maxLine,
-                  obscureText: widget.isObscure!,
-                  controller: widget.controller,
                 ),
               ),
             ],

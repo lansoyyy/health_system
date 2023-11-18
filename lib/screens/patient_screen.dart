@@ -98,18 +98,21 @@ class _PatientScreenState extends State<PatientScreen> {
                           decoration: pw.TextDecoration.underline),
                     ),
                   ]),
-                  pw.Row(children: [
-                    pw.Text('Phone Number:',
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.only(left: 80),
+                    child: pw.Row(children: [
+                      pw.Text('Phone Number:',
+                          style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.normal, fontSize: 10)),
+                      pw.SizedBox(width: 5),
+                      pw.Text(
+                        userData1['phoneNumber'],
                         style: pw.TextStyle(
-                            fontWeight: pw.FontWeight.normal, fontSize: 10)),
-                    pw.SizedBox(width: 5),
-                    pw.Text(
-                      userData1['phoneNumber'],
-                      style: pw.TextStyle(
-                          fontWeight: pw.FontWeight.bold,
-                          decoration: pw.TextDecoration.underline),
-                    ),
-                  ]),
+                            fontWeight: pw.FontWeight.bold,
+                            decoration: pw.TextDecoration.underline),
+                      ),
+                    ]),
+                  ),
                   pw.SizedBox()
                 ]),
             pw.SizedBox(height: 20),
@@ -162,7 +165,9 @@ class _PatientScreenState extends State<PatientScreen> {
                       fontWeight: pw.FontWeight.normal, fontSize: 10)),
               pw.SizedBox(width: 5),
               pw.Text(
-                userData1['medicalFindings'][0]['notes'],
+                userData1['medicalFindings'].length != 0
+                    ? userData1['medicalFindings'][0]['notes']
+                    : 'No findings',
                 style: pw.TextStyle(
                     fontWeight: pw.FontWeight.bold,
                     decoration: pw.TextDecoration.underline),
@@ -306,11 +311,13 @@ class _PatientScreenState extends State<PatientScreen> {
                                     width: 10,
                                   ),
                                   GestureDetector(
-                                    onTap: (() {
+                                    onTap: (() async {
                                       setState(() {
                                         userData1 = data;
                                       });
+
                                       printing();
+                                      // printing();
                                     }),
                                     child: Row(
                                       mainAxisAlignment:
