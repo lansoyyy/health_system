@@ -304,7 +304,7 @@ class _AddPatientState extends State<AddPatient> {
                                   height: 10,
                                 ),
                                 Container(
-                                  width: 200,
+                                  width: 300,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Colors.white,
@@ -346,7 +346,7 @@ class _AddPatientState extends State<AddPatient> {
                               ],
                             ),
                             const SizedBox(
-                              width: 30,
+                              width: 135,
                             ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -359,7 +359,7 @@ class _AddPatientState extends State<AddPatient> {
                                   width: 10,
                                 ),
                                 Container(
-                                  width: 200,
+                                  width: 150,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: Colors.white,
@@ -399,73 +399,6 @@ class _AddPatientState extends State<AddPatient> {
                             const SizedBox(
                               width: 45,
                             ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TextRegular(
-                                    text: 'Sex:'.toUpperCase(),
-                                    fontSize: 24,
-                                    color: Colors.black),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Colors.white,
-                                      border: Border.all(color: Colors.black)),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                    child: Center(
-                                      child: DropdownButton(
-                                          dropdownColor: Colors.white,
-                                          focusColor: Colors.white,
-                                          value: _dropValue2,
-                                          items: [
-                                            DropdownMenuItem(
-                                              onTap: () {
-                                                gender = 'Male';
-                                              },
-                                              value: 0,
-                                              child: TextRegular(
-                                                  text: 'Male',
-                                                  fontSize: 18,
-                                                  color: Colors.black),
-                                            ),
-                                            DropdownMenuItem(
-                                              onTap: () {
-                                                gender = 'Female';
-                                              },
-                                              value: 1,
-                                              child: TextRegular(
-                                                  text: 'Female',
-                                                  fontSize: 18,
-                                                  color: Colors.black),
-                                            ),
-                                            DropdownMenuItem(
-                                              onTap: () {
-                                                gender = 'Others';
-                                              },
-                                              value: 2,
-                                              child: TextRegular(
-                                                  text: 'Others',
-                                                  fontSize: 18,
-                                                  color: Colors.black),
-                                            ),
-                                          ],
-                                          onChanged: ((value) {
-                                            setState(() {
-                                              _dropValue2 =
-                                                  int.parse(value.toString());
-                                            });
-                                          })),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
                           ],
                         ),
                         const SizedBox(
@@ -473,53 +406,132 @@ class _AddPatientState extends State<AddPatient> {
                         ),
                         box.read('user') != 'Nurse'
                             ? Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  TextRegular(
-                                      text: 'Disease:'.toUpperCase(),
-                                      fontSize: 24,
-                                      color: Colors.black),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Container(
-                                    width: 175,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: Colors.white,
-                                        border:
-                                            Border.all(color: Colors.black)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          20, 0, 20, 0),
-                                      child: Center(
-                                        child: DropdownButton(
-                                            dropdownColor: Colors.white,
-                                            focusColor: Colors.white,
-                                            value: _dropValue3,
-                                            items: [
-                                              for (int i = 0;
-                                                  i < diseases.length;
-                                                  i++)
-                                                DropdownMenuItem(
-                                                  onTap: (() {
-                                                    disease = diseases[i];
-                                                  }),
-                                                  value: i,
-                                                  child: TextRegular(
-                                                      text: diseases[i],
-                                                      fontSize: 14,
-                                                      color: Colors.black),
-                                                ),
-                                            ],
-                                            onChanged: ((value) {
-                                              setState(() {
-                                                _dropValue3 =
-                                                    int.parse(value.toString());
-                                              });
-                                            })),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      TextRegular(
+                                          text: 'Disease:'.toUpperCase(),
+                                          fontSize: 24,
+                                          color: Colors.black),
+                                      const SizedBox(
+                                        width: 10,
                                       ),
-                                    ),
+                                      Container(
+                                        width: 330,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            color: Colors.white,
+                                            border: Border.all(
+                                                color: Colors.black)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              20, 0, 20, 0),
+                                          child: Center(
+                                            child: DropdownButton(
+                                                dropdownColor: Colors.white,
+                                                focusColor: Colors.white,
+                                                value: _dropValue3,
+                                                items: [
+                                                  for (int i = 0;
+                                                      i < diseases.length;
+                                                      i++)
+                                                    DropdownMenuItem(
+                                                      onTap: (() {
+                                                        disease = diseases[i];
+                                                      }),
+                                                      value: i,
+                                                      child: TextRegular(
+                                                          text: diseases[i],
+                                                          fontSize: 14,
+                                                          color: Colors.black),
+                                                    ),
+                                                ],
+                                                onChanged: ((value) {
+                                                  setState(() {
+                                                    _dropValue3 = int.parse(
+                                                        value.toString());
+                                                  });
+                                                })),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    width: 160,
+                                  ),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      TextRegular(
+                                          text: 'Sex:'.toUpperCase(),
+                                          fontSize: 24,
+                                          color: Colors.black),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Container(
+                                        width: 150,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            color: Colors.white,
+                                            border: Border.all(
+                                                color: Colors.black)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              20, 0, 20, 0),
+                                          child: Center(
+                                            child: DropdownButton(
+                                                dropdownColor: Colors.white,
+                                                focusColor: Colors.white,
+                                                value: _dropValue2,
+                                                items: [
+                                                  DropdownMenuItem(
+                                                    onTap: () {
+                                                      gender = 'Male';
+                                                    },
+                                                    value: 0,
+                                                    child: TextRegular(
+                                                        text: 'Male',
+                                                        fontSize: 18,
+                                                        color: Colors.black),
+                                                  ),
+                                                  DropdownMenuItem(
+                                                    onTap: () {
+                                                      gender = 'Female';
+                                                    },
+                                                    value: 1,
+                                                    child: TextRegular(
+                                                        text: 'Female',
+                                                        fontSize: 18,
+                                                        color: Colors.black),
+                                                  ),
+                                                  DropdownMenuItem(
+                                                    onTap: () {
+                                                      gender = 'Others';
+                                                    },
+                                                    value: 2,
+                                                    child: TextRegular(
+                                                        text: 'Others',
+                                                        fontSize: 18,
+                                                        color: Colors.black),
+                                                  ),
+                                                ],
+                                                onChanged: ((value) {
+                                                  setState(() {
+                                                    _dropValue2 = int.parse(
+                                                        value.toString());
+                                                  });
+                                                })),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               )
