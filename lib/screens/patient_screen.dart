@@ -242,11 +242,11 @@ class _PatientScreenState extends State<PatientScreen> {
                           ],
                         ),
                         TextBold(
-                            text: 'PATIENT PROFILE',
+                            text: 'PATIENT INFORMATION',
                             fontSize: 58,
                             color: Colors.black),
                         const SizedBox(
-                          width: 50,
+                          width: 100,
                         ),
                       ],
                     ),
@@ -454,7 +454,7 @@ class _PatientScreenState extends State<PatientScreen> {
                                                   fontSize: 24,
                                                   color: Colors.black),
                                               const SizedBox(
-                                                width: 200,
+                                                width: 210,
                                               ),
                                               SizedBox(
                                                 width: 350,

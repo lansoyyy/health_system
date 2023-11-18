@@ -165,9 +165,10 @@ class _PatientListTabState extends State<PatientListTab> {
   List<String> dise = [];
   List<bool> actives = [];
 
-  String cdate2 = DateFormat("MMMM, dd, yyyy").format(DateTime.now());
-
   void _createPdf() async {
+    String cdate2 = DateFormat("MMMM, dd, yyyy")
+        .format(DateTime(2023, filterMonth, filterData));
+
     /// for using an image from assets
     // final image = await imageFromAssetBundle('assets/image.png');
 
@@ -202,7 +203,7 @@ class _PatientListTabState extends State<PatientListTab> {
                         style: pw.TextStyle(
                             fontWeight: pw.FontWeight.normal, fontSize: 10)),
                   ]),
-                  pw.SizedBox(width: 20),
+                  pw.SizedBox(width: 50),
                 ]),
             pw.SizedBox(height: 20),
             pw.Text(cdate2),
@@ -354,192 +355,6 @@ class _PatientListTabState extends State<PatientListTab> {
                       IconButton(
                           onPressed: (() {
                             {
-                              // showDialog(
-                              //     context: context,
-                              //     builder: (context) {
-                              //       return Dialog(
-                              //         child: Screenshot(
-                              //           controller: ssController,
-                              //           child: SizedBox(
-                              //               width: 1000,
-                              //               height: 700,
-                              //               child: Row(
-                              //                 mainAxisAlignment:
-                              //                     MainAxisAlignment
-                              //                         .spaceEvenly,
-                              //                 crossAxisAlignment:
-                              //                     CrossAxisAlignment
-                              //                         .center,
-                              //                 children: [
-                              //                   Column(
-                              //                     crossAxisAlignment:
-                              //                         CrossAxisAlignment
-                              //                             .start,
-                              //                     children: [
-                              //                       p.PieChart(
-                              //                         dataMap: dataMap,
-                              //                         animationDuration:
-                              //                             const Duration(
-                              //                                 milliseconds:
-                              //                                     800),
-                              //                         chartLegendSpacing:
-                              //                             32,
-                              //                         chartRadius: 150,
-                              //                         colorList: const [
-                              //                           Colors.blue,
-                              //                           Colors.amber,
-                              //                           Colors.red,
-                              //                           Colors.green,
-                              //                           Colors.brown,
-                              //                         ],
-                              //                         initialAngleInDegree:
-                              //                             0,
-                              //                         chartType: p
-                              //                             .ChartType.disc,
-                              //                         ringStrokeWidth: 32,
-
-                              //                         legendOptions: const p
-                              //                             .LegendOptions(
-                              //                           showLegendsInRow:
-                              //                               false,
-                              //                           legendPosition: p
-                              //                               .LegendPosition
-                              //                               .right,
-                              //                           showLegends: true,
-                              //                           legendTextStyle:
-                              //                               TextStyle(
-                              //                             fontWeight:
-                              //                                 FontWeight
-                              //                                     .bold,
-                              //                           ),
-                              //                         ),
-                              //                         chartValuesOptions:
-                              //                             const p
-                              //                                 .ChartValuesOptions(
-                              //                           showChartValueBackground:
-                              //                               true,
-                              //                           showChartValues:
-                              //                               false,
-                              //                           showChartValuesInPercentage:
-                              //                               false,
-                              //                           showChartValuesOutside:
-                              //                               false,
-                              //                           decimalPlaces: 1,
-                              //                         ),
-                              //                         // gradientList: ---To add gradient colors---
-                              //                         // emptyColorGradient: ---Empty Color gradient---
-                              //                       ),
-                              //                       Column(
-                              //                         crossAxisAlignment:
-                              //                             CrossAxisAlignment
-                              //                                 .center,
-                              //                         children: [
-                              //                           SizedBox(
-                              //                               width: 450,
-                              //                               height: 220,
-                              //                               child: SfCartesianChart(
-
-                              //                                   // Initialize category axis
-                              //                                   primaryXAxis: CategoryAxis(),
-                              //                                   series: <ChartSeries>[
-                              //                                     // Initialize line series
-                              //                                     LineSeries<ChartData1,
-                              //                                             String>(
-                              //                                         dataSource: [
-                              //                                           // Bind data source
-                              //                                           for (int i = 0; i < months.length; i++)
-                              //                                             ChartData1(months[i], datasMonth[i]),
-                              //                                         ],
-                              //                                         xValueMapper: (ChartData1 data, _) =>
-                              //                                             data.x,
-                              //                                         yValueMapper: (ChartData1 data, _) => data.y)
-                              //                                   ])),
-                              //                         ],
-                              //                       )
-                              //                     ],
-                              //                   ),
-                              //                   SizedBox(
-                              //                     height: 600,
-                              //                     width: 400,
-                              //                     child: GridView.builder(
-                              //                         itemCount:
-                              //                             brgys.length,
-                              //                         gridDelegate:
-                              //                             const SliverGridDelegateWithFixedCrossAxisCount(
-                              //                                 crossAxisCount:
-                              //                                     3),
-                              //                         itemBuilder:
-                              //                             (context,
-                              //                                 index) {
-                              //                           return Column(
-                              //                             mainAxisAlignment:
-                              //                                 MainAxisAlignment
-                              //                                     .center,
-                              //                             crossAxisAlignment:
-                              //                                 CrossAxisAlignment
-                              //                                     .start,
-                              //                             children: [
-                              //                               TextBold(
-                              //                                   text: brgys[
-                              //                                       index],
-                              //                                   fontSize:
-                              //                                       14,
-                              //                                   color: Colors
-                              //                                       .black),
-                              //                               const SizedBox(
-                              //                                 height: 10,
-                              //                               ),
-                              //                               TextRegular(
-                              //                                   text:
-                              //                                       'No Disease: ${datasNoDiseas[index]}',
-                              //                                   fontSize:
-                              //                                       12,
-                              //                                   color: Colors
-                              //                                       .grey),
-                              //                               const SizedBox(
-                              //                                 height: 10,
-                              //                               ),
-                              //                               TextRegular(
-                              //                                   text:
-                              //                                       'Covid:  ${datasCovid[index]}',
-                              //                                   fontSize:
-                              //                                       12,
-                              //                                   color: Colors
-                              //                                       .grey),
-                              //                               const SizedBox(
-                              //                                 height: 10,
-                              //                               ),
-                              //                               TextRegular(
-                              //                                   text:
-                              //                                       'Dengue:  ${dataDengue[index]}',
-                              //                                   fontSize:
-                              //                                       12,
-                              //                                   color: Colors
-                              //                                       .grey),
-                              //                               const SizedBox(
-                              //                                 height: 10,
-                              //                               ),
-                              //                               TextRegular(
-                              //                                   text:
-                              //                                       'Diarrhea:  ${datasDiarrhea[index]}',
-                              //                                   fontSize:
-                              //                                       12,
-                              //                                   color: Colors
-                              //                                       .grey),
-                              //                             ],
-                              //                           );
-                              //                         }),
-                              //                   ),
-                              //                 ],
-                              //               )),
-                              //         ),
-                              //       );
-                              //     });
-
-                              // To Implement
-                              // for (int i = 0; i < brgys.length; i++) {
-                              //   addPlaces(brgys[i]);
-                              // }
                               _createPdf();
                             }
                           }),
