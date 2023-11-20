@@ -186,22 +186,13 @@ class _PatientListTabState extends State<PatientListTab> {
                   ),
                   pw.Column(children: [
                     pw.SizedBox(height: 20),
-                    pw.Text('Sumilao, Bukidnon, 8701',
-                        style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                    pw.SizedBox(height: 5),
-                    pw.Row(children: [
-                      pw.Text('Tel (088) 813 - 5661',
-                          style: pw.TextStyle(
-                              fontWeight: pw.FontWeight.normal, fontSize: 8)),
-                      pw.SizedBox(width: 5),
-                      pw.Text('TO 5663; TELEFAX (088) 813 - 2717',
-                          style: pw.TextStyle(
-                              fontWeight: pw.FontWeight.normal, fontSize: 8)),
-                    ]),
-                    pw.SizedBox(height: 5),
-                    pw.Text('www.sumilao.com.ph',
-                        style: pw.TextStyle(
-                            fontWeight: pw.FontWeight.normal, fontSize: 10)),
+                   pw.Text('Rural Health Unit',
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+            pw.SizedBox(height: 5),
+            pw.Text('Municipality of Sumilao',
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+            pw.Text('Province of Bukidnon',
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                   ]),
                   pw.SizedBox(width: 50),
                 ]),
