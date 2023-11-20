@@ -166,7 +166,7 @@ class _PatientListTabState extends State<PatientListTab> {
   List<bool> actives = [];
 
   void _createPdf() async {
-    String cdate2 = DateFormat("MMMM, dd, yyyy")
+    String cdate2 = DateFormat("MMMM dd, yyyy")
         .format(DateTime(2023, filterMonth, filterData));
 
     /// for using an image from assets

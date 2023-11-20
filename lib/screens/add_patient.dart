@@ -163,7 +163,7 @@ class _AddPatientState extends State<AddPatient> {
                           fontSize: 58,
                           color: Colors.black),
                       const SizedBox(
-                        width: 100,
+                        width: 200,
                       ),
                     ],
                   ),

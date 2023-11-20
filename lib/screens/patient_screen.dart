@@ -251,7 +251,7 @@ class _PatientScreenState extends State<PatientScreen> {
                             fontSize: 58,
                             color: Colors.black),
                         const SizedBox(
-                          width: 100,
+                          width: 200,
                         ),
                       ],
                     ),
