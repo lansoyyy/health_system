@@ -190,11 +190,11 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
                       ],
                     ),
                     TextBold(
-                        text: 'USER MANAGEMENT',
+                        text: 'USER PROFILES',
                         fontSize: 58,
                         color: Colors.black),
                     const SizedBox(
-                      width: 50,
+                      width: 200,
                     ),
                   ],
                 ),
